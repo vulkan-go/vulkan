@@ -14,7 +14,7 @@ PARSER:
 
 TRANSLATOR: 
   ConstRules: 
-    defines: eval
+    defines: expand
     enum: eval
   Rules: 
     global: 
