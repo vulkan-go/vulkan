@@ -15,7 +15,6 @@ PARSER:
 TRANSLATOR: 
   ConstRules: 
     defines: expand
-    enum: eval
   Rules: 
     global: 
       - {action: accept, from: "^Vk"}
