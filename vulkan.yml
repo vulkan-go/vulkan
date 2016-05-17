@@ -30,6 +30,7 @@ TRANSLATOR:
       - {action: replace, from: "^PFN_vk", to: "PFN"}
       - {action: ignore, from: vkGetInstanceProcAddr$}
       - {action: ignore, from: vkGetDeviceProcAddr$}
+      - {action: ignore, from: PFN_vkVoidFunction$}
       - {action: ignore, from: vkCmdSetBlendConstants$} # todo: enable back
     function:
       - {action: accept, from: "^vk"}
