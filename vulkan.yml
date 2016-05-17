@@ -8,7 +8,8 @@ GENERATOR:
     - {name: "CFLAGS", flags: [
         "-I.",
         "-DVK_USE_PLATFORM_ANDROID_KHR",
-        "-DVK_NO_PROTOTYPES"
+        "-DVK_NO_PROTOTYPES",
+        "-D__ARM_ARCH_7A__",
     ]}
 
 PARSER: 
