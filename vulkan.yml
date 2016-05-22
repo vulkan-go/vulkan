@@ -11,12 +11,22 @@ GENERATOR:
   FlagGroups:
     - {name: "CFLAGS", flags: [
         "-I.",
-        "-DVK_USE_PLATFORM_ANDROID_KHR",
         "-DVK_NO_PROTOTYPES",
+        "-DVK_USE_PLATFORM_ANDROID_KHR",
+    ]}
+    - {name: "LDFLAGS", traits: ["android"], flags: [
+      "-Wl,--no-warn-mismatch",
+      "-lm_hard",
+    ]}
+    - {name: "CFLAGS", traits: ["android"], flags: [
         "-D__ARM_ARCH_7A__",
+        "-D_NDK_MATH_NO_SOFTFP=1",
+        "-mfpu=vfp",
+        "-mfloat-abi=hard",
+        "-march=armv7-a",
     ]}
 
-PARSER: 
+PARSER:
   IncludePaths: [/usr/include]
   SourcesPaths:
     - vulkan/vulkan.h
