@@ -41,17 +41,17 @@ func Error(result Result) error {
 		return errTooManyObjects
 	case ErrorFormatNotSupported:
 		return errFormatNotSupported
-	case ErrorSurfaceLostKhr:
+	case ErrorSurfaceLost:
 		return errSurfaceLostKHR
-	case ErrorNativeWindowInUseKhr:
+	case ErrorNativeWindowInUse:
 		return errNativeWindowInUseKHR
-	case SuboptimalKhr:
+	case Suboptimal:
 		return warnSuboptimalKHR
-	case ErrorOutOfDateKhr:
+	case ErrorOutOfDate:
 		return errOutOfDateKHR
-	case ErrorIncompatibleDisplayKhr:
+	case ErrorIncompatibleDisplay:
 		return errIncompatibleDisplayKHR
-	case ErrorValidationFailedExt:
+	case ErrorValidationFailed:
 		return errValidationFailedEXT
 	case ErrorInvalidShaderNv:
 		return errInvalidShaderNV
