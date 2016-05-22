@@ -8,6 +8,127 @@
 extern "C";
 #endif
 
+VkResult callVkCreateInstance(
+    const VkInstanceCreateInfo*                 pCreateInfo,
+    const VkAllocationCallbacks*                pAllocator,
+    VkInstance*                                 pInstance);
+
+void callVkDestroyInstance(
+    VkInstance                                  instance,
+    const VkAllocationCallbacks*                pAllocator);
+
+VkResult callVkEnumeratePhysicalDevices(
+    VkInstance                                  instance,
+    uint32_t*                                   pPhysicalDeviceCount,
+    VkPhysicalDevice*                           pPhysicalDevices);
+
+void callVkGetPhysicalDeviceFeatures(
+    VkPhysicalDevice                            physicalDevice,
+    VkPhysicalDeviceFeatures*                   pFeatures);
+
+void callVkGetPhysicalDeviceFormatProperties(
+    VkPhysicalDevice                            physicalDevice,
+    VkFormat                                    format,
+    VkFormatProperties*                         pFormatProperties);
+
+VkResult callVkGetPhysicalDeviceImageFormatProperties(
+    VkPhysicalDevice                            physicalDevice,
+    VkFormat                                    format,
+    VkImageType                                 type,
+    VkImageTiling                               tiling,
+    VkImageUsageFlags                           usage,
+    VkImageCreateFlags                          flags,
+    VkImageFormatProperties*                    pImageFormatProperties);
+
+void callVkGetPhysicalDeviceProperties(
+    VkPhysicalDevice                            physicalDevice,
+    VkPhysicalDeviceProperties*                 pProperties);
+
+void callVkGetPhysicalDeviceQueueFamilyProperties(
+    VkPhysicalDevice                            physicalDevice,
+    uint32_t*                                   pQueueFamilyPropertyCount,
+    VkQueueFamilyProperties*                    pQueueFamilyProperties);
+
+void callVkGetPhysicalDeviceMemoryProperties(
+    VkPhysicalDevice                            physicalDevice,
+    VkPhysicalDeviceMemoryProperties*           pMemoryProperties);
+
+VkResult callVkCreateDevice(
+    VkPhysicalDevice                            physicalDevice,
+    const VkDeviceCreateInfo*                   pCreateInfo,
+    const VkAllocationCallbacks*                pAllocator,
+    VkDevice*                                   pDevice);
+
+void callVkDestroyDevice(
+    VkDevice                                    device,
+    const VkAllocationCallbacks*                pAllocator);
+
+VkResult callVkEnumerateInstanceExtensionProperties(
+    const char*                                 pLayerName,
+    uint32_t*                                   pPropertyCount,
+    VkExtensionProperties*                      pProperties);
+
+VkResult callVkEnumerateDeviceExtensionProperties(
+    VkPhysicalDevice                            physicalDevice,
+    const char*                                 pLayerName,
+    uint32_t*                                   pPropertyCount,
+    VkExtensionProperties*                      pProperties);
+
+VkResult callVkEnumerateInstanceLayerProperties(
+    uint32_t*                                   pPropertyCount,
+    VkLayerProperties*                          pProperties);
+
+VkResult callVkEnumerateDeviceLayerProperties(
+    VkPhysicalDevice                            physicalDevice,
+    uint32_t*                                   pPropertyCount,
+    VkLayerProperties*                          pProperties);
+
+void callVkGetDeviceQueue(
+    VkDevice                                    device,
+    uint32_t                                    queueFamilyIndex,
+    uint32_t                                    queueIndex,
+    VkQueue*                                    pQueue);
+
+VkResult callVkQueueSubmit(
+    VkQueue                                     queue,
+    uint32_t                                    submitCount,
+    const VkSubmitInfo*                         pSubmits,
+    VkFence                                     fence);
+
+VkResult callVkQueueWaitIdle(
+    VkQueue                                     queue);
+
+VkResult callVkDeviceWaitIdle(
+    VkDevice                                    device);
+
+VkResult callVkAllocateMemory(
+    VkDevice                                    device,
+    const VkMemoryAllocateInfo*                 pAllocateInfo,
+    const VkAllocationCallbacks*                pAllocator,
+    VkDeviceMemory*                             pMemory);
+
+void callVkFreeMemory(
+    VkDevice                                    device,
+    VkDeviceMemory                              memory,
+    const VkAllocationCallbacks*                pAllocator);
+
+VkResult callVkMapMemory(
+    VkDevice                                    device,
+    VkDeviceMemory                              memory,
+    VkDeviceSize                                offset,
+    VkDeviceSize                                size,
+    VkMemoryMapFlags                            flags,
+    void**                                      ppData);
+
+void callVkUnmapMemory(
+    VkDevice                                    device,
+    VkDeviceMemory                              memory);
+
+VkResult callVkFlushMappedMemoryRanges(
+    VkDevice                                    device,
+    uint32_t                                    memoryRangeCount,
+    const VkMappedMemoryRange*                  pMemoryRanges);
+
 VkResult callVkInvalidateMappedMemoryRanges(
     VkDevice                                    device,
     uint32_t                                    memoryRangeCount,
