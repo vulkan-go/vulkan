@@ -76,12 +76,12 @@ TRANSLATOR:
     - {target: ANativeWindow, self: raw}
   PtrTips:
     function:
-      - {target: ^callVkEnumeratePhysicalDevices$, tips: [0,size,arr]}
-      - {target: ^callVkGetPhysicalDeviceQueueFamilyProperties$, tips: [0,size,arr]}
-      - {target: ^callVkEnumerateInstanceExtensionProperties$, tips: [0,size,arr]}
-      - {target: ^callVkEnumerateDeviceExtensionProperties$, tips: [0,0,size,arr]}
-      - {target: ^callVkEnumerateInstanceLayerProperties$, tips: [size,arr]}
-      - {target: ^callVkEnumerateDeviceLayerProperties$, tips: [0,size,arr]}
+      - {target: ^callVkEnumeratePhysicalDevices$, tips: [0,ref,arr]}
+      - {target: ^callVkGetPhysicalDeviceQueueFamilyProperties$, tips: [0,ref,arr]}
+      - {target: ^callVkEnumerateInstanceExtensionProperties$, tips: [0,ref,arr]}
+      - {target: ^callVkEnumerateDeviceExtensionProperties$, tips: [0,0,ref,arr]}
+      - {target: ^callVkEnumerateInstanceLayerProperties$, tips: [ref,arr]}
+      - {target: ^callVkEnumerateDeviceLayerProperties$, tips: [0,ref,arr]}
       - {target: ^callVkQueueSubmit$, tips: [0,size,arr]}
       - {target: ^callVkFlushMappedMemoryRanges$, tips: [0,size,arr]}
       - {target: ^callVkInvalidateMappedMemoryRanges$, tips: [0,size,arr]}
