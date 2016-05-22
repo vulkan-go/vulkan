@@ -45,6 +45,8 @@ TRANSLATOR:
       - {action: replace, from: "KHR$"}
       - {action: replace, from: "EXT$"}
     const:
+      - {action: replace, from: "KHR$"}
+      - {action: replace, from: "EXT$"}
       - {transform: lower}
       - {action: accept, from: "(?i)^VK_"}
       - {action: replace, from: "(?i)^VK_", to: "_"}
