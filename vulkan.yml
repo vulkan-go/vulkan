@@ -7,6 +7,7 @@ GENERATOR:
     - vulkan/vulkan.h
     - vulkan_wrapper.h
     - vulkan_bridge.h
+    - android/native_window.h
   FlagGroups:
     - {name: "CFLAGS", flags: [
         "-I.",
@@ -21,6 +22,7 @@ PARSER:
     - vulkan/vulkan.h
     - vulkan_wrapper.h
     - vulkan_bridge.h
+    - android/native_window.h
   Defines:
     VK_USE_PLATFORM_ANDROID_KHR: 1
     VK_NO_PROTOTYPES: 1
@@ -39,6 +41,7 @@ TRANSLATOR:
       - {action: accept, from: ^callVk}
       - {action: replace, from: ^callVk}
     type:
+      - {action: accept, from: "^ANativeWindow$"}
       - {action: replace, from: "KHR$"}
       - {action: replace, from: "EXT$"}
     function:
@@ -60,8 +63,23 @@ TRANSLATOR:
       - {transform: export}
   MemTips:
     - {target: VkAllocationCallbacks, self: raw}
+    - {target: ANativeWindow, self: raw}
   PtrTips:
     function:
+      - {target: ^callVkEnumeratePhysicalDevices$, tips: [0,size,arr]}
+      - {target: ^callVkGetPhysicalDeviceQueueFamilyProperties$, tips: [0,size,arr]}
+      - {target: ^callVkEnumerateInstanceExtensionProperties$, tips: [0,size,arr]}
+      - {target: ^callVkEnumerateDeviceExtensionProperties$, tips: [0,0,size,arr]}
+      - {target: ^callVkEnumerateInstanceLayerProperties$, tips: [size,arr]}
+      - {target: ^callVkEnumerateDeviceLayerProperties$, tips: [0,size,arr]}
+      - {target: ^callVkQueueSubmit$, tips: [0,size,arr]}
+      - {target: ^callVkFlushMappedMemoryRanges$, tips: [0,size,arr]}
+      - {target: ^callVkInvalidateMappedMemoryRanges$, tips: [0,size,arr]}
+      - {target: ^callVkGetImageSparseMemoryRequirements$, tips: [0,0,size,arr]}
+      - {target: ^callVkGetPhysicalDeviceSparseImageFormatProperties$, tips: [0,0,0,0,0,0,size,arr]}
+      - {target: ^callVkQueueBindSparse$, tips: [0,size,arr]}
+      - {target: ^callVkResetFences$, tips: [0,size,arr]}
+      - {target: ^callVkWaitForFences$, tips: [0,size,arr]}
       - {target: ^callVkMergePipelineCaches$, tips: [0,0,size,arr]}
       - {target: ^callVkCreateGraphicsPipelines$, tips: [0,0,size,arr,ref,ref]}
       - {target: ^callVkCreateComputePipelines$, tips: [0,0,size,arr,ref,ref]}
