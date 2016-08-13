@@ -67,6 +67,8 @@ TRANSLATOR:
     private:
       - {transform: unexport}
     post-global:
+      - {action: doc, from: "KHR$",
+              to: "https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vk$goname"}
       - {action: doc, from: "^callVk",
               to: "https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vk$goname.html"}
       - {action: replace, from: _$}
