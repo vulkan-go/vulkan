@@ -191,10 +191,13 @@ int vkInit(void) {
     vkCreateWin32SurfaceKHR = (PFN_vkCreateWin32SurfaceKHR)(dlsym(libvulkan, "vkCreateWin32SurfaceKHR"));
     vkGetPhysicalDeviceWin32PresentationSupportKHR = (PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR)(dlsym(libvulkan, "vkGetPhysicalDeviceWin32PresentationSupportKHR"));
 #endif
-    vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)(dlsym(libvulkan, "vkCreateDebugReportCallbackEXT"));
-    vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(dlsym(libvulkan, "vkDestroyDebugReportCallbackEXT"));
-    vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(dlsym(libvulkan, "vkDebugReportMessageEXT"));
     return 0;
+}
+
+void vkInitDebug(VkInstance instance) {
+    vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
+    vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
+    vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(vkGetInstanceProcAddr(instance, "vkDebugReportMessageEXT"));
 }
 
 PFN_vkCreateInstance vkCreateInstance;

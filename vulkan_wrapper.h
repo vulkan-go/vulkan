@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 int vkInit(void);
+void vkInitDebug(VkInstance instance);
 
 extern PFN_vkCreateInstance vkCreateInstance;
 extern PFN_vkDestroyInstance vkDestroyInstance;

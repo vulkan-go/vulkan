@@ -14,3 +14,7 @@ func Init() error {
 	}
 	return nil
 }
+
+func InitDebug(instance Instance) {
+	C.vkInitDebug(C.VkInstance(instance))
+}

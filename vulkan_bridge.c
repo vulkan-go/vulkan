@@ -1341,14 +1341,21 @@ VkResult callVkCreateDebugReportCallbackEXT(
     const VkDebugReportCallbackCreateInfoEXT*   pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
     VkDebugReportCallbackEXT*                   pCallback) {
-    return vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback);
+
+    if (vkCreateDebugReportCallbackEXT != NULL) {
+        return vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback);
+    }
+    return VK_NOT_READY;
 }
 
 void callVkDestroyDebugReportCallbackEXT(
     VkInstance                                  instance,
     VkDebugReportCallbackEXT                    callback,
     const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator);
+
+    if (vkDestroyDebugReportCallbackEXT != NULL) {
+        vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator);
+    }
 }
 
 void callVkDebugReportMessageEXT(
@@ -1360,8 +1367,11 @@ void callVkDebugReportMessageEXT(
     int32_t                                     messageCode,
     const char*                                 pLayerPrefix,
     const char*                                 pMessage) {
-    vkDebugReportMessageEXT(instance, flags, objectType, object, location,
-                            messageCode, pLayerPrefix, pMessage);
+
+    if (vkDebugReportMessageEXT != NULL) {
+        vkDebugReportMessageEXT(instance, flags, objectType, object, location,
+                                messageCode, pLayerPrefix, pMessage);
+    }
 }
 
 // VkResult callVkDebugMarkerSetObjectTagEXT(

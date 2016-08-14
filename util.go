@@ -63,13 +63,18 @@ func FindMemoryTypeIndex(dev PhysicalDevice,
 	return 0, false
 }
 
-// MemCopyFloat32 copies float32 values from src.Data to dst.Data on the unsafe level.
-func MemCopyFloat32(dst []unsafe.Pointer, src []float32) int {
-	hdr := *(*sliceHeader)(unsafe.Pointer(&dst))
-	hdr.Cap = cap(src)
-	hdr.Len = len(src)
-	dstView := *(*[]float32)(unsafe.Pointer(&hdr))
-	return copy(dstView, src)
+// MemCopyFloat32 copies float32 values from src to dst as if dst was []float32.
+func MemCopyFloat32(dst unsafe.Pointer, src []float32) int {
+	const m = 0x7fffffff
+	dstView := (*[m / 4]float32)(dst)
+	return copy(dstView[:len(src)], src)
+}
+
+// MemCopyByte copies []byte values from src to dst as if dst was []byte.
+func MemCopyByte(dst unsafe.Pointer, src []byte) int {
+	const m = 0x7fffffff
+	dstView := (*[m]byte)(dst)
+	return copy(dstView[:len(src)], src)
 }
 
 func NewClearValue(color []float32) ClearValue {
@@ -83,4 +88,11 @@ func (cv *ClearValue) SetColor(color []float32) {
 	for i := 0; i < len(color); i++ {
 		vkClearValue[i] = color[i]
 	}
+}
+
+func (cv *ClearValue) SetDepthStencil(depth float32, stencil uint32) {
+	depths := (*[2]float32)(unsafe.Pointer(cv))
+	stencils := (*[2]uint32)(unsafe.Pointer(cv))
+	depths[0] = depth
+	stencils[1] = stencil
 }
