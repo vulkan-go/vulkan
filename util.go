@@ -43,18 +43,20 @@ func ToString(buf []byte) string {
 }
 
 func FindMemoryTypeIndex(dev PhysicalDevice,
-	typeBits uint32, reqMask Flags) (uint32, bool) {
+	typeBits uint32, reqMask MemoryPropertyFlagBits) (uint32, bool) {
 
 	var memProperties PhysicalDeviceMemoryProperties
 	GetPhysicalDeviceMemoryProperties(dev, &memProperties)
 	memProperties.Deref()
+
+	var memFlags = MemoryPropertyFlags(reqMask)
 
 	// search memtypes to find the first index with those requirements
 	for i := 0; i < 32; i++ {
 		if typeBits&1 == 1 { // type is available
 			memType := memProperties.MemoryTypes[i]
 			memType.Deref()
-			if Flags(memType.PropertyFlags)&reqMask == reqMask {
+			if memType.PropertyFlags&memFlags == memFlags {
 				return uint32(i), true
 			}
 		}
