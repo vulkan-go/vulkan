@@ -71,7 +71,10 @@ TRANSLATOR:
               to: "https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vk$goname"}
       - {action: doc, from: "^callVk",
               to: "https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vk$goname.html"}
+      - {action: doc, from: "^Vk",
+              to: "https://www.khronos.org/registry/vulkan/specs/1.0/man/html/Vk$goname.html"}
       - {action: replace, from: _$}
+      - {action: replace, from: ^_}
       - {transform: export}
   MemTips:
     - {target: VkAllocationCallbacks, self: raw}
@@ -96,7 +99,9 @@ TRANSLATOR:
       - {target: ^callVkCreateGraphicsPipelines$, tips: [0,0,size,arr,ref,ref]}
       - {target: ^callVkCreateComputePipelines$, tips: [0,0,size,arr,ref,ref]}
       - {target: ^callVkUpdateDescriptorSets$, tips: [0,size,arr,size,arr]}
+      - {target: ^callVkAllocateCommandBuffers$, tips: [0,ref,arr]}
       - {target: ^callVkFreeCommandBuffers$, tips: [0,0,size,arr]}
+      - {target: ^callVkMapMemory, tips: [0,0,0,0,0,ref]}
       - {target: ^callVkCmdSetViewport$, tips: [0,0,size,arr]}
       - {target: ^callVkCmdSetScissor$, tips: [0,0,size,arr]}
       - {target: ^callVkCmdBindDescriptorSets$, tips: [0,0,0,0,size,arr,size,arr]}
@@ -124,4 +129,5 @@ TRANSLATOR:
       # this covers all other cases
       - {target: ^callVk, tips: [sref,sref,sref,sref,sref,sref,sref,sref]}
     struct:
+      - {target: VkGraphicsPipelineCreateInfo, tips: [0,0,0,0,arr,ref,ref,ref,ref,ref,ref,ref,ref,ref]}
       - {target: VkInstanceCreateInfo, tips: [0,0,0,ref]}
