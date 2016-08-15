@@ -9,6 +9,13 @@ import (
 // #include "vulkan/vulkan.h"
 import "C"
 
+// Max bounds of uint32 and uint64,
+// declared as var so type would get checked.
+var (
+	MaxUint32 uint32 = 1<<32 - 1 // also ^uint32(0)
+	MaxUint64 uint64 = 1<<64 - 1 // also ^uint64(0)
+)
+
 type Version uint32
 
 func (v Version) String() string {

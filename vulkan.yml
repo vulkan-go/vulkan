@@ -96,8 +96,8 @@ TRANSLATOR:
       - {target: ^callVkResetFences$, tips: [0,size,arr]}
       - {target: ^callVkWaitForFences$, tips: [0,size,arr]}
       - {target: ^callVkMergePipelineCaches$, tips: [0,0,size,arr]}
-      - {target: ^callVkCreateGraphicsPipelines$, tips: [0,0,size,arr,ref,ref]}
-      - {target: ^callVkCreateComputePipelines$, tips: [0,0,size,arr,ref,ref]}
+      - {target: ^callVkCreateGraphicsPipelines$, tips: [0,0,size,arr,ref,arr]}
+      - {target: ^callVkCreateComputePipelines$, tips: [0,0,size,arr,ref,arr]}
       - {target: ^callVkUpdateDescriptorSets$, tips: [0,size,arr,size,arr]}
       - {target: ^callVkAllocateCommandBuffers$, tips: [0,ref,arr]}
       - {target: ^callVkFreeCommandBuffers$, tips: [0,0,size,arr]}
