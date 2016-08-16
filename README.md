@@ -35,8 +35,7 @@ so in August I found some time on a weekend to create examples. I had them porte
 
 I hope to receive pull-requests from the community so we'd be able to run this on Windows and Linux too, since AFAIK, there is no limitations at all. In fact, I cannot recall if there was any hacks being introduced. This thing just works in a very idiomatic way, meeting all the common Vulkan guidelines.
 
-<a href="https:/
-/cl.ly/0n0n040w1022/IMG_1456.JPG"><img src="https://cl.ly/1g1V2o2C423s/IMG_1456.JPG" width="200"/></a>
+<a href="https://cl.ly/0n0n040w1022/IMG_1456.JPG"><img src="https://cl.ly/1g1V2o2C423s/IMG_1456.JPG" width="200"/></a>
 
 ## Layers
 
