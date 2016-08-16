@@ -1342,8 +1342,10 @@ VkResult callVkCreateDebugReportCallbackEXT(
     const VkAllocationCallbacks*                pAllocator,
     VkDebugReportCallbackEXT*                   pCallback) {
 
-    if (vkCreateDebugReportCallbackEXT != NULL) {
-        return vkCreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback);
+    PFN_vkCreateDebugReportCallbackEXT pfn = (PFN_vkCreateDebugReportCallbackEXT)
+            (vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
+    if (pfn != NULL) {
+        return pfn(instance, pCreateInfo, pAllocator, pCallback);
     }
     return VK_NOT_READY;
 }
@@ -1353,8 +1355,10 @@ void callVkDestroyDebugReportCallbackEXT(
     VkDebugReportCallbackEXT                    callback,
     const VkAllocationCallbacks*                pAllocator) {
 
-    if (vkDestroyDebugReportCallbackEXT != NULL) {
-        vkDestroyDebugReportCallbackEXT(instance, callback, pAllocator);
+    PFN_vkDestroyDebugReportCallbackEXT pfn = (PFN_vkDestroyDebugReportCallbackEXT)
+            (vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
+    if (pfn != NULL) {
+        pfn(instance, callback, pAllocator);
     }
 }
 
@@ -1368,9 +1372,11 @@ void callVkDebugReportMessageEXT(
     const char*                                 pLayerPrefix,
     const char*                                 pMessage) {
 
-    if (vkDebugReportMessageEXT != NULL) {
-        vkDebugReportMessageEXT(instance, flags, objectType, object, location,
-                                messageCode, pLayerPrefix, pMessage);
+    PFN_vkDebugReportMessageEXT pfn = (PFN_vkDebugReportMessageEXT)
+                                      (vkGetInstanceProcAddr(instance, "vkDebugReportMessageEXT"));
+    if (pfn != NULL) {
+        pfn(instance, flags, objectType, object, location,
+            messageCode, pLayerPrefix, pMessage);
     }
 }
 

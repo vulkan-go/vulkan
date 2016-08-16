@@ -191,13 +191,11 @@ int vkInit(void) {
     vkCreateWin32SurfaceKHR = (PFN_vkCreateWin32SurfaceKHR)(dlsym(libvulkan, "vkCreateWin32SurfaceKHR"));
     vkGetPhysicalDeviceWin32PresentationSupportKHR = (PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR)(dlsym(libvulkan, "vkGetPhysicalDeviceWin32PresentationSupportKHR"));
 #endif
-    return 0;
-}
 
-void vkInitDebug(VkInstance instance) {
-    vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)(vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
-    vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
-    vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(vkGetInstanceProcAddr(instance, "vkDebugReportMessageEXT"));
+    vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)(dlsym(libvulkan, "vkCreateDebugReportCallbackEXT"));
+    vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(dlsym(libvulkan, "vkDestroyDebugReportCallbackEXT"));
+    vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(dlsym(libvulkan, "vkDebugReportMessageEXT"));
+    return 0;
 }
 
 PFN_vkCreateInstance vkCreateInstance;
@@ -384,6 +382,7 @@ PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR;
 PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR;
 PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR;
 #endif
+
 PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT;
 PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT;
 PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT;

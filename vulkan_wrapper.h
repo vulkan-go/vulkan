@@ -4,13 +4,10 @@
 #define VK_NO_PROTOTYPES 1
 #include <vulkan/vulkan.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 int vkInit(void);
 void vkInitDebug(VkInstance instance);
 
+// VK_core
 extern PFN_vkCreateInstance vkCreateInstance;
 extern PFN_vkDestroyInstance vkDestroyInstance;
 extern PFN_vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices;
@@ -214,9 +211,5 @@ extern PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin
 extern PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT;
 extern PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT;
 extern PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT;
-
-#ifdef __cplusplus
-};
-#endif
 
 #endif // VULKAN_WRAPPER_H_
