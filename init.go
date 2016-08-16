@@ -10,7 +10,7 @@ import "C"
 func Init() error {
 	ret := C.vkInit()
 	if ret < 0 {
-		return errors.New("dlopen: libvulkan.so not found")
+		return errors.New("vkInit failed")
 	}
 	return nil
 }
