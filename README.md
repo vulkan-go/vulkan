@@ -23,9 +23,9 @@ import vk "github.com/vulkan-go/vulkan"
 And you're set. However I must warn you that using this thing properly is not an easy task at all!
 
 First of all, you'd need a device with the native Vulkan API support. Major platforms like Windows and Linux are
-too clumsy so I decided to stick with Android. I bougth an Nvidia Shield K1 tablet for this, because of their early support back into the March of 2016: https://developer.nvidia.com/vulkan-android.
+too clumsy so I decided to stick with Android. I have bought an Nvidia Shield K1 tablet for this, because of their early support back into the March of 2016: https://developer.nvidia.com/vulkan-android.
 
-Current list of devices includes Android N devices, as specified at [Android NDK help pages](https://developer.android.com/ndk/guides/graphics/getting-started.html) and so far as I know Samsung Galaxy S7 has the native Vulkan drivers.
+Current list of devices includes some of the Android N devices, as specified at [Android NDK help pages](https://developer.android.com/ndk/guides/graphics/getting-started.html) and so far as I know Samsung Galaxy S7 has the native Vulkan drivers, but the one borrowed from a friend lacked the swapchain device extension. I'll try to maintain a list of supported devices here: [0vulkaninfo.md](https://gist.github.com/xlab/4caad9c24735d14d2c4d044d775c699b), so leave a comment if you've succeed with yours.
 
 In order to be able create apps for android using the Android NDK without any fancy stuff being done with ANativeWindow,
 I dedicated some time in May 2016 to create this framework: http://github.com/xlab/android-go. It works cool with EGL/GLES/GLES2 but of course that was a side-effect! ;) What I really did was the first Vulkan run.
@@ -33,15 +33,15 @@ I dedicated some time in May 2016 to create this framework: http://github.com/xl
 Anyway, since May my binding generator improved a lot due to feedback and bugs I got while binding those two beasts,
 so in August I found some time on a weekend to create examples. I had them ported from C of course, it was about 5KLOC, see [Golang Vulkan API Demos](https://github.com/vulkan-go/demos) but they do work, so the Vulkan API for Golang is official (at least for Android, heh).
 
-I hope to receive pull-requests from the community so we'd be able to run this on Windows and Linux too, since AFAIK, there is no limitations at all. In fact, I cannot recall if there was any hacks being introduced. This thing just works in a very idiomatic way, meeting all the common Vulkan guidelines.
+I'm hoping for pull-requests from the community so we'd be able to run this on Windows and Linux too, since AFAIK, there is no limitations at all. In fact, I cannot recall if there was any hacks involved while I was doing my experiments. This thing just works in a very idiomatic way, meeting all the common Vulkan guidelines.
 
-<a href="https://cl.ly/0n0n040w1022/IMG_1456.JPG"><img src="https://cl.ly/1g1V2o2C423s/IMG_1456.JPG" width="200"/></a>
+<a href="https://cl.ly/410g1n2r041E/screen.png"><img src="https://cl.ly/410g1n2r041E/screen.png" width="200"></a>
 
 ## Layers
 
 A good brief of the current state of Vulkan validation layers: [Explore the Vulkan Loader and Validation Layers](https://lunarg.com/wp-content/uploads/2016/07/lunarg-birds-feather-session-siggraph-july-26-2016.pdf) (PDF).
 
-There is the full support of validation layers with custom callbacks in Go. For my Android experiments I got the standard pack of layers from https://github.com/LunarG/VulkanTools and built them like this:
+There is a full support of validation layers with custom callbacks in Go. For my Android experiments I got the standard pack of layers from https://github.com/LunarG/VulkanTools and built them like this:
 
 ```
 $ cd build-android
@@ -85,6 +85,7 @@ Let the VGo adventure begin.
 * [SaschaWillems Demos (C++)](https://github.com/SaschaWillems/Vulkan)
 * [Official list of Vulkan resources](https://www.khronos.org/vulkan/resources)
 * [Vulkan API quick reference](https://www.khronos.org/registry/vulkan/specs/1.0/refguide/Vulkan-1.0-web.pdf)
+* [Qt for Go](https://github.com/therecipe/qt) (when you're tired of vulkan)
 
 ## License
 
