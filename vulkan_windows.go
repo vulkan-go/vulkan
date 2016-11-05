@@ -4,11 +4,8 @@ package vulkan
 
 /*
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
-#cgo android LDFLAGS: -Wl,--no-warn-mismatch -lm_hard
-#cgo android CFLAGS: -DVK_USE_PLATFORM_ANDROID_KHR -D__ARM_ARCH_7A__ -D_NDK_MATH_NO_SOFTFP=1 -mfpu=vfp -mfloat-abi=hard -march=armv7-a
 #cgo windows CFLAGS: -DVK_USE_PLATFORM_WIN32_KHR -D_GLFW_WIN32 -DGLFW_INCLUDE_VULKAN
-#cgo windows LDFLAGS:
-
+#cgo windows LDFLAGS: -lglfw3 -lm -Wl,--allow-multiple-definition
 
 #include "vulkan/vulkan.h"
 #include "vk_wrapper.h"
