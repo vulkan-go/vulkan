@@ -3,9 +3,8 @@
 #include <GLFW/glfw3.h>
 #include "vk_wrapper.h"
 
-VkResult vkCreateWindowSurface(VkInstance instance,
-    void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
-   return glfwCreateWindowSurface(instance, (*GLFWwindow)(win), allocator, surface);
+VkResult vkCreateWindowSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
+   return glfwCreateWindowSurface(instance, (GLFWwindow *)(win), allocator, surface);
 }
 
 int vkInit(void) {
