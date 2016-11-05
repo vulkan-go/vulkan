@@ -27,6 +27,8 @@ GENERATOR:
 
 PARSER:
   IncludePaths: [/usr/include]
+  # for VK_USE_PLATFORM_WIN32_KHR:
+  # IncludePaths: [windows/um/, windows/ucrt/, windows/custom/, /usr/include]
   SourcesPaths:
     - vulkan/vulkan.h
     - vk_wrapper.h
