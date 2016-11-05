@@ -5,7 +5,7 @@ package vulkan
 /*
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
 #cgo windows CFLAGS: -DVK_USE_PLATFORM_WIN32_KHR -D_GLFW_WIN32 -DGLFW_INCLUDE_VULKAN
-#cgo windows LDFLAGS: -lglfw3 -lm -Wl,--allow-multiple-definition
+#cgo windows LDFLAGS: -lglfw3 -lgdi32 -lm -Wl,--allow-multiple-definition
 
 #include "vulkan/vulkan.h"
 #include "vk_wrapper.h"
