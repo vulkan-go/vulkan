@@ -39,9 +39,9 @@ const (
 )
 
 type (
-	HINSTANCE           C.HINSTANCE
-	HWND                C.HWND
-	HANDLE              C.HANDLE
+	HINSTANCE           unsafe.Pointer
+	HWND                unsafe.Pointer
+	HANDLE              unsafe.Pointer
 	SECURITY_ATTRIBUTES C.SECURITY_ATTRIBUTES
 	DWORD               C.DWORD
 )
@@ -115,236 +115,6 @@ type Win32SurfaceCreateInfo struct {
 	allocs8747e274 interface{}
 }
 
-// Ref returns a reference to C object as it is.
-func (x *HINSTANCE) Ref() *C.HINSTANCE {
-	if x == nil {
-		return nil
-	}
-	return (*C.HINSTANCE)(unsafe.Pointer(x))
-}
-
-// Free cleanups the referenced memory using C free.
-func (x *HINSTANCE) Free() {
-	if x != nil {
-		C.free(unsafe.Pointer(x))
-	}
-}
-
-// NewHINSTANCERef converts the C object reference into a raw struct reference without wrapping.
-func NewHINSTANCERef(ref unsafe.Pointer) *HINSTANCE {
-	return (*HINSTANCE)(ref)
-}
-
-// NewHINSTANCE allocates a new C object of this type and converts the reference into
-// a raw struct reference without wrapping.
-func NewHINSTANCE() *HINSTANCE {
-	return (*HINSTANCE)(allocHINSTANCEMemory(1))
-}
-
-// allocHINSTANCEMemory allocates memory for type C.HINSTANCE in C.
-// The caller is responsible for freeing the this memory via C.free.
-func allocHINSTANCEMemory(n int) unsafe.Pointer {
-	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfHINSTANCEValue))
-	if err != nil {
-		panic("memory alloc error: " + err.Error())
-	}
-	return mem
-}
-
-const sizeOfHINSTANCEValue = unsafe.Sizeof([1]C.HINSTANCE{})
-
-// PassRef returns a reference to C object as it is or allocates a new C object of this type.
-func (x *HINSTANCE) PassRef() *C.HINSTANCE {
-	if x == nil {
-		x = (*HINSTANCE)(allocHINSTANCEMemory(1))
-	}
-	return (*C.HINSTANCE)(unsafe.Pointer(x))
-}
-
-// Ref returns a reference to C object as it is.
-func (x *HWND) Ref() *C.HWND {
-	if x == nil {
-		return nil
-	}
-	return (*C.HWND)(unsafe.Pointer(x))
-}
-
-// Free cleanups the referenced memory using C free.
-func (x *HWND) Free() {
-	if x != nil {
-		C.free(unsafe.Pointer(x))
-	}
-}
-
-// NewHWNDRef converts the C object reference into a raw struct reference without wrapping.
-func NewHWNDRef(ref unsafe.Pointer) *HWND {
-	return (*HWND)(ref)
-}
-
-// NewHWND allocates a new C object of this type and converts the reference into
-// a raw struct reference without wrapping.
-func NewHWND() *HWND {
-	return (*HWND)(allocHWNDMemory(1))
-}
-
-// allocHWNDMemory allocates memory for type C.HWND in C.
-// The caller is responsible for freeing the this memory via C.free.
-func allocHWNDMemory(n int) unsafe.Pointer {
-	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfHWNDValue))
-	if err != nil {
-		panic("memory alloc error: " + err.Error())
-	}
-	return mem
-}
-
-const sizeOfHWNDValue = unsafe.Sizeof([1]C.HWND{})
-
-// PassRef returns a reference to C object as it is or allocates a new C object of this type.
-func (x *HWND) PassRef() *C.HWND {
-	if x == nil {
-		x = (*HWND)(allocHWNDMemory(1))
-	}
-	return (*C.HWND)(unsafe.Pointer(x))
-}
-
-// Ref returns a reference to C object as it is.
-func (x *HANDLE) Ref() *C.HANDLE {
-	if x == nil {
-		return nil
-	}
-	return (*C.HANDLE)(unsafe.Pointer(x))
-}
-
-// Free cleanups the referenced memory using C free.
-func (x *HANDLE) Free() {
-	if x != nil {
-		C.free(unsafe.Pointer(x))
-	}
-}
-
-// NewHANDLERef converts the C object reference into a raw struct reference without wrapping.
-func NewHANDLERef(ref unsafe.Pointer) *HANDLE {
-	return (*HANDLE)(ref)
-}
-
-// NewHANDLE allocates a new C object of this type and converts the reference into
-// a raw struct reference without wrapping.
-func NewHANDLE() *HANDLE {
-	return (*HANDLE)(allocHANDLEMemory(1))
-}
-
-// allocHANDLEMemory allocates memory for type C.HANDLE in C.
-// The caller is responsible for freeing the this memory via C.free.
-func allocHANDLEMemory(n int) unsafe.Pointer {
-	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfHANDLEValue))
-	if err != nil {
-		panic("memory alloc error: " + err.Error())
-	}
-	return mem
-}
-
-const sizeOfHANDLEValue = unsafe.Sizeof([1]C.HANDLE{})
-
-// PassRef returns a reference to C object as it is or allocates a new C object of this type.
-func (x *HANDLE) PassRef() *C.HANDLE {
-	if x == nil {
-		x = (*HANDLE)(allocHANDLEMemory(1))
-	}
-	return (*C.HANDLE)(unsafe.Pointer(x))
-}
-
-// Ref returns a reference to C object as it is.
-func (x *SECURITY_ATTRIBUTES) Ref() *C.SECURITY_ATTRIBUTES {
-	if x == nil {
-		return nil
-	}
-	return (*C.SECURITY_ATTRIBUTES)(unsafe.Pointer(x))
-}
-
-// Free cleanups the referenced memory using C free.
-func (x *SECURITY_ATTRIBUTES) Free() {
-	if x != nil {
-		C.free(unsafe.Pointer(x))
-	}
-}
-
-// NewSECURITY_ATTRIBUTESRef converts the C object reference into a raw struct reference without wrapping.
-func NewSECURITY_ATTRIBUTESRef(ref unsafe.Pointer) *SECURITY_ATTRIBUTES {
-	return (*SECURITY_ATTRIBUTES)(ref)
-}
-
-// NewSECURITY_ATTRIBUTES allocates a new C object of this type and converts the reference into
-// a raw struct reference without wrapping.
-func NewSECURITY_ATTRIBUTES() *SECURITY_ATTRIBUTES {
-	return (*SECURITY_ATTRIBUTES)(allocSECURITY_ATTRIBUTESMemory(1))
-}
-
-// allocSECURITY_ATTRIBUTESMemory allocates memory for type C.SECURITY_ATTRIBUTES in C.
-// The caller is responsible for freeing the this memory via C.free.
-func allocSECURITY_ATTRIBUTESMemory(n int) unsafe.Pointer {
-	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfSECURITY_ATTRIBUTESValue))
-	if err != nil {
-		panic("memory alloc error: " + err.Error())
-	}
-	return mem
-}
-
-const sizeOfSECURITY_ATTRIBUTESValue = unsafe.Sizeof([1]C.SECURITY_ATTRIBUTES{})
-
-// PassRef returns a reference to C object as it is or allocates a new C object of this type.
-func (x *SECURITY_ATTRIBUTES) PassRef() *C.SECURITY_ATTRIBUTES {
-	if x == nil {
-		x = (*SECURITY_ATTRIBUTES)(allocSECURITY_ATTRIBUTESMemory(1))
-	}
-	return (*C.SECURITY_ATTRIBUTES)(unsafe.Pointer(x))
-}
-
-// Ref returns a reference to C object as it is.
-func (x *DWORD) Ref() *C.DWORD {
-	if x == nil {
-		return nil
-	}
-	return (*C.DWORD)(unsafe.Pointer(x))
-}
-
-// Free cleanups the referenced memory using C free.
-func (x *DWORD) Free() {
-	if x != nil {
-		C.free(unsafe.Pointer(x))
-	}
-}
-
-// NewDWORDRef converts the C object reference into a raw struct reference without wrapping.
-func NewDWORDRef(ref unsafe.Pointer) *DWORD {
-	return (*DWORD)(ref)
-}
-
-// NewDWORD allocates a new C object of this type and converts the reference into
-// a raw struct reference without wrapping.
-func NewDWORD() *DWORD {
-	return (*DWORD)(allocDWORDMemory(1))
-}
-
-// allocDWORDMemory allocates memory for type C.DWORD in C.
-// The caller is responsible for freeing the this memory via C.free.
-func allocDWORDMemory(n int) unsafe.Pointer {
-	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfDWORDValue))
-	if err != nil {
-		panic("memory alloc error: " + err.Error())
-	}
-	return mem
-}
-
-const sizeOfDWORDValue = unsafe.Sizeof([1]C.DWORD{})
-
-// PassRef returns a reference to C object as it is or allocates a new C object of this type.
-func (x *DWORD) PassRef() *C.DWORD {
-	if x == nil {
-		x = (*DWORD)(allocDWORDMemory(1))
-	}
-	return (*C.DWORD)(unsafe.Pointer(x))
-}
-
 // allocWin32SurfaceCreateInfoMemory allocates memory for type C.VkWin32SurfaceCreateInfoKHR in C.
 // The caller is responsible for freeing the this memory via C.free.
 func allocWin32SurfaceCreateInfoMemory(n int) unsafe.Pointer {
@@ -409,11 +179,11 @@ func (x *Win32SurfaceCreateInfo) PassRef() (*C.VkWin32SurfaceCreateInfoKHR, *cgo
 	allocs8747e274.Borrow(cflags_allocs)
 
 	var chinstance_allocs *cgoAllocMap
-	ref8747e274.hinstance, chinstance_allocs = *(*C.HINSTANCE)(unsafe.Pointer(&x.Hinstance)), cgoAllocsUnknown
+	ref8747e274.hinstance, chinstance_allocs = (C.HINSTANCE)(x.Hinstance), cgoAllocsUnknown
 	allocs8747e274.Borrow(chinstance_allocs)
 
 	var chwnd_allocs *cgoAllocMap
-	ref8747e274.hwnd, chwnd_allocs = *(*C.HWND)(unsafe.Pointer(&x.Hwnd)), cgoAllocsUnknown
+	ref8747e274.hwnd, chwnd_allocs = (C.HWND)(x.Hwnd), cgoAllocsUnknown
 	allocs8747e274.Borrow(chwnd_allocs)
 
 	x.ref8747e274 = ref8747e274
@@ -440,8 +210,8 @@ func (x *Win32SurfaceCreateInfo) Deref() {
 	x.SType = (StructureType)(x.ref8747e274.sType)
 	x.PNext = (unsafe.Pointer)(unsafe.Pointer(x.ref8747e274.pNext))
 	x.Flags = (Win32SurfaceCreateFlags)(x.ref8747e274.flags)
-	x.Hinstance = *(*HINSTANCE)(unsafe.Pointer(&x.ref8747e274.hinstance))
-	x.Hwnd = *(*HWND)(unsafe.Pointer(&x.ref8747e274.hwnd))
+	x.Hinstance = (HINSTANCE)(x.ref8747e274.hinstance)
+	x.Hwnd = (HWND)(x.ref8747e274.hwnd)
 }
 
 // allocImportMemoryWin32HandleInfoNVMemory allocates memory for type C.VkImportMemoryWin32HandleInfoNV in C.
@@ -508,7 +278,7 @@ func (x *ImportMemoryWin32HandleInfoNV) PassRef() (*C.VkImportMemoryWin32HandleI
 	allocs6171f825.Borrow(chandleType_allocs)
 
 	var chandle_allocs *cgoAllocMap
-	ref6171f825.handle, chandle_allocs = *(*C.HANDLE)(unsafe.Pointer(&x.Handle)), cgoAllocsUnknown
+	ref6171f825.handle, chandle_allocs = (C.HANDLE)(x.Handle), cgoAllocsUnknown
 	allocs6171f825.Borrow(chandle_allocs)
 
 	x.ref6171f825 = ref6171f825
@@ -535,7 +305,7 @@ func (x *ImportMemoryWin32HandleInfoNV) Deref() {
 	x.SType = (StructureType)(x.ref6171f825.sType)
 	x.PNext = (unsafe.Pointer)(unsafe.Pointer(x.ref6171f825.pNext))
 	x.HandleType = (ExternalMemoryHandleTypeFlagsNV)(x.ref6171f825.handleType)
-	x.Handle = *(*HANDLE)(unsafe.Pointer(&x.ref6171f825.handle))
+	x.Handle = (HANDLE)(x.ref6171f825.handle)
 }
 
 // allocExportMemoryWin32HandleInfoNVMemory allocates memory for type C.VkExportMemoryWin32HandleInfoNV in C.
@@ -768,4 +538,97 @@ func (x *Win32KeyedMutexAcquireReleaseInfoNV) Deref() {
 	hxffe3496.Data = uintptr(unsafe.Pointer(x.refd7d87b9a.pReleaseKeys))
 	hxffe3496.Cap = 0x7fffffff
 	// hxffe3496.Len = ?
+
+}
+
+// Ref returns a reference to C object as it is.
+func (x *SECURITY_ATTRIBUTES) Ref() *C.SECURITY_ATTRIBUTES {
+	if x == nil {
+		return nil
+	}
+	return (*C.SECURITY_ATTRIBUTES)(unsafe.Pointer(x))
+}
+
+// Free cleanups the referenced memory using C free.
+func (x *SECURITY_ATTRIBUTES) Free() {
+	if x != nil {
+		C.free(unsafe.Pointer(x))
+	}
+}
+
+// NewSECURITY_ATTRIBUTESRef converts the C object reference into a raw struct reference without wrapping.
+func NewSECURITY_ATTRIBUTESRef(ref unsafe.Pointer) *SECURITY_ATTRIBUTES {
+	return (*SECURITY_ATTRIBUTES)(ref)
+}
+
+// NewSECURITY_ATTRIBUTES allocates a new C object of this type and converts the reference into
+// a raw struct reference without wrapping.
+func NewSECURITY_ATTRIBUTES() *SECURITY_ATTRIBUTES {
+	return (*SECURITY_ATTRIBUTES)(allocSECURITY_ATTRIBUTESMemory(1))
+}
+
+// allocSECURITY_ATTRIBUTESMemory allocates memory for type C.SECURITY_ATTRIBUTES in C.
+// The caller is responsible for freeing the this memory via C.free.
+func allocSECURITY_ATTRIBUTESMemory(n int) unsafe.Pointer {
+	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfSECURITY_ATTRIBUTESValue))
+	if err != nil {
+		panic("memory alloc error: " + err.Error())
+	}
+	return mem
+}
+
+const sizeOfSECURITY_ATTRIBUTESValue = unsafe.Sizeof([1]C.SECURITY_ATTRIBUTES{})
+
+// PassRef returns a reference to C object as it is or allocates a new C object of this type.
+func (x *SECURITY_ATTRIBUTES) PassRef() *C.SECURITY_ATTRIBUTES {
+	if x == nil {
+		x = (*SECURITY_ATTRIBUTES)(allocSECURITY_ATTRIBUTESMemory(1))
+	}
+	return (*C.SECURITY_ATTRIBUTES)(unsafe.Pointer(x))
+}
+
+// Ref returns a reference to C object as it is.
+func (x *DWORD) Ref() *C.DWORD {
+	if x == nil {
+		return nil
+	}
+	return (*C.DWORD)(unsafe.Pointer(x))
+}
+
+// Free cleanups the referenced memory using C free.
+func (x *DWORD) Free() {
+	if x != nil {
+		C.free(unsafe.Pointer(x))
+	}
+}
+
+// NewDWORDRef converts the C object reference into a raw struct reference without wrapping.
+func NewDWORDRef(ref unsafe.Pointer) *DWORD {
+	return (*DWORD)(ref)
+}
+
+// NewDWORD allocates a new C object of this type and converts the reference into
+// a raw struct reference without wrapping.
+func NewDWORD() *DWORD {
+	return (*DWORD)(allocDWORDMemory(1))
+}
+
+// allocDWORDMemory allocates memory for type C.DWORD in C.
+// The caller is responsible for freeing the this memory via C.free.
+func allocDWORDMemory(n int) unsafe.Pointer {
+	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfDWORDValue))
+	if err != nil {
+		panic("memory alloc error: " + err.Error())
+	}
+	return mem
+}
+
+const sizeOfDWORDValue = unsafe.Sizeof([1]C.DWORD{})
+
+// PassRef returns a reference to C object as it is or allocates a new C object of this type.
+func (x *DWORD) PassRef() *C.DWORD {
+	if x == nil {
+		x = (*DWORD)(allocDWORDMemory(1))
+	}
+	return (*C.DWORD)(unsafe.Pointer(x))
 }

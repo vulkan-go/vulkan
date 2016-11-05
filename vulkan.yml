@@ -14,8 +14,8 @@ GENERATOR:
     ]}
     
 PARSER:
-  IncludePaths: [/usr/include]
-  # IncludePaths: [windows/, /usr/include]
+  # IncludePaths: [/usr/include]
+  IncludePaths: [windows/, /usr/include]
   SourcesPaths:
     - vulkan/vulkan.h
     - vk_wrapper.h
@@ -23,7 +23,7 @@ PARSER:
   Defines:
     VK_NO_PROTOTYPES: 1
     VK_USE_PLATFORM_ANDROID_KHR: null
-    VK_USE_PLATFORM_WIN32_KHR: null
+    VK_USE_PLATFORM_WIN32_KHR: 1
 
 TRANSLATOR: 
   ConstRules: 
