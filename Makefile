@@ -1,5 +1,5 @@
 all:
-	cgogen -out .. vulkan.yml
+	cgogen -ccdefs -out .. vulkan.yml
 
 clean:
 	rm -f doc.go types.go const.go
