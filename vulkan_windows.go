@@ -52,7 +52,7 @@ func CreateGLFWSurface(instance Instance, glfwWindow uintptr, pAllocator *Alloca
 	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
 	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), cgoAllocsUnknown
 	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), cgoAllocsUnknown
-	ret := C.vkCreateWindowSurface(cinstance, unsafe.Pointer(glfwWindow), cpAllocator, cpSurface)
+	ret := C.vkCreateGLFWSurface(cinstance, unsafe.Pointer(glfwWindow), cpAllocator, cpSurface)
 	return (Result)(ret)
 }
 

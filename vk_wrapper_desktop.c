@@ -7,7 +7,7 @@ const char** vkGetRequiredInstanceExtensions(uint32_t *count) {
     return glfwGetRequiredInstanceExtensions(count);
 }
 
-VkResult vkCreateWindowSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
+VkResult vkCreateGLFWSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
    return glfwCreateWindowSurface(instance, (GLFWwindow *)(win), allocator, surface);
 }
 
