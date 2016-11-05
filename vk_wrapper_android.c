@@ -1,4 +1,6 @@
-#include "vulkan_wrapper.h"
+// +build android
+
+#include "vk_wrapper.h"
 #include <dlfcn.h>
 
 int vkInit(void) {

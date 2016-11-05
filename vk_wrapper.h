@@ -5,7 +5,6 @@
 #include <vulkan/vulkan.h>
 
 int vkInit(void);
-void vkInitDebug(VkInstance instance);
 
 // VK_core
 extern PFN_vkCreateInstance vkCreateInstance;

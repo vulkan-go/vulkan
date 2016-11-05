@@ -1,38 +1,35 @@
-#include "vulkan_wrapper.h"
-#include "vulkan_bridge.h"
+#ifndef VULKAN_BRIDGE_H_
+#define VULKAN_BRIDGE_H_ 1
+
+#define VK_NO_PROTOTYPES 1
+#include <vulkan/vulkan.h>
+
+#ifdef __cplusplus
+extern "C";
+#endif
 
 VkResult callVkCreateInstance(
     const VkInstanceCreateInfo*                 pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkInstance*                                 pInstance) {
-    return vkCreateInstance(pCreateInfo, pAllocator, pInstance);
-}
+    VkInstance*                                 pInstance);
 
 void callVkDestroyInstance(
     VkInstance                                  instance,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyInstance(instance, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkEnumeratePhysicalDevices(
     VkInstance                                  instance,
     uint32_t*                                   pPhysicalDeviceCount,
-    VkPhysicalDevice*                           pPhysicalDevices) {
-    return vkEnumeratePhysicalDevices(instance, pPhysicalDeviceCount, pPhysicalDevices);
-}
+    VkPhysicalDevice*                           pPhysicalDevices);
 
 void callVkGetPhysicalDeviceFeatures(
     VkPhysicalDevice                            physicalDevice,
-    VkPhysicalDeviceFeatures*                   pFeatures) {
-    vkGetPhysicalDeviceFeatures(physicalDevice, pFeatures);
-}
+    VkPhysicalDeviceFeatures*                   pFeatures);
 
 void callVkGetPhysicalDeviceFormatProperties(
     VkPhysicalDevice                            physicalDevice,
     VkFormat                                    format,
-    VkFormatProperties*                         pFormatProperties) {
-    vkGetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties);
-}
+    VkFormatProperties*                         pFormatProperties);
 
 VkResult callVkGetPhysicalDeviceImageFormatProperties(
     VkPhysicalDevice                            physicalDevice,
@@ -41,114 +38,79 @@ VkResult callVkGetPhysicalDeviceImageFormatProperties(
     VkImageTiling                               tiling,
     VkImageUsageFlags                           usage,
     VkImageCreateFlags                          flags,
-    VkImageFormatProperties*                    pImageFormatProperties) {
-    return vkGetPhysicalDeviceImageFormatProperties(physicalDevice, format, type,
-            tiling, usage, flags, pImageFormatProperties);
-}
+    VkImageFormatProperties*                    pImageFormatProperties);
 
 void callVkGetPhysicalDeviceProperties(
     VkPhysicalDevice                            physicalDevice,
-    VkPhysicalDeviceProperties*                 pProperties) {
-    vkGetPhysicalDeviceProperties(physicalDevice, pProperties);
-}
+    VkPhysicalDeviceProperties*                 pProperties);
 
 void callVkGetPhysicalDeviceQueueFamilyProperties(
     VkPhysicalDevice                            physicalDevice,
     uint32_t*                                   pQueueFamilyPropertyCount,
-    VkQueueFamilyProperties*                    pQueueFamilyProperties) {
-    vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice,
-            pQueueFamilyPropertyCount, pQueueFamilyProperties);
-}
+    VkQueueFamilyProperties*                    pQueueFamilyProperties);
 
 void callVkGetPhysicalDeviceMemoryProperties(
     VkPhysicalDevice                            physicalDevice,
-    VkPhysicalDeviceMemoryProperties*           pMemoryProperties) {
-    vkGetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties);
-}
+    VkPhysicalDeviceMemoryProperties*           pMemoryProperties);
 
 VkResult callVkCreateDevice(
     VkPhysicalDevice                            physicalDevice,
     const VkDeviceCreateInfo*                   pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkDevice*                                   pDevice) {
-    return vkCreateDevice(physicalDevice, pCreateInfo, pAllocator, pDevice);
-}
+    VkDevice*                                   pDevice);
 
 void callVkDestroyDevice(
     VkDevice                                    device,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyDevice(device, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkEnumerateInstanceExtensionProperties(
     const char*                                 pLayerName,
     uint32_t*                                   pPropertyCount,
-    VkExtensionProperties*                      pProperties) {
-    return vkEnumerateInstanceExtensionProperties(pLayerName, pPropertyCount, pProperties);
-}
+    VkExtensionProperties*                      pProperties);
 
 VkResult callVkEnumerateDeviceExtensionProperties(
     VkPhysicalDevice                            physicalDevice,
     const char*                                 pLayerName,
     uint32_t*                                   pPropertyCount,
-    VkExtensionProperties*                      pProperties) {
-    return vkEnumerateDeviceExtensionProperties(physicalDevice, pLayerName,
-            pPropertyCount, pProperties);
-}
+    VkExtensionProperties*                      pProperties);
 
 VkResult callVkEnumerateInstanceLayerProperties(
     uint32_t*                                   pPropertyCount,
-    VkLayerProperties*                          pProperties) {
-    return vkEnumerateInstanceLayerProperties(pPropertyCount, pProperties);
-}
+    VkLayerProperties*                          pProperties);
 
 VkResult callVkEnumerateDeviceLayerProperties(
     VkPhysicalDevice                            physicalDevice,
     uint32_t*                                   pPropertyCount,
-    VkLayerProperties*                          pProperties) {
-    return vkEnumerateDeviceLayerProperties(physicalDevice, pPropertyCount, pProperties);
-}
+    VkLayerProperties*                          pProperties);
 
 void callVkGetDeviceQueue(
     VkDevice                                    device,
     uint32_t                                    queueFamilyIndex,
     uint32_t                                    queueIndex,
-    VkQueue*                                    pQueue) {
-    vkGetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue);
-}
+    VkQueue*                                    pQueue);
 
 VkResult callVkQueueSubmit(
     VkQueue                                     queue,
     uint32_t                                    submitCount,
     const VkSubmitInfo*                         pSubmits,
-    VkFence                                     fence) {
-    return vkQueueSubmit(queue, submitCount, pSubmits, fence);
-}
+    VkFence                                     fence);
 
 VkResult callVkQueueWaitIdle(
-    VkQueue                                     queue) {
-    return vkQueueWaitIdle(queue);
-}
+    VkQueue                                     queue);
 
 VkResult callVkDeviceWaitIdle(
-    VkDevice                                    device) {
-    return vkDeviceWaitIdle(device);
-}
+    VkDevice                                    device);
 
 VkResult callVkAllocateMemory(
     VkDevice                                    device,
     const VkMemoryAllocateInfo*                 pAllocateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkDeviceMemory*                             pMemory) {
-    return vkAllocateMemory(device, pAllocateInfo, pAllocator, pMemory);
-}
+    VkDeviceMemory*                             pMemory);
 
 void callVkFreeMemory(
     VkDevice                                    device,
     VkDeviceMemory                              memory,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkFreeMemory(device, memory, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkMapMemory(
     VkDevice                                    device,
@@ -156,75 +118,54 @@ VkResult callVkMapMemory(
     VkDeviceSize                                offset,
     VkDeviceSize                                size,
     VkMemoryMapFlags                            flags,
-    void**                                      ppData) {
-    return vkMapMemory(device, memory, offset, size, flags, ppData);
-}
+    void**                                      ppData);
 
 void callVkUnmapMemory(
     VkDevice                                    device,
-    VkDeviceMemory                              memory) {
-    vkUnmapMemory(device, memory);
-}
+    VkDeviceMemory                              memory);
 
 VkResult callVkFlushMappedMemoryRanges(
     VkDevice                                    device,
     uint32_t                                    memoryRangeCount,
-    const VkMappedMemoryRange*                  pMemoryRanges) {
-    return vkFlushMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges);
-}
+    const VkMappedMemoryRange*                  pMemoryRanges);
 
 VkResult callVkInvalidateMappedMemoryRanges(
     VkDevice                                    device,
     uint32_t                                    memoryRangeCount,
-    const VkMappedMemoryRange*                  pMemoryRanges) {
-    return vkInvalidateMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges);
-}
+    const VkMappedMemoryRange*                  pMemoryRanges);
 
 void callVkGetDeviceMemoryCommitment(
     VkDevice                                    device,
     VkDeviceMemory                              memory,
-    VkDeviceSize*                               pCommittedMemoryInBytes) {
-    vkGetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes);
-}
+    VkDeviceSize*                               pCommittedMemoryInBytes);
 
 VkResult callVkBindBufferMemory(
     VkDevice                                    device,
     VkBuffer                                    buffer,
     VkDeviceMemory                              memory,
-    VkDeviceSize                                memoryOffset) {
-    return vkBindBufferMemory(device, buffer, memory, memoryOffset);
-}
+    VkDeviceSize                                memoryOffset);
 
 VkResult callVkBindImageMemory(
     VkDevice                                    device,
     VkImage                                     image,
     VkDeviceMemory                              memory,
-    VkDeviceSize                                memoryOffset) {
-    return vkBindImageMemory(device, image, memory, memoryOffset);
-}
+    VkDeviceSize                                memoryOffset);
 
 void callVkGetBufferMemoryRequirements(
     VkDevice                                    device,
     VkBuffer                                    buffer,
-    VkMemoryRequirements*                       pMemoryRequirements) {
-    vkGetBufferMemoryRequirements(device, buffer, pMemoryRequirements);
-}
+    VkMemoryRequirements*                       pMemoryRequirements);
 
 void callVkGetImageMemoryRequirements(
     VkDevice                                    device,
     VkImage                                     image,
-    VkMemoryRequirements*                       pMemoryRequirements) {
-    vkGetImageMemoryRequirements(device, image, pMemoryRequirements);
-}
+    VkMemoryRequirements*                       pMemoryRequirements);
 
 void callVkGetImageSparseMemoryRequirements(
     VkDevice                                    device,
     VkImage                                     image,
     uint32_t*                                   pSparseMemoryRequirementCount,
-    VkSparseImageMemoryRequirements*            pSparseMemoryRequirements) {
-    vkGetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount,
-                                       pSparseMemoryRequirements);
-}
+    VkSparseImageMemoryRequirements*            pSparseMemoryRequirements);
 
 void callVkGetPhysicalDeviceSparseImageFormatProperties(
     VkPhysicalDevice                            physicalDevice,
@@ -234,118 +175,85 @@ void callVkGetPhysicalDeviceSparseImageFormatProperties(
     VkImageUsageFlags                           usage,
     VkImageTiling                               tiling,
     uint32_t*                                   pPropertyCount,
-    VkSparseImageFormatProperties*              pProperties) {
-    vkGetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format,
-            type, samples, usage, tiling, pPropertyCount, pProperties);
-}
+    VkSparseImageFormatProperties*              pProperties);
 
 VkResult callVkQueueBindSparse(
     VkQueue                                     queue,
     uint32_t                                    bindInfoCount,
     const VkBindSparseInfo*                     pBindInfo,
-    VkFence                                     fence) {
-    return vkQueueBindSparse(queue, bindInfoCount, pBindInfo, fence);
-}
+    VkFence                                     fence);
 
 VkResult callVkCreateFence(
     VkDevice                                    device,
     const VkFenceCreateInfo*                    pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkFence*                                    pFence) {
-    return vkCreateFence(device, pCreateInfo, pAllocator, pFence);
-}
+    VkFence*                                    pFence);
 
 void callVkDestroyFence(
     VkDevice                                    device,
     VkFence                                     fence,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyFence(device, fence, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkResetFences(
     VkDevice                                    device,
     uint32_t                                    fenceCount,
-    const VkFence*                              pFences) {
-    return vkResetFences(device, fenceCount, pFences);
-}
+    const VkFence*                              pFences);
 
 VkResult callVkGetFenceStatus(
     VkDevice                                    device,
-    VkFence                                     fence) {
-    return vkGetFenceStatus(device, fence);
-}
+    VkFence                                     fence);
 
 VkResult callVkWaitForFences(
     VkDevice                                    device,
     uint32_t                                    fenceCount,
     const VkFence*                              pFences,
     VkBool32                                    waitAll,
-    uint64_t                                    timeout) {
-    return vkWaitForFences(device, fenceCount, pFences, waitAll, timeout);
-}
+    uint64_t                                    timeout);
 
 VkResult callVkCreateSemaphore(
     VkDevice                                    device,
     const VkSemaphoreCreateInfo*                pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSemaphore*                                pSemaphore) {
-    return vkCreateSemaphore(device, pCreateInfo, pAllocator, pSemaphore);
-}
+    VkSemaphore*                                pSemaphore);
 
 void callVkDestroySemaphore(
     VkDevice                                    device,
     VkSemaphore                                 semaphore,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroySemaphore(device, semaphore, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateEvent(
     VkDevice                                    device,
     const VkEventCreateInfo*                    pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkEvent*                                    pEvent) {
-    return vkCreateEvent(device, pCreateInfo, pAllocator, pEvent);
-}
+    VkEvent*                                    pEvent);
 
 void callVkDestroyEvent(
     VkDevice                                    device,
     VkEvent                                     event,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyEvent(device, event, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkGetEventStatus(
     VkDevice                                    device,
-    VkEvent                                     event) {
-    return vkGetEventStatus(device, event);
-}
+    VkEvent                                     event);
 
 VkResult callVkSetEvent(
     VkDevice                                    device,
-    VkEvent                                     event) {
-    return vkSetEvent(device, event);
-}
+    VkEvent                                     event);
 
 VkResult callVkResetEvent(
     VkDevice                                    device,
-    VkEvent                                     event) {
-    return vkResetEvent(device, event);
-}
+    VkEvent                                     event);
 
 VkResult callVkCreateQueryPool(
     VkDevice                                    device,
     const VkQueryPoolCreateInfo*                pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkQueryPool*                                pQueryPool) {
-    return vkCreateQueryPool(device, pCreateInfo, pAllocator, pQueryPool);
-}
+    VkQueryPool*                                pQueryPool);
 
 void callVkDestroyQueryPool(
     VkDevice                                    device,
     VkQueryPool                                 queryPool,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyQueryPool(device, queryPool, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkGetQueryPoolResults(
     VkDevice                                    device,
@@ -355,124 +263,91 @@ VkResult callVkGetQueryPoolResults(
     size_t                                      dataSize,
     void*                                       pData,
     VkDeviceSize                                stride,
-    VkQueryResultFlags                          flags) {
-    return vkGetQueryPoolResults(device, queryPool, firstQuery, queryCount,
-                                 dataSize, pData, stride, flags);
-}
+    VkQueryResultFlags                          flags);
 
 VkResult callVkCreateBuffer(
     VkDevice                                    device,
     const VkBufferCreateInfo*                   pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkBuffer*                                   pBuffer) {
-    return vkCreateBuffer(device, pCreateInfo, pAllocator, pBuffer);
-}
+    VkBuffer*                                   pBuffer);
 
 void callVkDestroyBuffer(
     VkDevice                                    device,
     VkBuffer                                    buffer,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyBuffer(device, buffer, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateBufferView(
     VkDevice                                    device,
     const VkBufferViewCreateInfo*               pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkBufferView*                               pView) {
-    return vkCreateBufferView(device, pCreateInfo, pAllocator, pView);
-}
+    VkBufferView*                               pView);
 
 void callVkDestroyBufferView(
     VkDevice                                    device,
     VkBufferView                                bufferView,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyBufferView(device, bufferView, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateImage(
     VkDevice                                    device,
     const VkImageCreateInfo*                    pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkImage*                                    pImage) {
-    return vkCreateImage(device, pCreateInfo, pAllocator, pImage);
-}
+    VkImage*                                    pImage);
 
 void callVkDestroyImage(
     VkDevice                                    device,
     VkImage                                     image,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyImage(device, image, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 void callVkGetImageSubresourceLayout(
     VkDevice                                    device,
     VkImage                                     image,
     const VkImageSubresource*                   pSubresource,
-    VkSubresourceLayout*                        pLayout) {
-    vkGetImageSubresourceLayout(device, image, pSubresource, pLayout);
-}
+    VkSubresourceLayout*                        pLayout);
 
 VkResult callVkCreateImageView(
     VkDevice                                    device,
     const VkImageViewCreateInfo*                pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkImageView*                                pView) {
-    return vkCreateImageView(device, pCreateInfo, pAllocator, pView);
-}
+    VkImageView*                                pView);
 
 void callVkDestroyImageView(
     VkDevice                                    device,
     VkImageView                                 imageView,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyImageView(device, imageView, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateShaderModule(
     VkDevice                                    device,
     const VkShaderModuleCreateInfo*             pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkShaderModule*                             pShaderModule) {
-    return vkCreateShaderModule(device, pCreateInfo, pAllocator, pShaderModule);
-}
+    VkShaderModule*                             pShaderModule);
 
 void callVkDestroyShaderModule(
     VkDevice                                    device,
     VkShaderModule                              shaderModule,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyShaderModule(device, shaderModule, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreatePipelineCache(
     VkDevice                                    device,
     const VkPipelineCacheCreateInfo*            pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkPipelineCache*                            pPipelineCache) {
-    return vkCreatePipelineCache(device, pCreateInfo, pAllocator, pPipelineCache);
-}
+    VkPipelineCache*                            pPipelineCache);
 
 void callVkDestroyPipelineCache(
     VkDevice                                    device,
     VkPipelineCache                             pipelineCache,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyPipelineCache(device, pipelineCache, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkGetPipelineCacheData(
     VkDevice                                    device,
     VkPipelineCache                             pipelineCache,
     size_t*                                     pDataSize,
-    void*                                       pData) {
-    return vkGetPipelineCacheData(device, pipelineCache, pDataSize, pData);
-}
+    void*                                       pData);
 
 VkResult callVkMergePipelineCaches(
     VkDevice                                    device,
     VkPipelineCache                             dstCache,
     uint32_t                                    srcCacheCount,
-    const VkPipelineCache*                      pSrcCaches) {
-    return vkMergePipelineCaches(device, dstCache, srcCacheCount, pSrcCaches);
-}
+    const VkPipelineCache*                      pSrcCaches);
 
 VkResult callVkCreateGraphicsPipelines(
     VkDevice                                    device,
@@ -480,10 +355,7 @@ VkResult callVkCreateGraphicsPipelines(
     uint32_t                                    createInfoCount,
     const VkGraphicsPipelineCreateInfo*         pCreateInfos,
     const VkAllocationCallbacks*                pAllocator,
-    VkPipeline*                                 pPipelines) {
-    return vkCreateGraphicsPipelines(device, pipelineCache, createInfoCount,
-                                     pCreateInfos, pAllocator, pPipelines);
-}
+    VkPipeline*                                 pPipelines);
 
 VkResult callVkCreateComputePipelines(
     VkDevice                                    device,
@@ -491,272 +363,195 @@ VkResult callVkCreateComputePipelines(
     uint32_t                                    createInfoCount,
     const VkComputePipelineCreateInfo*          pCreateInfos,
     const VkAllocationCallbacks*                pAllocator,
-    VkPipeline*                                 pPipelines) {
-    return vkCreateComputePipelines(device, pipelineCache, createInfoCount,
-                                    pCreateInfos, pAllocator, pPipelines);
-}
+    VkPipeline*                                 pPipelines);
 
 void callVkDestroyPipeline(
     VkDevice                                    device,
     VkPipeline                                  pipeline,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyPipeline(device, pipeline, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreatePipelineLayout(
     VkDevice                                    device,
     const VkPipelineLayoutCreateInfo*           pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkPipelineLayout*                           pPipelineLayout) {
-    return vkCreatePipelineLayout(device, pCreateInfo, pAllocator, pPipelineLayout);
-}
+    VkPipelineLayout*                           pPipelineLayout);
 
 void callVkDestroyPipelineLayout(
     VkDevice                                    device,
     VkPipelineLayout                            pipelineLayout,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyPipelineLayout(device, pipelineLayout, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateSampler(
     VkDevice                                    device,
     const VkSamplerCreateInfo*                  pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSampler*                                  pSampler) {
-    return vkCreateSampler(device, pCreateInfo, pAllocator, pSampler);
-}
+    VkSampler*                                  pSampler);
 
 void callVkDestroySampler(
     VkDevice                                    device,
     VkSampler                                   sampler,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroySampler(device, sampler, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateDescriptorSetLayout(
     VkDevice                                    device,
     const VkDescriptorSetLayoutCreateInfo*      pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkDescriptorSetLayout*                      pSetLayout) {
-    return vkCreateDescriptorSetLayout(device, pCreateInfo, pAllocator, pSetLayout);
-}
+    VkDescriptorSetLayout*                      pSetLayout);
 
 void callVkDestroyDescriptorSetLayout(
     VkDevice                                    device,
     VkDescriptorSetLayout                       descriptorSetLayout,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateDescriptorPool(
     VkDevice                                    device,
     const VkDescriptorPoolCreateInfo*           pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkDescriptorPool*                           pDescriptorPool) {
-    return vkCreateDescriptorPool(device, pCreateInfo, pAllocator, pDescriptorPool);
-}
+    VkDescriptorPool*                           pDescriptorPool);
 
 void callVkDestroyDescriptorPool(
     VkDevice                                    device,
     VkDescriptorPool                            descriptorPool,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyDescriptorPool(device, descriptorPool, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkResetDescriptorPool(
     VkDevice                                    device,
     VkDescriptorPool                            descriptorPool,
-    VkDescriptorPoolResetFlags                  flags) {
-    return vkResetDescriptorPool(device, descriptorPool, flags);
-}
+    VkDescriptorPoolResetFlags                  flags);
 
 VkResult callVkAllocateDescriptorSets(
     VkDevice                                    device,
     const VkDescriptorSetAllocateInfo*          pAllocateInfo,
-    VkDescriptorSet*                            pDescriptorSets) {
-    return vkAllocateDescriptorSets(device, pAllocateInfo, pDescriptorSets);
-}
+    VkDescriptorSet*                            pDescriptorSets);
 
 VkResult callVkFreeDescriptorSets(
     VkDevice                                    device,
     VkDescriptorPool                            descriptorPool,
     uint32_t                                    descriptorSetCount,
-    const VkDescriptorSet*                      pDescriptorSets) {
-    return vkFreeDescriptorSets(device, descriptorPool, descriptorSetCount, pDescriptorSets);
-}
+    const VkDescriptorSet*                      pDescriptorSets);
 
 void callVkUpdateDescriptorSets(
     VkDevice                                    device,
     uint32_t                                    descriptorWriteCount,
     const VkWriteDescriptorSet*                 pDescriptorWrites,
     uint32_t                                    descriptorCopyCount,
-    const VkCopyDescriptorSet*                  pDescriptorCopies) {
-    vkUpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites,
-                           descriptorCopyCount, pDescriptorCopies);
-}
+    const VkCopyDescriptorSet*                  pDescriptorCopies);
 
 VkResult callVkCreateFramebuffer(
     VkDevice                                    device,
     const VkFramebufferCreateInfo*              pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkFramebuffer*                              pFramebuffer) {
-    return vkCreateFramebuffer(device, pCreateInfo, pAllocator, pFramebuffer);
-}
+    VkFramebuffer*                              pFramebuffer);
 
 void callVkDestroyFramebuffer(
     VkDevice                                    device,
     VkFramebuffer                               framebuffer,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyFramebuffer(device, framebuffer, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkCreateRenderPass(
     VkDevice                                    device,
     const VkRenderPassCreateInfo*               pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkRenderPass*                               pRenderPass) {
-    return vkCreateRenderPass(device, pCreateInfo, pAllocator, pRenderPass);
-}
+    VkRenderPass*                               pRenderPass);
 
 void callVkDestroyRenderPass(
     VkDevice                                    device,
     VkRenderPass                                renderPass,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyRenderPass(device, renderPass, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 void callVkGetRenderAreaGranularity(
     VkDevice                                    device,
     VkRenderPass                                renderPass,
-    VkExtent2D*                                 pGranularity) {
-    vkGetRenderAreaGranularity(device, renderPass, pGranularity);
-}
+    VkExtent2D*                                 pGranularity);
 
 VkResult callVkCreateCommandPool(
     VkDevice                                    device,
     const VkCommandPoolCreateInfo*              pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkCommandPool*                              pCommandPool) {
-    return vkCreateCommandPool(device, pCreateInfo, pAllocator, pCommandPool);
-}
+    VkCommandPool*                              pCommandPool);
 
 void callVkDestroyCommandPool(
     VkDevice                                    device,
     VkCommandPool                               commandPool,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroyCommandPool(device, commandPool, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkResetCommandPool(
     VkDevice                                    device,
     VkCommandPool                               commandPool,
-    VkCommandPoolResetFlags                     flags) {
-    return vkResetCommandPool(device, commandPool, flags);
-}
+    VkCommandPoolResetFlags                     flags);
 
 VkResult callVkAllocateCommandBuffers(
     VkDevice                                    device,
     const VkCommandBufferAllocateInfo*          pAllocateInfo,
-    VkCommandBuffer*                            pCommandBuffers) {
-    return vkAllocateCommandBuffers(device, pAllocateInfo, pCommandBuffers);
-}
+    VkCommandBuffer*                            pCommandBuffers);
 
 void callVkFreeCommandBuffers(
     VkDevice                                    device,
     VkCommandPool                               commandPool,
     uint32_t                                    commandBufferCount,
-    const VkCommandBuffer*                      pCommandBuffers) {
-    vkFreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers);
-}
+    const VkCommandBuffer*                      pCommandBuffers);
 
 VkResult callVkBeginCommandBuffer(
     VkCommandBuffer                             commandBuffer,
-    const VkCommandBufferBeginInfo*             pBeginInfo) {
-    return vkBeginCommandBuffer(commandBuffer, pBeginInfo);
-}
+    const VkCommandBufferBeginInfo*             pBeginInfo);
 
 VkResult callVkEndCommandBuffer(
-    VkCommandBuffer                             commandBuffer) {
-    return vkEndCommandBuffer(commandBuffer);
-}
+    VkCommandBuffer                             commandBuffer);
 
 VkResult callVkResetCommandBuffer(
     VkCommandBuffer                             commandBuffer,
-    VkCommandBufferResetFlags                   flags) {
-    return vkResetCommandBuffer(commandBuffer, flags);
-}
+    VkCommandBufferResetFlags                   flags);
 
 void callVkCmdBindPipeline(
     VkCommandBuffer                             commandBuffer,
     VkPipelineBindPoint                         pipelineBindPoint,
-    VkPipeline                                  pipeline) {
-    vkCmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline);
-}
+    VkPipeline                                  pipeline);
 
 void callVkCmdSetViewport(
     VkCommandBuffer                             commandBuffer,
     uint32_t                                    firstViewport,
     uint32_t                                    viewportCount,
-    const VkViewport*                           pViewports) {
-    vkCmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports);
-}
+    const VkViewport*                           pViewports);
 
 void callVkCmdSetScissor(
     VkCommandBuffer                             commandBuffer,
     uint32_t                                    firstScissor,
     uint32_t                                    scissorCount,
-    const VkRect2D*                             pScissors) {
-    vkCmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors);
-}
+    const VkRect2D*                             pScissors);
 
 void callVkCmdSetLineWidth(
     VkCommandBuffer                             commandBuffer,
-    float                                       lineWidth) {
-    vkCmdSetLineWidth(commandBuffer, lineWidth);
-}
+    float                                       lineWidth);
 
 void callVkCmdSetDepthBias(
     VkCommandBuffer                             commandBuffer,
     float                                       depthBiasConstantFactor,
     float                                       depthBiasClamp,
-    float                                       depthBiasSlopeFactor) {
-    vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor,
-                      depthBiasClamp, depthBiasSlopeFactor);
-}
+    float                                       depthBiasSlopeFactor);
 
 void callVkCmdSetBlendConstants(
     VkCommandBuffer                             commandBuffer,
-    const float                                 blendConstants[4]) {
-    vkCmdSetBlendConstants(commandBuffer, blendConstants);
-}
+    const float                                 blendConstants[4]);
 
 void callVkCmdSetDepthBounds(
     VkCommandBuffer                             commandBuffer,
     float                                       minDepthBounds,
-    float                                       maxDepthBounds) {
-    vkCmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds);
-}
+    float                                       maxDepthBounds);
 
 void callVkCmdSetStencilCompareMask(
     VkCommandBuffer                             commandBuffer,
     VkStencilFaceFlags                          faceMask,
-    uint32_t                                    compareMask) {
-    vkCmdSetStencilCompareMask(commandBuffer, faceMask, compareMask);
-}
+    uint32_t                                    compareMask);
 
 void callVkCmdSetStencilWriteMask(
     VkCommandBuffer                             commandBuffer,
     VkStencilFaceFlags                          faceMask,
-    uint32_t                                    writeMask) {
-    vkCmdSetStencilWriteMask(commandBuffer, faceMask, writeMask);
-}
+    uint32_t                                    writeMask);
 
 void callVkCmdSetStencilReference(
     VkCommandBuffer                             commandBuffer,
     VkStencilFaceFlags                          faceMask,
-    uint32_t                                    reference) {
-    vkCmdSetStencilReference(commandBuffer, faceMask, reference);
-}
+    uint32_t                                    reference);
 
 void callVkCmdBindDescriptorSets(
     VkCommandBuffer                             commandBuffer,
@@ -766,37 +561,27 @@ void callVkCmdBindDescriptorSets(
     uint32_t                                    descriptorSetCount,
     const VkDescriptorSet*                      pDescriptorSets,
     uint32_t                                    dynamicOffsetCount,
-    const uint32_t*                             pDynamicOffsets) {
-    vkCmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout,
-                            firstSet, descriptorSetCount, pDescriptorSets,
-                            dynamicOffsetCount, pDynamicOffsets);
-}
+    const uint32_t*                             pDynamicOffsets);
 
 void callVkCmdBindIndexBuffer(
     VkCommandBuffer                             commandBuffer,
     VkBuffer                                    buffer,
     VkDeviceSize                                offset,
-    VkIndexType                                 indexType) {
-    vkCmdBindIndexBuffer(commandBuffer, buffer, offset, indexType);
-}
+    VkIndexType                                 indexType);
 
 void callVkCmdBindVertexBuffers(
     VkCommandBuffer                             commandBuffer,
     uint32_t                                    firstBinding,
     uint32_t                                    bindingCount,
     const VkBuffer*                             pBuffers,
-    const VkDeviceSize*                         pOffsets) {
-    vkCmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
-}
+    const VkDeviceSize*                         pOffsets);
 
 void callVkCmdDraw(
     VkCommandBuffer                             commandBuffer,
     uint32_t                                    vertexCount,
     uint32_t                                    instanceCount,
     uint32_t                                    firstVertex,
-    uint32_t                                    firstInstance) {
-    vkCmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
-}
+    uint32_t                                    firstInstance);
 
 void callVkCmdDrawIndexed(
     VkCommandBuffer                             commandBuffer,
@@ -804,52 +589,39 @@ void callVkCmdDrawIndexed(
     uint32_t                                    instanceCount,
     uint32_t                                    firstIndex,
     int32_t                                     vertexOffset,
-    uint32_t                                    firstInstance) {
-    vkCmdDrawIndexed(commandBuffer, indexCount, instanceCount,
-                     firstIndex, vertexOffset, firstInstance);
-}
+    uint32_t                                    firstInstance);
 
 void callVkCmdDrawIndirect(
     VkCommandBuffer                             commandBuffer,
     VkBuffer                                    buffer,
     VkDeviceSize                                offset,
     uint32_t                                    drawCount,
-    uint32_t                                    stride) {
-    vkCmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride);
-}
+    uint32_t                                    stride);
 
 void callVkCmdDrawIndexedIndirect(
     VkCommandBuffer                             commandBuffer,
     VkBuffer                                    buffer,
     VkDeviceSize                                offset,
     uint32_t                                    drawCount,
-    uint32_t                                    stride) {
-    vkCmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride);
-}
+    uint32_t                                    stride);
 
 void callVkCmdDispatch(
     VkCommandBuffer                             commandBuffer,
     uint32_t                                    x,
     uint32_t                                    y,
-    uint32_t                                    z) {
-    vkCmdDispatch(commandBuffer, x, y, z);
-}
+    uint32_t                                    z);
 
 void callVkCmdDispatchIndirect(
     VkCommandBuffer                             commandBuffer,
     VkBuffer                                    buffer,
-    VkDeviceSize                                offset) {
-    vkCmdDispatchIndirect(commandBuffer, buffer, offset);
-}
+    VkDeviceSize                                offset);
 
 void callVkCmdCopyBuffer(
     VkCommandBuffer                             commandBuffer,
     VkBuffer                                    srcBuffer,
     VkBuffer                                    dstBuffer,
     uint32_t                                    regionCount,
-    const VkBufferCopy*                         pRegions) {
-    vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
-}
+    const VkBufferCopy*                         pRegions);
 
 void callVkCmdCopyImage(
     VkCommandBuffer                             commandBuffer,
@@ -858,10 +630,7 @@ void callVkCmdCopyImage(
     VkImage                                     dstImage,
     VkImageLayout                               dstImageLayout,
     uint32_t                                    regionCount,
-    const VkImageCopy*                          pRegions) {
-    vkCmdCopyImage(commandBuffer, srcImage, srcImageLayout,
-                   dstImage, dstImageLayout, regionCount, pRegions);
-}
+    const VkImageCopy*                          pRegions);
 
 void callVkCmdBlitImage(
     VkCommandBuffer                             commandBuffer,
@@ -871,10 +640,7 @@ void callVkCmdBlitImage(
     VkImageLayout                               dstImageLayout,
     uint32_t                                    regionCount,
     const VkImageBlit*                          pRegions,
-    VkFilter                                    filter) {
-    vkCmdBlitImage(commandBuffer, srcImage, srcImageLayout,
-                   dstImage, dstImageLayout, regionCount, pRegions, filter);
-}
+    VkFilter                                    filter);
 
 void callVkCmdCopyBufferToImage(
     VkCommandBuffer                             commandBuffer,
@@ -882,10 +648,7 @@ void callVkCmdCopyBufferToImage(
     VkImage                                     dstImage,
     VkImageLayout                               dstImageLayout,
     uint32_t                                    regionCount,
-    const VkBufferImageCopy*                    pRegions) {
-    vkCmdCopyBufferToImage(commandBuffer, srcBuffer,
-                           dstImage, dstImageLayout, regionCount, pRegions);
-}
+    const VkBufferImageCopy*                    pRegions);
 
 void callVkCmdCopyImageToBuffer(
     VkCommandBuffer                             commandBuffer,
@@ -893,28 +656,21 @@ void callVkCmdCopyImageToBuffer(
     VkImageLayout                               srcImageLayout,
     VkBuffer                                    dstBuffer,
     uint32_t                                    regionCount,
-    const VkBufferImageCopy*                    pRegions) {
-    vkCmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout,
-                           dstBuffer, regionCount, pRegions);
-}
+    const VkBufferImageCopy*                    pRegions);
 
 void callVkCmdUpdateBuffer(
     VkCommandBuffer                             commandBuffer,
     VkBuffer                                    dstBuffer,
     VkDeviceSize                                dstOffset,
     VkDeviceSize                                dataSize,
-    const uint32_t*                             pData) {
-    vkCmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData);
-}
+    const uint32_t*                             pData);
 
 void callVkCmdFillBuffer(
     VkCommandBuffer                             commandBuffer,
     VkBuffer                                    dstBuffer,
     VkDeviceSize                                dstOffset,
     VkDeviceSize                                size,
-    uint32_t                                    data) {
-    vkCmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data);
-}
+    uint32_t                                    data);
 
 void callVkCmdClearColorImage(
     VkCommandBuffer                             commandBuffer,
@@ -922,9 +678,7 @@ void callVkCmdClearColorImage(
     VkImageLayout                               imageLayout,
     const VkClearColorValue*                    pColor,
     uint32_t                                    rangeCount,
-    const VkImageSubresourceRange*              pRanges) {
-    vkCmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
-}
+    const VkImageSubresourceRange*              pRanges);
 
 void callVkCmdClearDepthStencilImage(
     VkCommandBuffer                             commandBuffer,
@@ -932,19 +686,14 @@ void callVkCmdClearDepthStencilImage(
     VkImageLayout                               imageLayout,
     const VkClearDepthStencilValue*             pDepthStencil,
     uint32_t                                    rangeCount,
-    const VkImageSubresourceRange*              pRanges) {
-    vkCmdClearDepthStencilImage(commandBuffer, image, imageLayout,
-                                pDepthStencil, rangeCount, pRanges);
-}
+    const VkImageSubresourceRange*              pRanges);
 
 void callVkCmdClearAttachments(
     VkCommandBuffer                             commandBuffer,
     uint32_t                                    attachmentCount,
     const VkClearAttachment*                    pAttachments,
     uint32_t                                    rectCount,
-    const VkClearRect*                          pRects) {
-    vkCmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
-}
+    const VkClearRect*                          pRects);
 
 void callVkCmdResolveImage(
     VkCommandBuffer                             commandBuffer,
@@ -953,24 +702,17 @@ void callVkCmdResolveImage(
     VkImage                                     dstImage,
     VkImageLayout                               dstImageLayout,
     uint32_t                                    regionCount,
-    const VkImageResolve*                       pRegions) {
-    vkCmdResolveImage(commandBuffer, srcImage, srcImageLayout,
-                      dstImage, dstImageLayout, regionCount, pRegions);
-}
+    const VkImageResolve*                       pRegions);
 
 void callVkCmdSetEvent(
     VkCommandBuffer                             commandBuffer,
     VkEvent                                     event,
-    VkPipelineStageFlags                        stageMask) {
-    vkCmdSetEvent(commandBuffer, event, stageMask);
-}
+    VkPipelineStageFlags                        stageMask);
 
 void callVkCmdResetEvent(
     VkCommandBuffer                             commandBuffer,
     VkEvent                                     event,
-    VkPipelineStageFlags                        stageMask) {
-    vkCmdResetEvent(commandBuffer, event, stageMask);
-}
+    VkPipelineStageFlags                        stageMask);
 
 void callVkCmdWaitEvents(
     VkCommandBuffer                             commandBuffer,
@@ -983,12 +725,7 @@ void callVkCmdWaitEvents(
     uint32_t                                    bufferMemoryBarrierCount,
     const VkBufferMemoryBarrier*                pBufferMemoryBarriers,
     uint32_t                                    imageMemoryBarrierCount,
-    const VkImageMemoryBarrier*                 pImageMemoryBarriers) {
-    vkCmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask,
-                    memoryBarrierCount, pMemoryBarriers,
-                    bufferMemoryBarrierCount, pBufferMemoryBarriers,
-                    imageMemoryBarrierCount, pImageMemoryBarriers);
-}
+    const VkImageMemoryBarrier*                 pImageMemoryBarriers);
 
 void callVkCmdPipelineBarrier(
     VkCommandBuffer                             commandBuffer,
@@ -1000,43 +737,30 @@ void callVkCmdPipelineBarrier(
     uint32_t                                    bufferMemoryBarrierCount,
     const VkBufferMemoryBarrier*                pBufferMemoryBarriers,
     uint32_t                                    imageMemoryBarrierCount,
-    const VkImageMemoryBarrier*                 pImageMemoryBarriers) {
-    vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags,
-                         memoryBarrierCount, pMemoryBarriers,
-                         bufferMemoryBarrierCount, pBufferMemoryBarriers,
-                         imageMemoryBarrierCount, pImageMemoryBarriers);
-}
+    const VkImageMemoryBarrier*                 pImageMemoryBarriers);
 
 void callVkCmdBeginQuery(
     VkCommandBuffer                             commandBuffer,
     VkQueryPool                                 queryPool,
     uint32_t                                    query,
-    VkQueryControlFlags                         flags) {
-    vkCmdBeginQuery(commandBuffer, queryPool, query, flags);
-}
+    VkQueryControlFlags                         flags);
 
 void callVkCmdEndQuery(
     VkCommandBuffer                             commandBuffer,
     VkQueryPool                                 queryPool,
-    uint32_t                                    query) {
-    vkCmdEndQuery(commandBuffer, queryPool, query);
-}
+    uint32_t                                    query);
 
 void callVkCmdResetQueryPool(
     VkCommandBuffer                             commandBuffer,
     VkQueryPool                                 queryPool,
     uint32_t                                    firstQuery,
-    uint32_t                                    queryCount) {
-    vkCmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount);
-}
+    uint32_t                                    queryCount);
 
 void callVkCmdWriteTimestamp(
     VkCommandBuffer                             commandBuffer,
     VkPipelineStageFlagBits                     pipelineStage,
     VkQueryPool                                 queryPool,
-    uint32_t                                    query) {
-    vkCmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query);
-}
+    uint32_t                                    query);
 
 void callVkCmdCopyQueryPoolResults(
     VkCommandBuffer                             commandBuffer,
@@ -1046,10 +770,7 @@ void callVkCmdCopyQueryPoolResults(
     VkBuffer                                    dstBuffer,
     VkDeviceSize                                dstOffset,
     VkDeviceSize                                stride,
-    VkQueryResultFlags                          flags) {
-    vkCmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount,
-                              dstBuffer, dstOffset, stride, flags);
-}
+    VkQueryResultFlags                          flags);
 
 void callVkCmdPushConstants(
     VkCommandBuffer                             commandBuffer,
@@ -1057,99 +778,69 @@ void callVkCmdPushConstants(
     VkShaderStageFlags                          stageFlags,
     uint32_t                                    offset,
     uint32_t                                    size,
-    const void*                                 pValues) {
-    vkCmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues);
-}
+    const void*                                 pValues);
 
 void callVkCmdBeginRenderPass(
     VkCommandBuffer                             commandBuffer,
     const VkRenderPassBeginInfo*                pRenderPassBegin,
-    VkSubpassContents                           contents) {
-    vkCmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents);
-}
+    VkSubpassContents                           contents);
 
 void callVkCmdNextSubpass(
     VkCommandBuffer                             commandBuffer,
-    VkSubpassContents                           contents) {
-    vkCmdNextSubpass(commandBuffer, contents);
-}
+    VkSubpassContents                           contents);
 
 void callVkCmdEndRenderPass(
-    VkCommandBuffer                             commandBuffer) {
-    vkCmdEndRenderPass(commandBuffer);
-}
+    VkCommandBuffer                             commandBuffer);
 
 void callVkCmdExecuteCommands(
     VkCommandBuffer                             commandBuffer,
     uint32_t                                    commandBufferCount,
-    const VkCommandBuffer*                      pCommandBuffers) {
-    vkCmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers);
-}
+    const VkCommandBuffer*                      pCommandBuffers);
 
 void callVkDestroySurfaceKHR(
     VkInstance                                  instance,
     VkSurfaceKHR                                surface,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroySurfaceKHR(instance, surface, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkGetPhysicalDeviceSurfaceSupportKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t                                    queueFamilyIndex,
     VkSurfaceKHR                                surface,
-    VkBool32*                                   pSupported) {
-    return vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice,
-            queueFamilyIndex, surface, pSupported);
-}
+    VkBool32*                                   pSupported);
 
 VkResult callVkGetPhysicalDeviceSurfaceCapabilitiesKHR(
     VkPhysicalDevice                            physicalDevice,
     VkSurfaceKHR                                surface,
-    VkSurfaceCapabilitiesKHR*                   pSurfaceCapabilities) {
-    return vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice,
-            surface, pSurfaceCapabilities);
-}
+    VkSurfaceCapabilitiesKHR*                   pSurfaceCapabilities);
 
 VkResult callVkGetPhysicalDeviceSurfaceFormatsKHR(
     VkPhysicalDevice                            physicalDevice,
     VkSurfaceKHR                                surface,
     uint32_t*                                   pSurfaceFormatCount,
-    VkSurfaceFormatKHR*                         pSurfaceFormats) {
-    return vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice,
-            surface, pSurfaceFormatCount, pSurfaceFormats);
-}
+    VkSurfaceFormatKHR*                         pSurfaceFormats);
 
 VkResult callVkGetPhysicalDeviceSurfacePresentModesKHR(
     VkPhysicalDevice                            physicalDevice,
     VkSurfaceKHR                                surface,
     uint32_t*                                   pPresentModeCount,
-    VkPresentModeKHR*                           pPresentModes) {
-    return vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice,
-            surface, pPresentModeCount, pPresentModes);
-}
+    VkPresentModeKHR*                           pPresentModes);
 
 VkResult callVkCreateSwapchainKHR(
     VkDevice                                    device,
     const VkSwapchainCreateInfoKHR*             pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSwapchainKHR*                             pSwapchain) {
-    return vkCreateSwapchainKHR(device, pCreateInfo, pAllocator, pSwapchain);
-}
+    VkSwapchainKHR*                             pSwapchain);
 
 void callVkDestroySwapchainKHR(
     VkDevice                                    device,
     VkSwapchainKHR                              swapchain,
-    const VkAllocationCallbacks*                pAllocator) {
-    vkDestroySwapchainKHR(device, swapchain, pAllocator);
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 VkResult callVkGetSwapchainImagesKHR(
     VkDevice                                    device,
     VkSwapchainKHR                              swapchain,
     uint32_t*                                   pSwapchainImageCount,
-    VkImage*                                    pSwapchainImages) {
-    return vkGetSwapchainImagesKHR(device, swapchain, pSwapchainImageCount, pSwapchainImages);
-}
+    VkImage*                                    pSwapchainImages);
 
 VkResult callVkAcquireNextImageKHR(
     VkDevice                                    device,
@@ -1157,102 +848,72 @@ VkResult callVkAcquireNextImageKHR(
     uint64_t                                    timeout,
     VkSemaphore                                 semaphore,
     VkFence                                     fence,
-    uint32_t*                                   pImageIndex) {
-    return vkAcquireNextImageKHR(device, swapchain, timeout, semaphore, fence, pImageIndex);
-}
+    uint32_t*                                   pImageIndex);
 
 VkResult callVkQueuePresentKHR(
     VkQueue                                     queue,
-    const VkPresentInfoKHR*                     pPresentInfo) {
-    return vkQueuePresentKHR(queue, pPresentInfo);
-}
+    const VkPresentInfoKHR*                     pPresentInfo);
 
 VkResult callVkGetPhysicalDeviceDisplayPropertiesKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t*                                   pPropertyCount,
-    VkDisplayPropertiesKHR*                     pProperties) {
-    return vkGetPhysicalDeviceDisplayPropertiesKHR(physicalDevice,
-            pPropertyCount, pProperties);
-}
+    VkDisplayPropertiesKHR*                     pProperties);
 
 VkResult callVkGetPhysicalDeviceDisplayPlanePropertiesKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t*                                   pPropertyCount,
-    VkDisplayPlanePropertiesKHR*                pProperties) {
-    return vkGetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice,
-            pPropertyCount, pProperties);
-}
+    VkDisplayPlanePropertiesKHR*                pProperties);
 
 VkResult callVkGetDisplayPlaneSupportedDisplaysKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t                                    planeIndex,
     uint32_t*                                   pDisplayCount,
-    VkDisplayKHR*                               pDisplays) {
-    return vkGetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex,
-            pDisplayCount, pDisplays);
-}
+    VkDisplayKHR*                               pDisplays);
 
 VkResult callVkGetDisplayModePropertiesKHR(
     VkPhysicalDevice                            physicalDevice,
     VkDisplayKHR                                display,
     uint32_t*                                   pPropertyCount,
-    VkDisplayModePropertiesKHR*                 pProperties) {
-    return vkGetDisplayModePropertiesKHR(physicalDevice, display,
-                                         pPropertyCount, pProperties);
-}
+    VkDisplayModePropertiesKHR*                 pProperties);
 
 VkResult callVkCreateDisplayModeKHR(
     VkPhysicalDevice                            physicalDevice,
     VkDisplayKHR                                display,
     const VkDisplayModeCreateInfoKHR*           pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkDisplayModeKHR*                           pMode) {
-    return vkCreateDisplayModeKHR(physicalDevice, display, pCreateInfo, pAllocator, pMode);
-}
+    VkDisplayModeKHR*                           pMode);
 
 VkResult callVkGetDisplayPlaneCapabilitiesKHR(
     VkPhysicalDevice                            physicalDevice,
     VkDisplayModeKHR                            mode,
     uint32_t                                    planeIndex,
-    VkDisplayPlaneCapabilitiesKHR*              pCapabilities) {
-    return vkGetDisplayPlaneCapabilitiesKHR(physicalDevice, mode, planeIndex, pCapabilities);
-}
+    VkDisplayPlaneCapabilitiesKHR*              pCapabilities);
 
 VkResult callVkCreateDisplayPlaneSurfaceKHR(
     VkInstance                                  instance,
     const VkDisplaySurfaceCreateInfoKHR*        pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface) {
-    return vkCreateDisplayPlaneSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
-}
+    VkSurfaceKHR*                               pSurface);
 
 VkResult callVkCreateSharedSwapchainsKHR(
     VkDevice                                    device,
     uint32_t                                    swapchainCount,
     const VkSwapchainCreateInfoKHR*             pCreateInfos,
     const VkAllocationCallbacks*                pAllocator,
-    VkSwapchainKHR*                             pSwapchains) {
-    return vkCreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos,
-                                       pAllocator, pSwapchains);
-}
+    VkSwapchainKHR*                             pSwapchains);
 
 #ifdef VK_USE_PLATFORM_XLIB_KHR
 VkResult callVkCreateXlibSurfaceKHR(
     VkInstance                                  instance,
     const VkXlibSurfaceCreateInfoKHR*           pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface) {
-    return vkCreateXlibSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
-}
+    VkSurfaceKHR*                               pSurface);
 
 VkBool32 callVkGetPhysicalDeviceXlibPresentationSupportKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t                                    queueFamilyIndex,
     Display*                                    dpy,
-    VisualID                                    visualID) {
-    return vkGetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice,
-            queueFamilyIndex, dpy, visualID);
-}
+    VisualID                                    visualID);
 #endif /* VK_USE_PLATFORM_XLIB_KHR */
 
 #ifdef VK_USE_PLATFORM_XCB_KHR
@@ -1260,18 +921,13 @@ VkResult callVkCreateXcbSurfaceKHR(
     VkInstance                                  instance,
     const VkXcbSurfaceCreateInfoKHR*            pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface) {
-    return vkCreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
-}
+    VkSurfaceKHR*                               pSurface);
 
 VkBool32 callVkGetPhysicalDeviceXcbPresentationSupportKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t                                    queueFamilyIndex,
     xcb_connection_t*                           connection,
-    xcb_visualid_t                              visual_id) {
-    vkGetPhysicalDeviceXcbPresentationSupportKHR(physicalDevice,
-            queueFamilyIndex, connection, visual_id);
-}
+    xcb_visualid_t                              visual_id);
 #endif /* VK_USE_PLATFORM_XCB_KHR */
 
 #ifdef VK_USE_PLATFORM_WAYLAND_KHR
@@ -1279,17 +935,12 @@ VkResult callVkCreateWaylandSurfaceKHR(
     VkInstance                                  instance,
     const VkWaylandSurfaceCreateInfoKHR*        pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface) {
-    return vkCreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
-}
+    VkSurfaceKHR*                               pSurface);
 
 VkBool32 callVkGetPhysicalDeviceWaylandPresentationSupportKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t                                    queueFamilyIndex,
-    struct wl_display*                          display) {
-    return vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice,
-            queueFamilyIndex, display);
-}
+    struct wl_display*                          display);
 #endif /* VK_USE_PLATFORM_WAYLAND_KHR */
 
 #ifdef VK_USE_PLATFORM_MIR_KHR
@@ -1297,17 +948,12 @@ VkResult callVkCreateMirSurfaceKHR(
     VkInstance                                  instance,
     const VkMirSurfaceCreateInfoKHR*            pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface) {
-    return vkCreateMirSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
-}
+    VkSurfaceKHR*                               pSurface);
 
 VkBool32 callVkGetPhysicalDeviceMirPresentationSupportKHR(
     VkPhysicalDevice                            physicalDevice,
     uint32_t                                    queueFamilyIndex,
-    MirConnection*                              connection) {
-    return vkGetPhysicalDeviceMirPresentationSupportKHR(physicalDevice,
-            queueFamilyIndex, connection);
-}
+    MirConnection*                              connection);
 #endif /* VK_USE_PLATFORM_MIR_KHR */
 
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
@@ -1315,9 +961,7 @@ VkResult callVkCreateAndroidSurfaceKHR(
     VkInstance                                  instance,
     const VkAndroidSurfaceCreateInfoKHR*        pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface) {
-    return vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
-}
+    VkSurfaceKHR*                               pSurface);
 #endif /* VK_USE_PLATFORM_ANDROID_KHR */
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
@@ -1325,42 +969,23 @@ VkResult callVkCreateWin32SurfaceKHR(
     VkInstance                                  instance,
     const VkWin32SurfaceCreateInfoKHR*          pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface) {
-    return vkCreateWin32SurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
-}
+    VkSurfaceKHR*                               pSurface);
 
 VkBool32 callVkGetPhysicalDeviceWin32PresentationSupportKHR(
     VkPhysicalDevice                            physicalDevice,
-    uint32_t                                    queueFamilyIndex) {
-    return vkGetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFamilyIndex);
-}
+    uint32_t                                    queueFamilyIndex);
 #endif /* VK_USE_PLATFORM_WIN32_KHR */
 
 VkResult callVkCreateDebugReportCallbackEXT(
     VkInstance                                  instance,
     const VkDebugReportCallbackCreateInfoEXT*   pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
-    VkDebugReportCallbackEXT*                   pCallback) {
-
-    PFN_vkCreateDebugReportCallbackEXT pfn = (PFN_vkCreateDebugReportCallbackEXT)
-            (vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
-    if (pfn != NULL) {
-        return pfn(instance, pCreateInfo, pAllocator, pCallback);
-    }
-    return VK_NOT_READY;
-}
+    VkDebugReportCallbackEXT*                   pCallback);
 
 void callVkDestroyDebugReportCallbackEXT(
     VkInstance                                  instance,
     VkDebugReportCallbackEXT                    callback,
-    const VkAllocationCallbacks*                pAllocator) {
-
-    PFN_vkDestroyDebugReportCallbackEXT pfn = (PFN_vkDestroyDebugReportCallbackEXT)
-            (vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
-    if (pfn != NULL) {
-        pfn(instance, callback, pAllocator);
-    }
-}
+    const VkAllocationCallbacks*                pAllocator);
 
 void callVkDebugReportMessageEXT(
     VkInstance                                  instance,
@@ -1370,41 +995,10 @@ void callVkDebugReportMessageEXT(
     size_t                                      location,
     int32_t                                     messageCode,
     const char*                                 pLayerPrefix,
-    const char*                                 pMessage) {
+    const char*                                 pMessage);
 
-    PFN_vkDebugReportMessageEXT pfn = (PFN_vkDebugReportMessageEXT)
-                                      (vkGetInstanceProcAddr(instance, "vkDebugReportMessageEXT"));
-    if (pfn != NULL) {
-        pfn(instance, flags, objectType, object, location,
-            messageCode, pLayerPrefix, pMessage);
-    }
-}
+#ifdef __cplusplus
+};
+#endif
 
-// VkResult callVkDebugMarkerSetObjectTagEXT(
-//     VkDevice                                    device,
-//     VkDebugMarkerObjectTagInfoEXT*              pTagInfo) {
-//  return vkDebugMarkerSetObjectTagEXT(device, pTagInfo);
-// }
-
-// VkResult callVkDebugMarkerSetObjectNameEXT(
-//     VkDevice                                    device,
-//     VkDebugMarkerObjectNameInfoEXT*             pNameInfo) {
-//  return vkDebugMarkerSetObjectNameEXT(device, pNameInfo);
-// }
-
-// void callVkCmdDebugMarkerBeginEXT(
-//     VkCommandBuffer                             commandBuffer,
-//     VkDebugMarkerMarkerInfoEXT*                 pMarkerInfo) {
-//  vkCmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo);
-// }
-
-// void callVkCmdDebugMarkerEndEXT(
-//     VkCommandBuffer                             commandBuffer) {
-//  vkCmdDebugMarkerEndEXT(commandBuffer);
-// }
-
-// void callVkCmdDebugMarkerInsertEXT(
-//     VkCommandBuffer                             commandBuffer,
-//     VkDebugMarkerMarkerInfoEXT*                 pMarkerInfo) {
-//  vkCmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo);
-// }
+#endif // VULKAN_BRIDGE_H_

@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-// #include "vulkan_wrapper.h"
+// #include "vk_wrapper.h"
 import "C"
 
 func Init() error {
