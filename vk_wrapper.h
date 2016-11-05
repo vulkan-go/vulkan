@@ -5,6 +5,7 @@
 #include "vulkan/vulkan.h"
 
 int vkInit(void);
+const char** vkGetRequiredInstanceExtensions(uint32_t *count);
 VkResult vkCreateWindowSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface);
 
 // VK_core

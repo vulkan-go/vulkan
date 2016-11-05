@@ -14,8 +14,8 @@ GENERATOR:
     ]}
     
 PARSER:
-  # IncludePaths: [/usr/include]
-  IncludePaths: [windows/, /usr/include]
+  IncludePaths: [/usr/include]
+  # IncludePaths: [windows/, /usr/include]
   SourcesPaths:
     - vulkan/vulkan.h
     - vk_wrapper.h

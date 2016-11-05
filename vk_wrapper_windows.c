@@ -3,6 +3,10 @@
 #include <GLFW/glfw3.h>
 #include "vk_wrapper.h"
 
+const char** vkGetRequiredInstanceExtensions(uint32_t *count) {
+    return glfwGetRequiredInstanceExtensions(count);
+}
+
 VkResult vkCreateWindowSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
    return glfwCreateWindowSurface(instance, (GLFWwindow *)(win), allocator, surface);
 }
