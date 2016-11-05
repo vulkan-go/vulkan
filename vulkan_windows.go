@@ -61,7 +61,7 @@ func CreateGLFWSurface(instance Instance, glfwWindow uintptr, pAllocator *Alloca
 func GetRequiredInstanceExtensions() []string {
 	var count uint32
 	ccount, _ := (*C.uint32_t)(unsafe.Pointer(&count)), cgoAllocsUnknown
-	__ret := C.VkGetRequiredInstanceExtensions(ccount)
+	__ret := C.vkGetRequiredInstanceExtensions(ccount)
 	__v := make([]string, count)
 	packSString(__v, __ret)
 	return __v
