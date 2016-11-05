@@ -2,7 +2,7 @@
 #define VULKAN_WRAPPER_H_ 1
 
 #define VK_NO_PROTOTYPES 1
-#include <vulkan/vulkan.h>
+#include "vulkan/vulkan.h"
 
 int vkInit(void);
 
