@@ -46,6 +46,16 @@ type (
 	DWORD               C.DWORD
 )
 
+// CreateGLFWSurface creates a Vulkan surface (as defined by the VK_KHR_surface extension) for a GLFW window with glfwCreateWindowSurface.
+// See http://www.glfw.org/docs/latest/group__vulkan.html#ga1a24536bec3f80b08ead18e28e6ae965
+func CreateGLFWSurface(instance Instance, glfwWindow uintptr, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
+	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
+	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), cgoAllocsUnknown
+	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), cgoAllocsUnknown
+	ret := C.vkCreateWindowSurface(instance, glfwWindow, pAllocator, surface)
+	return (Result)(ret)
+}
+
 // CreateWin32Surface function as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkCreateWin32SurfaceKHR
 func CreateWin32Surface(instance Instance, pCreateInfo *Win32SurfaceCreateInfo, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
 	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown

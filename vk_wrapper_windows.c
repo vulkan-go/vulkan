@@ -3,11 +3,15 @@
 #include <GLFW/glfw3.h>
 #include "vk_wrapper.h"
 
+VkResult vkCreateWindowSurface(VkInstance instance,
+    void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
+   return glfwCreateWindowSurface(instance, (*GLFWwindow)(win), allocator, surface);
+}
+
 int vkInit(void) {
     if (!glfwVulkanSupported()) {
          return -1;
     }
-    
     vkCreateInstance = (PFN_vkCreateInstance)(glfwGetInstanceProcAddress(NULL,"vkCreateInstance"));
     vkDestroyInstance = (PFN_vkDestroyInstance)(glfwGetInstanceProcAddress(NULL,"vkDestroyInstance"));
     vkEnumeratePhysicalDevices = (PFN_vkEnumeratePhysicalDevices)(glfwGetInstanceProcAddress(NULL,"vkEnumeratePhysicalDevices"));
