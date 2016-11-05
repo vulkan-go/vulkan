@@ -12,21 +12,10 @@ GENERATOR:
         "-I.",
         "-DVK_NO_PROTOTYPES",
     ]}
-    - {name: "LDFLAGS", traits: ["android"], flags: [
-      "-Wl,--no-warn-mismatch",
-      "-lm_hard",
-    ]}
-    - {name: "CFLAGS", traits: ["android"], flags: [
-        "-DVK_USE_PLATFORM_ANDROID_KHR",
-        "-D__ARM_ARCH_7A__",
-        "-D_NDK_MATH_NO_SOFTFP=1",
-        "-mfpu=vfp",
-        "-mfloat-abi=hard",
-        "-march=armv7-a",
-    ]}
-
+    
 PARSER:
   IncludePaths: [/usr/include]
+  # IncludePaths: [windows/, /usr/include]
   SourcesPaths:
     - vulkan/vulkan.h
     - vk_wrapper.h
@@ -51,6 +40,11 @@ TRANSLATOR:
       - {action: replace, from: ^callVk}
     type:
       - {action: accept, from: "^ANativeWindow$"}
+      - {action: accept, from: "^HINSTANCE$"}
+      - {action: accept, from: "^HWND$"}
+      - {action: accept, from: "^HANDLE$"}
+      - {action: accept, from: "^SECURITY_ATTRIBUTES$"}
+      - {action: accept, from: "^DWORD$"}
       - {action: replace, from: "KHR$"}
       - {action: replace, from: "EXT$"}
     function:
@@ -78,6 +72,11 @@ TRANSLATOR:
   MemTips:
     - {target: VkAllocationCallbacks, self: raw}
     - {target: ANativeWindow, self: raw}
+    - {target: HINSTANCE, self: raw}
+    - {target: HWND, self: raw}
+    - {target: HANDLE, self: raw}
+    - {target: SECURITY_ATTRIBUTES, self: raw}
+    - {target: DWORD, self: raw}
   PtrTips:
     function:
       - {target: ^callVkEnumeratePhysicalDevices$, tips: [0,ref,arr]}

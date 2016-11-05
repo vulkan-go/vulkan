@@ -6,6 +6,9 @@ package vulkan
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
 #cgo android LDFLAGS: -Wl,--no-warn-mismatch -lm_hard
 #cgo android CFLAGS: -DVK_USE_PLATFORM_ANDROID_KHR -D__ARM_ARCH_7A__ -D_NDK_MATH_NO_SOFTFP=1 -mfpu=vfp -mfloat-abi=hard -march=armv7-a
+#cgo windows CFLAGS: -DVK_USE_PLATFORM_WIN32_KHR -D_GLFW_WIN32 -DGLFW_INCLUDE_VULKAN
+#cgo windows LDFLAGS:
+
 
 #include "vulkan/vulkan.h"
 #include "vk_wrapper.h"
@@ -38,49 +41,13 @@ const (
 	NvWin32KeyedMutexExtensionName = "VK_NV_win32_keyed_mutex"
 )
 
-// Win32SurfaceCreateFlags type as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkWin32SurfaceCreateFlagsKHR
-type Win32SurfaceCreateFlags uint32
-
-// Win32SurfaceCreateInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkWin32SurfaceCreateInfoKHR
-type Win32SurfaceCreateInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	Flags          Win32SurfaceCreateFlags
-	ref8747e274    *C.VkWin32SurfaceCreateInfoKHR
-	allocs8747e274 interface{}
-}
-
-// ImportMemoryWin32HandleInfoNV as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryWin32HandleInfoNV.html
-type ImportMemoryWin32HandleInfoNV struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	HandleType     ExternalMemoryHandleTypeFlagsNV
-	ref6171f825    *C.VkImportMemoryWin32HandleInfoNV
-	allocs6171f825 interface{}
-}
-
-// ExportMemoryWin32HandleInfoNV as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryWin32HandleInfoNV.html
-type ExportMemoryWin32HandleInfoNV struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	ref84fe87ef    *C.VkExportMemoryWin32HandleInfoNV
-	allocs84fe87ef interface{}
-}
-
-// Win32KeyedMutexAcquireReleaseInfoNV as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWin32KeyedMutexAcquireReleaseInfoNV.html
-type Win32KeyedMutexAcquireReleaseInfoNV struct {
-	SType                       StructureType
-	PNext                       unsafe.Pointer
-	AcquireCount                uint32
-	PAcquireSyncs               []DeviceMemory
-	PAcquireKeys                []uint64
-	PAcquireTimeoutMilliseconds []uint32
-	ReleaseCount                uint32
-	PReleaseSyncs               []DeviceMemory
-	PReleaseKeys                []uint64
-	refd7d87b9a                 *C.VkWin32KeyedMutexAcquireReleaseInfoNV
-	allocsd7d87b9a              interface{}
-}
+type (
+	HINSTANCE           C.HINSTANCE
+	HWND                C.HWND
+	HANDLE              C.HANDLE
+	SECURITY_ATTRIBUTES C.SECURITY_ATTRIBUTES
+	DWORD               C.DWORD
+)
 
 // CreateWin32Surface function as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkCreateWin32SurfaceKHR
 func CreateWin32Surface(instance Instance, pCreateInfo *Win32SurfaceCreateInfo, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
@@ -100,6 +67,285 @@ func GetPhysicalDeviceWin32PresentationSupport(physicalDevice PhysicalDevice, qu
 	__ret := C.callVkGetPhysicalDeviceWin32PresentationSupportKHR(cphysicalDevice, cqueueFamilyIndex)
 	__v := (Bool32)(__ret)
 	return __v
+}
+
+// ImportMemoryWin32HandleInfoNV as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryWin32HandleInfoNV.html
+type ImportMemoryWin32HandleInfoNV struct {
+	SType          StructureType
+	PNext          unsafe.Pointer
+	HandleType     ExternalMemoryHandleTypeFlagsNV
+	Handle         HANDLE
+	ref6171f825    *C.VkImportMemoryWin32HandleInfoNV
+	allocs6171f825 interface{}
+}
+
+// ExportMemoryWin32HandleInfoNV as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryWin32HandleInfoNV.html
+type ExportMemoryWin32HandleInfoNV struct {
+	SType          StructureType
+	PNext          unsafe.Pointer
+	PAttributes    *SECURITY_ATTRIBUTES
+	DwAccess       DWORD
+	ref84fe87ef    *C.VkExportMemoryWin32HandleInfoNV
+	allocs84fe87ef interface{}
+}
+
+// Win32KeyedMutexAcquireReleaseInfoNV as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWin32KeyedMutexAcquireReleaseInfoNV.html
+type Win32KeyedMutexAcquireReleaseInfoNV struct {
+	SType                       StructureType
+	PNext                       unsafe.Pointer
+	AcquireCount                uint32
+	PAcquireSyncs               []DeviceMemory
+	PAcquireKeys                []uint64
+	PAcquireTimeoutMilliseconds []uint32
+	ReleaseCount                uint32
+	PReleaseSyncs               []DeviceMemory
+	PReleaseKeys                []uint64
+	refd7d87b9a                 *C.VkWin32KeyedMutexAcquireReleaseInfoNV
+	allocsd7d87b9a              interface{}
+}
+
+// Win32SurfaceCreateFlags type as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkWin32SurfaceCreateFlagsKHR
+type Win32SurfaceCreateFlags uint32
+
+// Win32SurfaceCreateInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkWin32SurfaceCreateInfoKHR
+type Win32SurfaceCreateInfo struct {
+	SType          StructureType
+	PNext          unsafe.Pointer
+	Flags          Win32SurfaceCreateFlags
+	Hinstance      HINSTANCE
+	Hwnd           HWND
+	ref8747e274    *C.VkWin32SurfaceCreateInfoKHR
+	allocs8747e274 interface{}
+}
+
+// Ref returns a reference to C object as it is.
+func (x *HINSTANCE) Ref() *C.HINSTANCE {
+	if x == nil {
+		return nil
+	}
+	return (*C.HINSTANCE)(unsafe.Pointer(x))
+}
+
+// Free cleanups the referenced memory using C free.
+func (x *HINSTANCE) Free() {
+	if x != nil {
+		C.free(unsafe.Pointer(x))
+	}
+}
+
+// NewHINSTANCERef converts the C object reference into a raw struct reference without wrapping.
+func NewHINSTANCERef(ref unsafe.Pointer) *HINSTANCE {
+	return (*HINSTANCE)(ref)
+}
+
+// NewHINSTANCE allocates a new C object of this type and converts the reference into
+// a raw struct reference without wrapping.
+func NewHINSTANCE() *HINSTANCE {
+	return (*HINSTANCE)(allocHINSTANCEMemory(1))
+}
+
+// allocHINSTANCEMemory allocates memory for type C.HINSTANCE in C.
+// The caller is responsible for freeing the this memory via C.free.
+func allocHINSTANCEMemory(n int) unsafe.Pointer {
+	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfHINSTANCEValue))
+	if err != nil {
+		panic("memory alloc error: " + err.Error())
+	}
+	return mem
+}
+
+const sizeOfHINSTANCEValue = unsafe.Sizeof([1]C.HINSTANCE{})
+
+// PassRef returns a reference to C object as it is or allocates a new C object of this type.
+func (x *HINSTANCE) PassRef() *C.HINSTANCE {
+	if x == nil {
+		x = (*HINSTANCE)(allocHINSTANCEMemory(1))
+	}
+	return (*C.HINSTANCE)(unsafe.Pointer(x))
+}
+
+// Ref returns a reference to C object as it is.
+func (x *HWND) Ref() *C.HWND {
+	if x == nil {
+		return nil
+	}
+	return (*C.HWND)(unsafe.Pointer(x))
+}
+
+// Free cleanups the referenced memory using C free.
+func (x *HWND) Free() {
+	if x != nil {
+		C.free(unsafe.Pointer(x))
+	}
+}
+
+// NewHWNDRef converts the C object reference into a raw struct reference without wrapping.
+func NewHWNDRef(ref unsafe.Pointer) *HWND {
+	return (*HWND)(ref)
+}
+
+// NewHWND allocates a new C object of this type and converts the reference into
+// a raw struct reference without wrapping.
+func NewHWND() *HWND {
+	return (*HWND)(allocHWNDMemory(1))
+}
+
+// allocHWNDMemory allocates memory for type C.HWND in C.
+// The caller is responsible for freeing the this memory via C.free.
+func allocHWNDMemory(n int) unsafe.Pointer {
+	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfHWNDValue))
+	if err != nil {
+		panic("memory alloc error: " + err.Error())
+	}
+	return mem
+}
+
+const sizeOfHWNDValue = unsafe.Sizeof([1]C.HWND{})
+
+// PassRef returns a reference to C object as it is or allocates a new C object of this type.
+func (x *HWND) PassRef() *C.HWND {
+	if x == nil {
+		x = (*HWND)(allocHWNDMemory(1))
+	}
+	return (*C.HWND)(unsafe.Pointer(x))
+}
+
+// Ref returns a reference to C object as it is.
+func (x *HANDLE) Ref() *C.HANDLE {
+	if x == nil {
+		return nil
+	}
+	return (*C.HANDLE)(unsafe.Pointer(x))
+}
+
+// Free cleanups the referenced memory using C free.
+func (x *HANDLE) Free() {
+	if x != nil {
+		C.free(unsafe.Pointer(x))
+	}
+}
+
+// NewHANDLERef converts the C object reference into a raw struct reference without wrapping.
+func NewHANDLERef(ref unsafe.Pointer) *HANDLE {
+	return (*HANDLE)(ref)
+}
+
+// NewHANDLE allocates a new C object of this type and converts the reference into
+// a raw struct reference without wrapping.
+func NewHANDLE() *HANDLE {
+	return (*HANDLE)(allocHANDLEMemory(1))
+}
+
+// allocHANDLEMemory allocates memory for type C.HANDLE in C.
+// The caller is responsible for freeing the this memory via C.free.
+func allocHANDLEMemory(n int) unsafe.Pointer {
+	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfHANDLEValue))
+	if err != nil {
+		panic("memory alloc error: " + err.Error())
+	}
+	return mem
+}
+
+const sizeOfHANDLEValue = unsafe.Sizeof([1]C.HANDLE{})
+
+// PassRef returns a reference to C object as it is or allocates a new C object of this type.
+func (x *HANDLE) PassRef() *C.HANDLE {
+	if x == nil {
+		x = (*HANDLE)(allocHANDLEMemory(1))
+	}
+	return (*C.HANDLE)(unsafe.Pointer(x))
+}
+
+// Ref returns a reference to C object as it is.
+func (x *SECURITY_ATTRIBUTES) Ref() *C.SECURITY_ATTRIBUTES {
+	if x == nil {
+		return nil
+	}
+	return (*C.SECURITY_ATTRIBUTES)(unsafe.Pointer(x))
+}
+
+// Free cleanups the referenced memory using C free.
+func (x *SECURITY_ATTRIBUTES) Free() {
+	if x != nil {
+		C.free(unsafe.Pointer(x))
+	}
+}
+
+// NewSECURITY_ATTRIBUTESRef converts the C object reference into a raw struct reference without wrapping.
+func NewSECURITY_ATTRIBUTESRef(ref unsafe.Pointer) *SECURITY_ATTRIBUTES {
+	return (*SECURITY_ATTRIBUTES)(ref)
+}
+
+// NewSECURITY_ATTRIBUTES allocates a new C object of this type and converts the reference into
+// a raw struct reference without wrapping.
+func NewSECURITY_ATTRIBUTES() *SECURITY_ATTRIBUTES {
+	return (*SECURITY_ATTRIBUTES)(allocSECURITY_ATTRIBUTESMemory(1))
+}
+
+// allocSECURITY_ATTRIBUTESMemory allocates memory for type C.SECURITY_ATTRIBUTES in C.
+// The caller is responsible for freeing the this memory via C.free.
+func allocSECURITY_ATTRIBUTESMemory(n int) unsafe.Pointer {
+	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfSECURITY_ATTRIBUTESValue))
+	if err != nil {
+		panic("memory alloc error: " + err.Error())
+	}
+	return mem
+}
+
+const sizeOfSECURITY_ATTRIBUTESValue = unsafe.Sizeof([1]C.SECURITY_ATTRIBUTES{})
+
+// PassRef returns a reference to C object as it is or allocates a new C object of this type.
+func (x *SECURITY_ATTRIBUTES) PassRef() *C.SECURITY_ATTRIBUTES {
+	if x == nil {
+		x = (*SECURITY_ATTRIBUTES)(allocSECURITY_ATTRIBUTESMemory(1))
+	}
+	return (*C.SECURITY_ATTRIBUTES)(unsafe.Pointer(x))
+}
+
+// Ref returns a reference to C object as it is.
+func (x *DWORD) Ref() *C.DWORD {
+	if x == nil {
+		return nil
+	}
+	return (*C.DWORD)(unsafe.Pointer(x))
+}
+
+// Free cleanups the referenced memory using C free.
+func (x *DWORD) Free() {
+	if x != nil {
+		C.free(unsafe.Pointer(x))
+	}
+}
+
+// NewDWORDRef converts the C object reference into a raw struct reference without wrapping.
+func NewDWORDRef(ref unsafe.Pointer) *DWORD {
+	return (*DWORD)(ref)
+}
+
+// NewDWORD allocates a new C object of this type and converts the reference into
+// a raw struct reference without wrapping.
+func NewDWORD() *DWORD {
+	return (*DWORD)(allocDWORDMemory(1))
+}
+
+// allocDWORDMemory allocates memory for type C.DWORD in C.
+// The caller is responsible for freeing the this memory via C.free.
+func allocDWORDMemory(n int) unsafe.Pointer {
+	mem, err := C.calloc(C.size_t(n), (C.size_t)(sizeOfDWORDValue))
+	if err != nil {
+		panic("memory alloc error: " + err.Error())
+	}
+	return mem
+}
+
+const sizeOfDWORDValue = unsafe.Sizeof([1]C.DWORD{})
+
+// PassRef returns a reference to C object as it is or allocates a new C object of this type.
+func (x *DWORD) PassRef() *C.DWORD {
+	if x == nil {
+		x = (*DWORD)(allocDWORDMemory(1))
+	}
+	return (*C.DWORD)(unsafe.Pointer(x))
 }
 
 // allocWin32SurfaceCreateInfoMemory allocates memory for type C.VkWin32SurfaceCreateInfoKHR in C.
@@ -165,6 +411,14 @@ func (x *Win32SurfaceCreateInfo) PassRef() (*C.VkWin32SurfaceCreateInfoKHR, *cgo
 	ref8747e274.flags, cflags_allocs = (C.VkWin32SurfaceCreateFlagsKHR)(x.Flags), cgoAllocsUnknown
 	allocs8747e274.Borrow(cflags_allocs)
 
+	var chinstance_allocs *cgoAllocMap
+	ref8747e274.hinstance, chinstance_allocs = *(*C.HINSTANCE)(unsafe.Pointer(&x.Hinstance)), cgoAllocsUnknown
+	allocs8747e274.Borrow(chinstance_allocs)
+
+	var chwnd_allocs *cgoAllocMap
+	ref8747e274.hwnd, chwnd_allocs = *(*C.HWND)(unsafe.Pointer(&x.Hwnd)), cgoAllocsUnknown
+	allocs8747e274.Borrow(chwnd_allocs)
+
 	x.ref8747e274 = ref8747e274
 	x.allocs8747e274 = allocs8747e274
 	return ref8747e274, allocs8747e274
@@ -189,6 +443,8 @@ func (x *Win32SurfaceCreateInfo) Deref() {
 	x.SType = (StructureType)(x.ref8747e274.sType)
 	x.PNext = (unsafe.Pointer)(unsafe.Pointer(x.ref8747e274.pNext))
 	x.Flags = (Win32SurfaceCreateFlags)(x.ref8747e274.flags)
+	x.Hinstance = *(*HINSTANCE)(unsafe.Pointer(&x.ref8747e274.hinstance))
+	x.Hwnd = *(*HWND)(unsafe.Pointer(&x.ref8747e274.hwnd))
 }
 
 // allocImportMemoryWin32HandleInfoNVMemory allocates memory for type C.VkImportMemoryWin32HandleInfoNV in C.
@@ -254,6 +510,10 @@ func (x *ImportMemoryWin32HandleInfoNV) PassRef() (*C.VkImportMemoryWin32HandleI
 	ref6171f825.handleType, chandleType_allocs = (C.VkExternalMemoryHandleTypeFlagsNV)(x.HandleType), cgoAllocsUnknown
 	allocs6171f825.Borrow(chandleType_allocs)
 
+	var chandle_allocs *cgoAllocMap
+	ref6171f825.handle, chandle_allocs = *(*C.HANDLE)(unsafe.Pointer(&x.Handle)), cgoAllocsUnknown
+	allocs6171f825.Borrow(chandle_allocs)
+
 	x.ref6171f825 = ref6171f825
 	x.allocs6171f825 = allocs6171f825
 	return ref6171f825, allocs6171f825
@@ -278,6 +538,7 @@ func (x *ImportMemoryWin32HandleInfoNV) Deref() {
 	x.SType = (StructureType)(x.ref6171f825.sType)
 	x.PNext = (unsafe.Pointer)(unsafe.Pointer(x.ref6171f825.pNext))
 	x.HandleType = (ExternalMemoryHandleTypeFlagsNV)(x.ref6171f825.handleType)
+	x.Handle = *(*HANDLE)(unsafe.Pointer(&x.ref6171f825.handle))
 }
 
 // allocExportMemoryWin32HandleInfoNVMemory allocates memory for type C.VkExportMemoryWin32HandleInfoNV in C.
@@ -339,6 +600,14 @@ func (x *ExportMemoryWin32HandleInfoNV) PassRef() (*C.VkExportMemoryWin32HandleI
 	ref84fe87ef.pNext, cpNext_allocs = *(*unsafe.Pointer)(unsafe.Pointer(&x.PNext)), cgoAllocsUnknown
 	allocs84fe87ef.Borrow(cpNext_allocs)
 
+	var cpAttributes_allocs *cgoAllocMap
+	ref84fe87ef.pAttributes, cpAttributes_allocs = *(**C.SECURITY_ATTRIBUTES)(unsafe.Pointer(&x.PAttributes)), cgoAllocsUnknown
+	allocs84fe87ef.Borrow(cpAttributes_allocs)
+
+	var cdwAccess_allocs *cgoAllocMap
+	ref84fe87ef.dwAccess, cdwAccess_allocs = *(*C.DWORD)(unsafe.Pointer(&x.DwAccess)), cgoAllocsUnknown
+	allocs84fe87ef.Borrow(cdwAccess_allocs)
+
 	x.ref84fe87ef = ref84fe87ef
 	x.allocs84fe87ef = allocs84fe87ef
 	return ref84fe87ef, allocs84fe87ef
@@ -362,6 +631,8 @@ func (x *ExportMemoryWin32HandleInfoNV) Deref() {
 	}
 	x.SType = (StructureType)(x.ref84fe87ef.sType)
 	x.PNext = (unsafe.Pointer)(unsafe.Pointer(x.ref84fe87ef.pNext))
+	x.PAttributes = (*SECURITY_ATTRIBUTES)(unsafe.Pointer(x.ref84fe87ef.pAttributes))
+	x.DwAccess = *(*DWORD)(unsafe.Pointer(&x.ref84fe87ef.dwAccess))
 }
 
 // allocWin32KeyedMutexAcquireReleaseInfoNVMemory allocates memory for type C.VkWin32KeyedMutexAcquireReleaseInfoNV in C.
