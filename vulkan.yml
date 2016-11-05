@@ -35,7 +35,7 @@ PARSER:
     - vk_bridge.h
 #    - android/native_window.h
   Defines:
-    VK_USE_PLATFORM_ANDROID_KHR: 1
+    # VK_USE_PLATFORM_ANDROID_KHR: 1
     VK_NO_PROTOTYPES: 1
 
 TRANSLATOR: 
