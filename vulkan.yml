@@ -7,12 +7,10 @@ GENERATOR:
     - vulkan/vulkan.h
     - vk_wrapper.h
     - vk_bridge.h
-#    - android/native_window.h
   FlagGroups:
     - {name: "CFLAGS", flags: [
         "-I.",
         "-DVK_NO_PROTOTYPES",
-        # "-DVK_USE_PLATFORM_ANDROID_KHR",
     ]}
     - {name: "LDFLAGS", traits: ["android"], flags: [
       "-Wl,--no-warn-mismatch",
@@ -33,10 +31,9 @@ PARSER:
     - vulkan/vulkan.h
     - vk_wrapper.h
     - vk_bridge.h
-#    - android/native_window.h
   Defines:
-    # VK_USE_PLATFORM_ANDROID_KHR: 1
     VK_NO_PROTOTYPES: 1
+    VK_USE_PLATFORM_ANDROID_KHR: 0
 
 TRANSLATOR: 
   ConstRules: 
