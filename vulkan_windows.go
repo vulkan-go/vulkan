@@ -4,7 +4,7 @@ package vulkan
 
 /*
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
-#cgo windows CFLAGS: -DVK_USE_PLATFORM_WIN32_KHR -D_GLFW_WIN32
+#cgo windows CFLAGS: -DVK_USE_PLATFORM_WIN32_KHR -D_GLFW_WIN32 -Wno-int-to-pointer-cast
 #cgo windows LDFLAGS: -lglfw3 -lgdi32 -Wl,--allow-multiple-definition
 
 #include <GLFW/glfw3.h>
