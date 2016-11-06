@@ -4,9 +4,11 @@ package vulkan
 
 /*
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
-#cgo darwin CFLAGS: -DVK_USE_PLATFORM_MACOS_MVK -DGLFW_COCOA -DGLFW_USE_CHDIR -DGLFW_USE_MENUBAR -DGLFW_INCLUDE_VULKAN -DGLFW_USE_RETINA -Wno-deprecated-declarations
+#cgo darwin CFLAGS: -DVK_USE_PLATFORM_MACOS_MVK -DGLFW_INCLUDE_VULKAN -D_GLFW_COCOA -D_GLFW_USE_CHDIR -D_GLFW_USE_MENUBAR -D_GLFW_USE_RETINA -Wno-deprecated-declarations
 #cgo darwin LDFLAGS: -framework Cocoa -framework IOKit -framework Metal -framework QuartzCore -framework MoltenVK -lc++
 #cgo darwin pkg-config: glfw3
+
+#include <GLFW/glfw3.h>
 
 #include "vulkan/vulkan.h"
 #include "vk_wrapper.h"

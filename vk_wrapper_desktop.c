@@ -1,7 +1,6 @@
 // +build windows darwin
 
 #include <GLFW/glfw3.h>
-#include <stdio.h>
 #include "vk_wrapper.h"
 
 const char** vkGetRequiredInstanceExtensions(uint32_t *count) {

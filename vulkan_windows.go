@@ -4,13 +4,13 @@ package vulkan
 
 /*
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
-#cgo windows CFLAGS: -DVK_USE_PLATFORM_WIN32_KHR -D_GLFW_WIN32 -DGLFW_INCLUDE_VULKAN
-#cgo windows LDFLAGS: -lglfw3 -lgdi32 -lm -Wl,--allow-multiple-definition
+#cgo windows CFLAGS: -DVK_USE_PLATFORM_WIN32_KHR -D_GLFW_WIN32
+#cgo windows LDFLAGS: -lglfw3 -lgdi32 -Wl,--allow-multiple-definition
 
-#include "vulkan/vulkan.h"
+#include <GLFW/glfw3.h>
+
 #include "vk_wrapper.h"
 #include "vk_bridge.h"
-#include <stdlib.h>
 */
 import "C"
 import "unsafe"
