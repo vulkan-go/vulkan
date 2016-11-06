@@ -18,6 +18,8 @@ import "C"
 import "unsafe"
 
 const (
+	// NullHandle defines a platform-specfic null handle.
+	NullHandle = 0
 	// UsePlatformAndroid as defined in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html
 	UsePlatformAndroid = 1
 	// KhrAndroidSurface as defined in vulkan/vulkan.h:3669

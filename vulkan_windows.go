@@ -16,6 +16,8 @@ import "C"
 import "unsafe"
 
 const (
+	// NullHandle defines a platform-specfic null handle.
+	NullHandle = nil
 	// UsePlatformWin32 as defined in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html
 	UsePlatformWin32 = 1
 	// KhrWin32Surface as defined in vulkan/vulkan.h:3697

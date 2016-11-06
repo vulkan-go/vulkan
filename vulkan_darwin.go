@@ -16,6 +16,8 @@ import "C"
 import "unsafe"
 
 const (
+	// NullHandle defines a platform-specfic null handle.
+	NullHandle = nil
 	// UsePlatformMacos mean enabled support of MoltenVK.
 	UsePlatformMacos = 1
 	// MvkMacosSurface means that VK_MVK_macos_surface is available.
