@@ -46,9 +46,9 @@ type (
 	DWORD               C.DWORD
 )
 
-// CreateGLFWSurface creates a Vulkan surface (as defined by the VK_KHR_surface extension) for a GLFW window with glfwCreateWindowSurface.
+// CreateWindowSurface creates a Vulkan surface (VK_KHR_win32_surface) for a GLFW window with glfwCreateWindowSurface.
 // See http://www.glfw.org/docs/latest/group__vulkan.html#ga1a24536bec3f80b08ead18e28e6ae965
-func CreateGLFWSurface(instance Instance, glfwWindow uintptr, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
+func CreateWindowSurface(instance Instance, glfwWindow uintptr, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
 	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
 	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), cgoAllocsUnknown
 	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), cgoAllocsUnknown
@@ -56,7 +56,8 @@ func CreateGLFWSurface(instance Instance, glfwWindow uintptr, pAllocator *Alloca
 	return (Result)(ret)
 }
 
-// GetRequiredInstanceExtensions should be used to query the instance extensions required, calls glfwGetRequiredInstanceExtensions.
+// GetRequiredInstanceExtensions should be used to query instance extensions required for surface initialization,
+// calls glfwGetRequiredInstanceExtensions.
 // See http://www.glfw.org/docs/3.2/group__vulkan.html#ga1abcbe61033958f22f63ef82008874b1
 func GetRequiredInstanceExtensions() []string {
 	var count uint32
@@ -69,7 +70,7 @@ func GetRequiredInstanceExtensions() []string {
 
 // CreateWin32Surface function as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkCreateWin32SurfaceKHR
 func CreateWin32Surface(instance Instance, pCreateInfo *Win32SurfaceCreateInfo, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
-	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
+	cinstance, _ := (C.VkInstance)(instance), cgoAllocsUnknown
 	cpCreateInfo, _ := pCreateInfo.PassRef()
 	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), cgoAllocsUnknown
 	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), cgoAllocsUnknown

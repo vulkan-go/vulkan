@@ -28,6 +28,29 @@ const (
 	KhrAndroidSurfaceExtensionName = "VK_KHR_android_surface"
 )
 
+// CreateWindowSurface creates a Vulkan surface (VK_KHR_android_surface) for ANativeWindow from Android NDK.
+func CreateWindowSurface(instance Instance, nativeWindow uintptr, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
+	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
+	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), cgoAllocsUnknown
+	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), cgoAllocsUnknown
+	pCreateInfo := &AndroidSurfaceCreateInfo{
+		SType:  StructureTypeAndroidSurfaceCreateInfo,
+		Window: (*ANativeWindow)(unsafe.Pointer(nativeWindow)),
+	}
+	cpCreateInfo, _ := pCreateInfo.PassRef()
+	__ret := C.callVkCreateAndroidSurfaceKHR(cinstance, cpCreateInfo, cpAllocator, cpSurface)
+	__v := (Result)(__ret)
+	return __v
+}
+
+// GetRequiredInstanceExtensions should be used to query instance extensions required for surface initialization.
+func GetRequiredInstanceExtensions() []string {
+	return []string{
+		"VK_KHR_surface\x00",
+		"VK_KHR_android_surface\x00",
+	}
+}
+
 // CreateAndroidSurface function as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vkCreateAndroidSurfaceKHR
 func CreateAndroidSurface(instance Instance, pCreateInfo *AndroidSurfaceCreateInfo, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
 	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
