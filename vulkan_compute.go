@@ -14,6 +14,16 @@ package vulkan
 import "C"
 
 const (
-	// UsePlatformCompute means using VK for compute and headless rendering purposes only.
+	// UsePlatformCompute means using Vulkan API for compute and headless rendering purposes only.
 	UsePlatformCompute = 1
 )
+
+// CreateWindowSurface is a no-op for Vulkan in compute mode.
+func CreateWindowSurface(_ Instance, _ uintptr, _ *AllocationCallbacks, _ *Surface) Result {
+	return 0
+}
+
+// GetRequiredInstanceExtensions is a no-op for Vulkan in compute mode.
+func GetRequiredInstanceExtensions() []string {
+	return nil
+}
