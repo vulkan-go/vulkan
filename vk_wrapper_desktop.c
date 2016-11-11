@@ -1,4 +1,4 @@
-// +build windows darwin
+// +build windows darwin,!ios
 
 #include <GLFW/glfw3.h>
 #include "vk_wrapper.h"
@@ -8,21 +8,21 @@ const char** vkGetRequiredInstanceExtensions(uint32_t *count) {
 }
 
 VkResult vkCreateGLFWSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
-   return glfwCreateWindowSurface(instance, (GLFWwindow *)(win), allocator, surface);
+    return glfwCreateWindowSurface(instance, (GLFWwindow *)(win), allocator, surface);
 }
 
 int vkInit(void) {
     if (!glfwVulkanSupported()) {
-         return -1;
+        return -1;
     }
     vgo_vkCreateInstance = (PFN_vkCreateInstance)(glfwGetInstanceProcAddress(NULL, "vkCreateInstance"));
     vgo_vkEnumerateInstanceExtensionProperties = (PFN_vkEnumerateInstanceExtensionProperties)(glfwGetInstanceProcAddress(NULL, "vkEnumerateInstanceExtensionProperties"));
     vgo_vkEnumerateInstanceLayerProperties = (PFN_vkEnumerateInstanceLayerProperties)(glfwGetInstanceProcAddress(NULL, "vkEnumerateInstanceLayerProperties"));
-    
-    #ifndef VK_USE_PLATFORM_MACOS_MVK
-        // can safely init instance PFNs with no instance
-        vkInitInstance(NULL);
-    #endif
+
+#ifndef VK_USE_PLATFORM_MACOS_MVK
+    // can safely init instance PFNs with no instance
+    vkInitInstance(NULL);
+#endif
 
     return 0;
 }
@@ -213,7 +213,7 @@ int vkInitInstance(VkInstance instance) {
     vgo_vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)(glfwGetInstanceProcAddress(instance, "vkCreateDebugReportCallbackEXT"));
     vgo_vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(glfwGetInstanceProcAddress(instance, "vkDestroyDebugReportCallbackEXT"));
     vgo_vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(glfwGetInstanceProcAddress(instance, "vkDebugReportMessageEXT"));
-    
+
     return 0;
 }
 
