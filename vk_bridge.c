@@ -223,7 +223,7 @@ void callVkGetImageSparseMemoryRequirements(
     uint32_t*                                   pSparseMemoryRequirementCount,
     VkSparseImageMemoryRequirements*            pSparseMemoryRequirements) {
     vgo_vkGetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount,
-                                       pSparseMemoryRequirements);
+                                           pSparseMemoryRequirements);
 }
 
 void callVkGetPhysicalDeviceSparseImageFormatProperties(
@@ -357,7 +357,7 @@ VkResult callVkGetQueryPoolResults(
     VkDeviceSize                                stride,
     VkQueryResultFlags                          flags) {
     return vgo_vkGetQueryPoolResults(device, queryPool, firstQuery, queryCount,
-                                 dataSize, pData, stride, flags);
+                                     dataSize, pData, stride, flags);
 }
 
 VkResult callVkCreateBuffer(
@@ -482,7 +482,7 @@ VkResult callVkCreateGraphicsPipelines(
     const VkAllocationCallbacks*                pAllocator,
     VkPipeline*                                 pPipelines) {
     return vgo_vkCreateGraphicsPipelines(device, pipelineCache, createInfoCount,
-                                     pCreateInfos, pAllocator, pPipelines);
+                                         pCreateInfos, pAllocator, pPipelines);
 }
 
 VkResult callVkCreateComputePipelines(
@@ -493,7 +493,7 @@ VkResult callVkCreateComputePipelines(
     const VkAllocationCallbacks*                pAllocator,
     VkPipeline*                                 pPipelines) {
     return vgo_vkCreateComputePipelines(device, pipelineCache, createInfoCount,
-                                    pCreateInfos, pAllocator, pPipelines);
+                                        pCreateInfos, pAllocator, pPipelines);
 }
 
 void callVkDestroyPipeline(
@@ -592,7 +592,7 @@ void callVkUpdateDescriptorSets(
     uint32_t                                    descriptorCopyCount,
     const VkCopyDescriptorSet*                  pDescriptorCopies) {
     vgo_vkUpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites,
-                           descriptorCopyCount, pDescriptorCopies);
+                               descriptorCopyCount, pDescriptorCopies);
 }
 
 VkResult callVkCreateFramebuffer(
@@ -721,7 +721,7 @@ void callVkCmdSetDepthBias(
     float                                       depthBiasClamp,
     float                                       depthBiasSlopeFactor) {
     vgo_vkCmdSetDepthBias(commandBuffer, depthBiasConstantFactor,
-                      depthBiasClamp, depthBiasSlopeFactor);
+                          depthBiasClamp, depthBiasSlopeFactor);
 }
 
 void callVkCmdSetBlendConstants(
@@ -768,8 +768,8 @@ void callVkCmdBindDescriptorSets(
     uint32_t                                    dynamicOffsetCount,
     const uint32_t*                             pDynamicOffsets) {
     vgo_vkCmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout,
-                            firstSet, descriptorSetCount, pDescriptorSets,
-                            dynamicOffsetCount, pDynamicOffsets);
+                                firstSet, descriptorSetCount, pDescriptorSets,
+                                dynamicOffsetCount, pDynamicOffsets);
 }
 
 void callVkCmdBindIndexBuffer(
@@ -806,7 +806,7 @@ void callVkCmdDrawIndexed(
     int32_t                                     vertexOffset,
     uint32_t                                    firstInstance) {
     vgo_vkCmdDrawIndexed(commandBuffer, indexCount, instanceCount,
-                     firstIndex, vertexOffset, firstInstance);
+                         firstIndex, vertexOffset, firstInstance);
 }
 
 void callVkCmdDrawIndirect(
@@ -860,7 +860,7 @@ void callVkCmdCopyImage(
     uint32_t                                    regionCount,
     const VkImageCopy*                          pRegions) {
     vgo_vkCmdCopyImage(commandBuffer, srcImage, srcImageLayout,
-                   dstImage, dstImageLayout, regionCount, pRegions);
+                       dstImage, dstImageLayout, regionCount, pRegions);
 }
 
 void callVkCmdBlitImage(
@@ -873,7 +873,7 @@ void callVkCmdBlitImage(
     const VkImageBlit*                          pRegions,
     VkFilter                                    filter) {
     vgo_vkCmdBlitImage(commandBuffer, srcImage, srcImageLayout,
-                   dstImage, dstImageLayout, regionCount, pRegions, filter);
+                       dstImage, dstImageLayout, regionCount, pRegions, filter);
 }
 
 void callVkCmdCopyBufferToImage(
@@ -884,7 +884,7 @@ void callVkCmdCopyBufferToImage(
     uint32_t                                    regionCount,
     const VkBufferImageCopy*                    pRegions) {
     vgo_vkCmdCopyBufferToImage(commandBuffer, srcBuffer,
-                           dstImage, dstImageLayout, regionCount, pRegions);
+                               dstImage, dstImageLayout, regionCount, pRegions);
 }
 
 void callVkCmdCopyImageToBuffer(
@@ -895,7 +895,7 @@ void callVkCmdCopyImageToBuffer(
     uint32_t                                    regionCount,
     const VkBufferImageCopy*                    pRegions) {
     vgo_vkCmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout,
-                           dstBuffer, regionCount, pRegions);
+                               dstBuffer, regionCount, pRegions);
 }
 
 void callVkCmdUpdateBuffer(
@@ -934,7 +934,7 @@ void callVkCmdClearDepthStencilImage(
     uint32_t                                    rangeCount,
     const VkImageSubresourceRange*              pRanges) {
     vgo_vkCmdClearDepthStencilImage(commandBuffer, image, imageLayout,
-                                pDepthStencil, rangeCount, pRanges);
+                                    pDepthStencil, rangeCount, pRanges);
 }
 
 void callVkCmdClearAttachments(
@@ -955,7 +955,7 @@ void callVkCmdResolveImage(
     uint32_t                                    regionCount,
     const VkImageResolve*                       pRegions) {
     vgo_vkCmdResolveImage(commandBuffer, srcImage, srcImageLayout,
-                      dstImage, dstImageLayout, regionCount, pRegions);
+                          dstImage, dstImageLayout, regionCount, pRegions);
 }
 
 void callVkCmdSetEvent(
@@ -985,9 +985,9 @@ void callVkCmdWaitEvents(
     uint32_t                                    imageMemoryBarrierCount,
     const VkImageMemoryBarrier*                 pImageMemoryBarriers) {
     vgo_vkCmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask,
-                    memoryBarrierCount, pMemoryBarriers,
-                    bufferMemoryBarrierCount, pBufferMemoryBarriers,
-                    imageMemoryBarrierCount, pImageMemoryBarriers);
+                        memoryBarrierCount, pMemoryBarriers,
+                        bufferMemoryBarrierCount, pBufferMemoryBarriers,
+                        imageMemoryBarrierCount, pImageMemoryBarriers);
 }
 
 void callVkCmdPipelineBarrier(
@@ -1002,9 +1002,9 @@ void callVkCmdPipelineBarrier(
     uint32_t                                    imageMemoryBarrierCount,
     const VkImageMemoryBarrier*                 pImageMemoryBarriers) {
     vgo_vkCmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags,
-                         memoryBarrierCount, pMemoryBarriers,
-                         bufferMemoryBarrierCount, pBufferMemoryBarriers,
-                         imageMemoryBarrierCount, pImageMemoryBarriers);
+                             memoryBarrierCount, pMemoryBarriers,
+                             bufferMemoryBarrierCount, pBufferMemoryBarriers,
+                             imageMemoryBarrierCount, pImageMemoryBarriers);
 }
 
 void callVkCmdBeginQuery(
@@ -1048,7 +1048,7 @@ void callVkCmdCopyQueryPoolResults(
     VkDeviceSize                                stride,
     VkQueryResultFlags                          flags) {
     vgo_vkCmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount,
-                              dstBuffer, dstOffset, stride, flags);
+                                  dstBuffer, dstOffset, stride, flags);
 }
 
 void callVkCmdPushConstants(
@@ -1198,7 +1198,7 @@ VkResult callVkGetDisplayModePropertiesKHR(
     uint32_t*                                   pPropertyCount,
     VkDisplayModePropertiesKHR*                 pProperties) {
     return vgo_vkGetDisplayModePropertiesKHR(physicalDevice, display,
-                                         pPropertyCount, pProperties);
+            pPropertyCount, pProperties);
 }
 
 VkResult callVkCreateDisplayModeKHR(
@@ -1233,7 +1233,7 @@ VkResult callVkCreateSharedSwapchainsKHR(
     const VkAllocationCallbacks*                pAllocator,
     VkSwapchainKHR*                             pSwapchains) {
     return vgo_vkCreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos,
-                                       pAllocator, pSwapchains);
+                                           pAllocator, pSwapchains);
 }
 
 #ifdef VK_USE_PLATFORM_XLIB_KHR
@@ -1319,6 +1319,52 @@ VkResult callVkCreateAndroidSurfaceKHR(
     return vgo_vkCreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
 }
 #endif /* VK_USE_PLATFORM_ANDROID_KHR */
+
+#ifdef VK_USE_PLATFORM_IOS_MVK
+VkResult callVkCreateIOSSurfaceMVK(
+    VkInstance                              instance,
+    const VkIOSSurfaceCreateInfoMVK*        pCreateInfo,
+    const VkAllocationCallbacks*            pAllocator,
+    VkSurfaceKHR*                           pSurface) {
+    return vgo_vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface);
+}
+
+VkResult callVkActivateMoltenVKLicenseMVK(
+    const char*                                 licenseID,
+    const char*                                 licenseKey,
+    VkBool32                                    acceptLicenseTermsAndConditions) {
+    return vgo_vkActivateMoltenVKLicenseMVK(licenseID, licenseKey, acceptLicenseTermsAndConditions);
+}
+
+VkResult callVkActivateMoltenVKLicensesMVK() {
+    return vkActivateMoltenVKLicensesMVK();
+}
+
+VkResult callVkGetMoltenVKDeviceConfigurationMVK(
+    VkDevice                                    device,
+    MVKDeviceConfiguration*                     pConfiguration) {
+    return vgo_vkGetMoltenVKDeviceConfigurationMVK(device, pConfiguration);
+}
+
+VkResult callVkSetMoltenVKDeviceConfigurationMVK(
+    VkDevice                                    device,
+    MVKDeviceConfiguration*                     pConfiguration) {
+    return vgo_vkSetMoltenVKDeviceConfigurationMVK(device, pConfiguration);
+}
+
+VkResult callVkGetPhysicalDeviceMetalFeaturesMVK(
+    VkPhysicalDevice                            physicalDevice,
+    MVKPhysicalDeviceMetalFeatures*             pMetalFeatures) {
+    return vgo_vkGetPhysicalDeviceMetalFeaturesMVK(physicalDevice, pMetalFeatures);
+}
+
+VkResult callVkGetSwapchainPerformanceMVK(
+    VkDevice                                    device,
+    VkSwapchainKHR                              swapchain,
+    MVKSwapchainPerformance*                    pSwapchainPerf) {
+    return vgo_vkGetSwapchainPerformanceMVK(device, swapchain, pSwapchainPerf);
+}
+#endif /* VK_USE_PLATFORM_IOS_MVK */
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 VkResult callVkCreateWin32SurfaceKHR(

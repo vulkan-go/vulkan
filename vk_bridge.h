@@ -4,6 +4,11 @@
 #define VK_NO_PROTOTYPES 1
 #include "vulkan/vulkan.h"
 
+#ifdef VK_USE_PLATFORM_IOS_MVK
+#include "moltenVK/vk_mvk_moltenvk.h"
+#include "moltenVK/vk_mvk_ios_surface.h"
+#endif
+
 #ifdef __cplusplus
 extern "C";
 #endif
@@ -963,6 +968,38 @@ VkResult callVkCreateAndroidSurfaceKHR(
     const VkAllocationCallbacks*                pAllocator,
     VkSurfaceKHR*                               pSurface);
 #endif /* VK_USE_PLATFORM_ANDROID_KHR */
+
+#ifdef VK_USE_PLATFORM_IOS_MVK
+VkResult callVkCreateIOSSurfaceMVK(
+    VkInstance                              instance,
+    const VkIOSSurfaceCreateInfoMVK*        pCreateInfo,
+    const VkAllocationCallbacks*            pAllocator,
+    VkSurfaceKHR*                           pSurface);
+
+VkResult callVkActivateMoltenVKLicenseMVK(
+    const char*                                 licenseID,
+    const char*                                 licenseKey,
+    VkBool32                                    acceptLicenseTermsAndConditions);
+
+VkResult callVkActivateMoltenVKLicensesMVK();
+
+VkResult callVkGetMoltenVKDeviceConfigurationMVK(
+    VkDevice                                    device,
+    MVKDeviceConfiguration*                     pConfiguration);
+
+VkResult callVkSetMoltenVKDeviceConfigurationMVK(
+    VkDevice                                    device,
+    MVKDeviceConfiguration*                     pConfiguration);
+
+VkResult callVkGetPhysicalDeviceMetalFeaturesMVK(
+    VkPhysicalDevice                            physicalDevice,
+    MVKPhysicalDeviceMetalFeatures*             pMetalFeatures);
+
+VkResult callVkGetSwapchainPerformanceMVK(
+    VkDevice                                    device,
+    VkSwapchainKHR                              swapchain,
+    MVKSwapchainPerformance*                    pSwapchainPerf);
+#endif /* VK_USE_PLATFORM_IOS_MVK */
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 VkResult callVkCreateWin32SurfaceKHR(
