@@ -83,6 +83,29 @@ type IOSSurfaceCreateInfoMVK struct {
 	allocs96717271 interface{}
 }
 
+// CreateWindowSurface creates a Vulkan surface (VK_MVK_ios_surface) for an UIView from iOS SDK's UIKit.
+func CreateWindowSurface(instance Instance, uiView uintptr, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
+	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
+	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), cgoAllocsUnknown
+	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), cgoAllocsUnknown
+	pCreateInfo := &IOSSurfaceCreateInfoMVK{
+		SType: StructureTypeIosSurfaceCreateInfoMvk,
+		PView: unsafe.Pointer(uiView),
+	}
+	cpCreateInfo, _ := pCreateInfo.PassRef()
+	__ret := C.callVkCreateIOSSurfaceMVK(cinstance, cpCreateInfo, cpAllocator, cpSurface)
+	__v := (Result)(__ret)
+	return __v
+}
+
+// GetRequiredInstanceExtensions should be used to query instance extensions required for surface initialization.
+func GetRequiredInstanceExtensions() []string {
+	return []string{
+		"VK_KHR_surface\x00",
+		"VK_MVK_ios_surface\x00",
+	}
+}
+
 // CreateIOSSurfaceMVK function as declared in vulkan/vk_bridge.h:973
 func CreateIOSSurfaceMVK(instance Instance, pCreateInfo *IOSSurfaceCreateInfoMVK, pAllocator *AllocationCallbacks, pSurface *Surface) Result {
 	cinstance, _ := *(*C.VkInstance)(unsafe.Pointer(&instance)), cgoAllocsUnknown
