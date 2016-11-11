@@ -4,6 +4,11 @@
 #define VK_NO_PROTOTYPES 1
 #include "vulkan/vulkan.h"
 
+#ifdef VK_USE_PLATFORM_IOS_MVK
+#include "moltenVK/vk_mvk_moltenvk.h"
+#include "moltenVK/vk_mvk_ios_surface.h"
+#endif
+
 int vkInit(void);
 int vkInitInstance(VkInstance instance);
 const char** vkGetRequiredInstanceExtensions(uint32_t *count);

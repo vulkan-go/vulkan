@@ -1,4 +1,5 @@
-// +build android
+// +build darwin
+// +build arm arm64
 
 #include "vk_wrapper.h"
 #include <dlfcn.h>

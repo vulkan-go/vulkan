@@ -20,10 +20,13 @@ PARSER:
     - vulkan/vulkan.h
     - vk_wrapper.h
     - vk_bridge.h
+    # - moltenVK/vk_mvk_ios_surface.h
+    # - moltenVK/vk_mvk_moltenvk.h
   Defines:
     VK_NO_PROTOTYPES: 1
     VK_USE_PLATFORM_ANDROID_KHR: null
     VK_USE_PLATFORM_WIN32_KHR: null
+    VK_USE_PLATFORM_IOS_MVK: null
 
 TRANSLATOR: 
   ConstRules: 
@@ -32,6 +35,7 @@ TRANSLATOR:
     global: 
       - {action: accept, from: "^Vk"}
       - {action: replace, from: "^Vk"}
+      - {action: accept, from: "^MVK"}
       # callbacks (no allocation callbacks cos it's dumb)
       - {action: accept, from: PFN_vkDebugReportCallback}
       - {action: replace, from: PFN_vkDebugReportCallback, to: DebugReportCallbackFunc}
@@ -63,6 +67,7 @@ TRANSLATOR:
     post-global:
       - {action: doc, from: "KHR$",
               to: "https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#vk$goname"}
+      - {action: doc, from: "MVK$"}
       - {action: doc, from: "^callVk",
               to: "https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vk$goname.html"}
       - {action: doc, from: "^Vk",
