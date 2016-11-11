@@ -1,4 +1,4 @@
-// +build linux,compute
+// +build linux,compute linux,headless
 
 #include "vk_wrapper.h"
 #include <dlfcn.h>

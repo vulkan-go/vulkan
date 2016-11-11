@@ -1,4 +1,4 @@
-// +build linux,compute
+// +build linux,compute linux,headless
 
 package vulkan
 
