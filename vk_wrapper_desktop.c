@@ -397,6 +397,10 @@ PFN_vkGetPhysicalDeviceMirPresentationSupportKHR vgo_vkGetPhysicalDeviceMirPrese
 PFN_vkCreateAndroidSurfaceKHR vgo_vkCreateAndroidSurfaceKHR;
 #endif
 
+#ifdef VK_USE_PLATFORM_MACOS_MVK
+void __link_moltenvk() { vkGetInstanceProcAddr(NULL, NULL); }
+#endif
+
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 PFN_vkCreateWin32SurfaceKHR vgo_vkCreateWin32SurfaceKHR;
 PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vgo_vkGetPhysicalDeviceWin32PresentationSupportKHR;

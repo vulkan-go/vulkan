@@ -217,6 +217,13 @@ extern PFN_vkGetMoltenVKDeviceConfigurationMVK vgo_vkGetMoltenVKDeviceConfigurat
 extern PFN_vkSetMoltenVKDeviceConfigurationMVK vgo_vkSetMoltenVKDeviceConfigurationMVK;
 extern PFN_vkGetPhysicalDeviceMetalFeaturesMVK vgo_vkGetPhysicalDeviceMetalFeaturesMVK;
 extern PFN_vkGetSwapchainPerformanceMVK vgo_vkGetSwapchainPerformanceMVK;
+// vkGetInstanceProcAddr left there so the linker would link MoltenVK
+extern PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr;
+#endif
+
+#ifdef VK_USE_PLATFORM_MACOS_MVK
+// vkGetInstanceProcAddr left there so the linker would link MoltenVK
+extern PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr;
 #endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR

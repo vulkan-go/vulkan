@@ -1337,7 +1337,7 @@ VkResult callVkActivateMoltenVKLicenseMVK(
 }
 
 VkResult callVkActivateMoltenVKLicensesMVK() {
-    return vkActivateMoltenVKLicensesMVK();
+    return vgo_vkActivateMoltenVKLicensesMVK();
 }
 
 VkResult callVkGetMoltenVKDeviceConfigurationMVK(

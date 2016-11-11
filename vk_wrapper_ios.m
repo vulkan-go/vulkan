@@ -397,6 +397,7 @@ PFN_vkGetMoltenVKDeviceConfigurationMVK vgo_vkGetMoltenVKDeviceConfigurationMVK;
 PFN_vkSetMoltenVKDeviceConfigurationMVK vgo_vkSetMoltenVKDeviceConfigurationMVK;
 PFN_vkGetPhysicalDeviceMetalFeaturesMVK vgo_vkGetPhysicalDeviceMetalFeaturesMVK;
 PFN_vkGetSwapchainPerformanceMVK vgo_vkGetSwapchainPerformanceMVK;
+void __link_moltenvk() { vkGetInstanceProcAddr(NULL, NULL); }
 #endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
