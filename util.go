@@ -16,6 +16,10 @@ var (
 	MaxUint64 uint64 = 1<<64 - 1 // also ^uint64(0)
 )
 
+func (b Bool32) B() bool {
+	return b == True
+}
+
 type Version uint32
 
 func (v Version) String() string {
@@ -49,6 +53,7 @@ func ToString(buf []byte) string {
 	return str.String()
 }
 
+// deprecated
 func FindMemoryTypeIndex(dev PhysicalDevice,
 	typeBits uint32, reqMask MemoryPropertyFlagBits) (uint32, bool) {
 
@@ -72,23 +77,28 @@ func FindMemoryTypeIndex(dev PhysicalDevice,
 	return 0, false
 }
 
-// MemCopyFloat32 copies float32 values from src to dst as if dst was []float32.
-func MemCopyFloat32(dst unsafe.Pointer, src []float32) int {
-	const m = 0x7fffffff
-	dstView := (*[m / 4]float32)(dst)
-	return copy(dstView[:len(src)], src)
-}
-
-// MemCopyByte copies []byte values from src to dst as if dst was []byte.
-func MemCopyByte(dst unsafe.Pointer, src []byte) int {
+// Memcopy is like a Go's built-in copy function, it copies data from src slice,
+// but into a destination pointer. Useful to copy data into device memory.
+func Memcopy(dst unsafe.Pointer, src []byte) int {
 	const m = 0x7fffffff
 	dstView := (*[m]byte)(dst)
 	return copy(dstView[:len(src)], src)
 }
 
+// Memview returns a pointer to user data, so Vulkan runtime in userspace can peek.
+func Memview(data []byte) unsafe.Pointer {
+	return unsafe.Pointer((*sliceHeader)(unsafe.Pointer(&data)).Data)
+}
+
 func NewClearValue(color []float32) ClearValue {
 	var v ClearValue
 	v.SetColor(color)
+	return v
+}
+
+func NewClearDepthStencil(depth float32, stencil uint32) ClearValue {
+	var v ClearValue
+	v.SetDepthStencil(depth, stencil)
 	return v
 }
 
