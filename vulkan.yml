@@ -133,5 +133,6 @@ TRANSLATOR:
       # this covers all other cases
       - {target: ^callVk, tips: [sref,sref,sref,sref,sref,sref,sref,sref]}
     struct:
+      - {target: VkSubpassDescription, tips: [0,0,size,arr,size,arr,arr,ref,size,arr]}
       - {target: VkGraphicsPipelineCreateInfo, tips: [0,0,0,0,arr,ref,ref,ref,ref,ref,ref,ref,ref,ref]}
       - {target: VkInstanceCreateInfo, tips: [0,0,0,ref]}
