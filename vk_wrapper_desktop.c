@@ -1,4 +1,4 @@
-// +build windows darwin,!ios linux
+// +build windows darwin,!ios linux,!android
 
 #include <GLFW/glfw3.h>
 #include "vk_wrapper.h"
