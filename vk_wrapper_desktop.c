@@ -214,8 +214,8 @@ int vkInitInstance(VkInstance instance) {
     vgo_vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(glfwGetInstanceProcAddress(instance, "vkDestroyDebugReportCallbackEXT"));
     vgo_vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(glfwGetInstanceProcAddress(instance, "vkDebugReportMessageEXT"));
 
-    vgo_vkGetRefreshCycleDurationGOOGLE = (PFN_vkGetRefreshCycleDurationGOOGLE)(dlsym(libvulkan, "vkGetRefreshCycleDurationGOOGLE"));
-    vgo_vkGetPastPresentationTimingGOOGLE = (PFN_vkGetPastPresentationTimingGOOGLE)(dlsym(libvulkan, "vkGetPastPresentationTimingGOOGLE"));
+    vgo_vkGetRefreshCycleDurationGOOGLE = (PFN_vkGetRefreshCycleDurationGOOGLE)(glfwGetInstanceProcAddress(instance, "vkGetRefreshCycleDurationGOOGLE"));
+    vgo_vkGetPastPresentationTimingGOOGLE = (PFN_vkGetPastPresentationTimingGOOGLE)(glfwGetInstanceProcAddress(instance, "vkGetPastPresentationTimingGOOGLE"));
     return 0;
 }
 
