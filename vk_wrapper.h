@@ -237,4 +237,8 @@ extern PFN_vkCreateDebugReportCallbackEXT vgo_vkCreateDebugReportCallbackEXT;
 extern PFN_vkDestroyDebugReportCallbackEXT vgo_vkDestroyDebugReportCallbackEXT;
 extern PFN_vkDebugReportMessageEXT vgo_vkDebugReportMessageEXT;
 
+// VK_GOOGLE_display_timing
+extern PFN_vkGetRefreshCycleDurationGOOGLE vgo_vkGetRefreshCycleDurationGOOGLE;
+extern PFN_vkGetPastPresentationTimingGOOGLE vgo_vkGetPastPresentationTimingGOOGLE;
+
 #endif // VULKAN_WRAPPER_H_

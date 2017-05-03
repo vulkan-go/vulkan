@@ -1034,6 +1034,17 @@ void callVkDebugReportMessageEXT(
     const char*                                 pLayerPrefix,
     const char*                                 pMessage);
 
+VkResult callVkGetRefreshCycleDurationGOOGLE(
+    VkDevice                                    device,
+    VkSwapchainKHR                              swapchain,
+    VkRefreshCycleDurationGOOGLE*               pDisplayTimingProperties);
+
+VkResult callVkGetPastPresentationTimingGOOGLE(
+    VkDevice                                    device,
+    VkSwapchainKHR                              swapchain,
+    uint32_t*                                   pPresentationTimingCount,
+    VkPastPresentationTimingGOOGLE*             pPresentationTimings);
+
 #ifdef __cplusplus
 };
 #endif

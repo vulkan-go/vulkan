@@ -1425,3 +1425,19 @@ void callVkDebugReportMessageEXT(
             messageCode, pLayerPrefix, pMessage);
     }
 }
+
+VkResult callVkGetRefreshCycleDurationGOOGLE(
+    VkDevice                                    device,
+    VkSwapchainKHR                              swapchain,
+    VkRefreshCycleDurationGOOGLE*               pDisplayTimingProperties) {
+    return vgo_vkGetRefreshCycleDurationGOOGLE(device, swapchain, pDisplayTimingProperties);
+}
+
+VkResult callVkGetPastPresentationTimingGOOGLE(
+    VkDevice                                    device,
+    VkSwapchainKHR                              swapchain,
+    uint32_t*                                   pPresentationTimingCount,
+    VkPastPresentationTimingGOOGLE*             pPresentationTimings) {
+    return vgo_vkGetPastPresentationTimingGOOGLE(device, swapchain, pPresentationTimingCount, pPresentationTimings);
+}
+

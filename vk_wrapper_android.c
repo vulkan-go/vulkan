@@ -201,6 +201,9 @@ int vkInit(void) {
     vgo_vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)(dlsym(libvulkan, "vkCreateDebugReportCallbackEXT"));
     vgo_vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(dlsym(libvulkan, "vkDestroyDebugReportCallbackEXT"));
     vgo_vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(dlsym(libvulkan, "vkDebugReportMessageEXT"));
+
+    vgo_vkGetRefreshCycleDurationGOOGLE = (PFN_vkGetRefreshCycleDurationGOOGLE)(dlsym(libvulkan, "vkGetRefreshCycleDurationGOOGLE"));
+    vgo_vkGetPastPresentationTimingGOOGLE = (PFN_vkGetPastPresentationTimingGOOGLE)(dlsym(libvulkan, "vkGetPastPresentationTimingGOOGLE"));
     return 0;
 }
 
@@ -392,3 +395,6 @@ PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vgo_vkGetPhysicalDeviceWin32P
 PFN_vkCreateDebugReportCallbackEXT vgo_vkCreateDebugReportCallbackEXT;
 PFN_vkDestroyDebugReportCallbackEXT vgo_vkDestroyDebugReportCallbackEXT;
 PFN_vkDebugReportMessageEXT vgo_vkDebugReportMessageEXT;
+
+PFN_vkGetRefreshCycleDurationGOOGLE vgo_vkGetRefreshCycleDurationGOOGLE;
+PFN_vkGetPastPresentationTimingGOOGLE vgo_vkGetPastPresentationTimingGOOGLE;
