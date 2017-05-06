@@ -1,7 +1,7 @@
 /*
  * vk_mvk_moltenvk.h
  *
- * Copyright (c) 2014-2016 The Brenwill Workshop Ltd. All rights reserved.
+ * Copyright (c) 2014-2017 The Brenwill Workshop Ltd. All rights reserved.
  * http://www.brenwill.com
  *
  * Use of this document is governed by the Molten License Agreement, as included
@@ -20,20 +20,18 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif	//  __cplusplus
-
+#endif  //  __cplusplus
+    
 #include <vulkan/vulkan.h>
 
 
-#define VK_MVK_MOLTENVK_REVISION				1
-#define VK_MVK_MOLTENVK_EXTENSION_NUMBER		54
-#define VK_MVK_MOLTENVK_EXTENSION_NAME			"VK_MVK_moltenvk"
+#define VK_MVK_MOLTENVK_SPEC_VERSION            1
+#define VK_MVK_MOLTENVK_EXTENSION_NAME          "VK_MVK_moltenvk"
 
 /** MoltenVK configuration settings. */
 typedef struct {
-    VkBool32 supportDisplayContentsScale;   /**< If enabled, display surfaces that support contents scaling (such as Retina) will automatically use it when creating a color attachment. When used, it is the responsibility of the app to ensure depth, stencil, and resolve attachments are sized to match. Default is false. */
+    VkBool32 supportLargeQueryPools;        /**< Metal allows only 8192 occlusion queries per MTLBuffer. If enabled, MoltenVK allocates a MTLBuffer for each query pool, allowing each query pool to support 8192 queries, which may slow performance or cause unexpected behaviour if the query pool is not established prior to a Metal renderpass, or if the query pool is changed within a Metal renderpass. If disabled, one MTLBuffer will be shared by all query pools, which improves performance, but limits the total device queries to 8192. Default is false. */
     VkBool32 imageFlipY;                    /**< If enabled, images will be flipped on the Y-axis, as Vulkan coordinate system is inverse of OpenGL. Default is false. */
-    VkBool32 shaderConversionFlipFragmentY; /**< If enabled, MSL fragment shader code created during Runtime Shader Conversion will flip the Y-axis of each texture coordinate, as Vulkan texture coordinate system is inverse of OpenGL. Default is false. */
     VkBool32 shaderConversionFlipVertexY;   /**< If enabled, MSL vertex shader code created during Runtime Shader Conversion will flip the Y-axis of each vertex, as Vulkan coordinate system is inverse of OpenGL. Default is true. */
     VkBool32 shaderConversionLogging;       /**< If enabled, both SPIR-V and MSL code will be logged during Runtime Shader Conversion. Default is false. */
     VkBool32 performanceTracking;           /**< If enabled, per-frame performance statistics are tracked, and can be retrieved via the API. Default is false. */
@@ -42,13 +40,15 @@ typedef struct {
 
 /** Features provided by the current implementation of Metal on the current device. */
 typedef struct {
-	VkBool32 depthClipMode;					/**< Depth clip mode. */
-	VkBool32 indirectDrawing;				/**< Draw call parameters held in a GPU buffer. */
-	VkBool32 baseVertexInstanceDrawing;		/**< Draw calls support specifiying the base vertex and instance. */
-	uint32_t maxVertexBufferCount;			/**< The total number of vertex buffers available for vertex shader uniform content and vertex attributes. */
-	uint32_t maxFragmentBufferCount;		/**< The total number of fragment buffers available for fragment shader uniform content. */
-    VkDeviceSize bufferAlignment;           /**< The alignment used when allocating memory for MTLBuffers. */
-    VkDeviceSize pushConstantsAlignment;    /**< The alignment used when allocating memory for push constant structures. */
+    VkBool32 indirectDrawing;               /**< Draw calls support parameters held in a GPU buffer. */
+    VkBool32 baseVertexInstanceDrawing;     /**< Draw calls support specifiying the base vertex and instance. */
+    VkBool32 dynamicMTLBuffers;             /**< Dynamic MTLBuffers supported for setting vertex, fragment, and compute bytes. */
+    uint32_t maxPerStageBufferCount;        /**< The total number of per-stage Metal buffers available for shader uniform content and attributes. */
+    uint32_t maxPerStageTextureCount;       /**< The total number of per-stage Metal textures available for shader uniform content. */
+    uint32_t maxPerStageSamplerCount;       /**< The total number of per-stage Metal samplers available for shader uniform content. */
+    VkDeviceSize maxMTLBufferSize;          /**< The max size of a MTLBuffer (in bytes). */
+    VkDeviceSize mtlBufferAlignment;        /**< The alignment used when allocating memory for MTLBuffers. */
+    VkDeviceSize maxQueryBufferSize;        /**< The maximum size of an occlusion query buffer (in bytes). */
 } MVKPhysicalDeviceMetalFeatures;
 
 /** MoltenVK swapchain performance statistics. */
@@ -147,36 +147,50 @@ VKAPI_ATTR VkResult VKAPI_CALL vkActivateMoltenVKLicenseMVK(
 static inline void vkActivateMoltenVKLicensesMVK() {
 
     // General macros for using a build setting as a string
-#	define MLN_QUOTE(name) #name
-#	define MLN_STR(macro) MLN_QUOTE(macro)
+#   define MLN_QUOTE(name) #name
+#   define MLN_STR(macro) MLN_QUOTE(macro)
 
-#	ifndef MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS
-#		define MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS		0
-#	endif
+#   ifndef MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS
+#       define MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS      0
+#   endif
 
-#	if defined(MLN_LICENSE_ID) && defined(MLN_LICENSE_KEY)
+#   if defined(MLN_LICENSE_ID) && defined(MLN_LICENSE_KEY)
     vkActivateMoltenVKLicenseMVK(MLN_STR(MLN_LICENSE_ID), MLN_STR(MLN_LICENSE_KEY), MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS);
-#	endif
+#   endif
 
-#	if defined(MLN_LICENSE_ID_1) && defined(MLN_LICENSE_KEY_1)
+#   if defined(MLN_LICENSE_ID_1) && defined(MLN_LICENSE_KEY_1)
     vkActivateMoltenVKLicenseMVK(MLN_STR(MLN_LICENSE_ID_1), MLN_STR(MLN_LICENSE_KEY_1), MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS);
-#	endif
+#   endif
 
-#	if defined(MLN_LICENSE_ID_2) && defined(MLN_LICENSE_KEY_2)
+#   if defined(MLN_LICENSE_ID_2) && defined(MLN_LICENSE_KEY_2)
     vkActivateMoltenVKLicenseMVK(MLN_STR(MLN_LICENSE_ID_2), MLN_STR(MLN_LICENSE_KEY_2), MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS);
-#	endif
+#   endif
         
-#	if defined(MLN_LICENSE_ID_3) && defined(MLN_LICENSE_KEY_3)
+#   if defined(MLN_LICENSE_ID_3) && defined(MLN_LICENSE_KEY_3)
     vkActivateMoltenVKLicenseMVK(MLN_STR(MLN_LICENSE_ID_3), MLN_STR(MLN_LICENSE_KEY_3), MLN_LICENSE_ACCEPT_TERMS_AND_CONDITIONS);
-#	endif
+#   endif
 }
 
-/** Populates the pConfiguration structure with the current MoltenVK configuration settings of the specified device. */
+/** 
+ * Populates the pConfiguration structure with the current MoltenVK configuration settings 
+ * of the specified device. 
+ *
+ * To change a specific configuration value, call vkGetMoltenVKDeviceConfigurationMVK()
+ * to retrieve the current configuration, make changes, and call 
+ * vkSetMoltenVKDeviceConfigurationMVK() to update all of the values.
+ */
 VKAPI_ATTR VkResult VKAPI_CALL vkGetMoltenVKDeviceConfigurationMVK(
     VkDevice                                    device,
     MVKDeviceConfiguration*                     pConfiguration);
 
-/** Sets the MoltenVK configuration settings of the specified device to those found in the pConfiguration structure. */
+/** 
+ * Sets the MoltenVK configuration settings of the specified device to those found in the 
+ * pConfiguration structure.
+ *
+ * To change a specific configuration value, call vkGetMoltenVKDeviceConfigurationMVK()
+ * to retrieve the current configuration, make changes, and call
+ * vkSetMoltenVKDeviceConfigurationMVK() to update all of the values.
+ */
 VKAPI_ATTR VkResult VKAPI_CALL vkSetMoltenVKDeviceConfigurationMVK(
     VkDevice                                    device,
     MVKDeviceConfiguration*                     pConfiguration);
@@ -186,8 +200,8 @@ VKAPI_ATTR VkResult VKAPI_CALL vkSetMoltenVKDeviceConfigurationMVK(
  * supported by the specified physical device. 
  */
 VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceMetalFeaturesMVK(
-	VkPhysicalDevice                            physicalDevice,
-	MVKPhysicalDeviceMetalFeatures*             pMetalFeatures);
+    VkPhysicalDevice                            physicalDevice,
+    MVKPhysicalDeviceMetalFeatures*             pMetalFeatures);
 
 /**
  * Populates the specified MVKSwapchainPerformance structure with
@@ -198,12 +212,25 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetSwapchainPerformanceMVK(
     VkSwapchainKHR                              swapchain,
     MVKSwapchainPerformance*                    pSwapchainPerf);
 
+/**
+ * Returns a human readable version of the MoltenVK and Vulkan versions.
+ *
+ * This function is provided as a convenience for reporting. Use the MLN_VERSION, 
+ * VK_API_VERSION_1_0, and VK_HEADER_VERSION macros for programmatically accessing
+ * the corresponding version numbers.
+ */
+VKAPI_ATTR VkResult VKAPI_CALL vkGetVersionStringsMVK(
+    char* pMoltenVersionStringBuffer,
+    uint32_t moltenVersionStringBufferLength,
+    char* pVulkanVersionStringBuffer,
+    uint32_t vulkanVersionStringBufferLength);
+
 
 #endif // VK_NO_PROTOTYPES
 
 
 #ifdef __cplusplus
 }
-#endif	//  __cplusplus
+#endif  //  __cplusplus
 
 #endif

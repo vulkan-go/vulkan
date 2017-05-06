@@ -20,7 +20,6 @@ PARSER:
     - vulkan/vulkan.h
     - vk_wrapper.h
     - vk_bridge.h
-    # - moltenVK/vk_mvk_ios_surface.h
     # - moltenVK/vk_mvk_moltenvk.h
   Defines:
     VK_NO_PROTOTYPES: 1
