@@ -5,7 +5,7 @@ package vulkan
 /*
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
 #cgo linux CFLAGS: -DVK_USE_PLATFORM_XCB_KHR -DGLFW_INCLUDE_VULKAN
-#cgo linux pkg-config: glfw3
+#cgo linux pkg-config: --static glfw3
 
 #include <GLFW/glfw3.h>
 
