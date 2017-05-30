@@ -41,6 +41,9 @@ TRANSLATOR:
       # these in global section so doc will work
       - {action: accept, from: ^callVk}
       - {action: replace, from: ^callVk}
+      # surface_capabilities2
+      - {action: replace, from: "(?i)_CAPABILITIES2_EXT$", to: "_CAPABILITIES2_E"}
+      - {action: replace, from: "(?i)Capabilities2EXT$", to: "Capabilities2E"}
     type:
       - {action: accept, from: "^ANativeWindow$"}
       - {action: accept, from: "^HINSTANCE$"}
