@@ -43,7 +43,7 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-11-06** VulkanInfo and VulkanDraw both ported to desktop OS X and use GLFW to initialize Vulkan ([screen #1](http://dl.xlab.is/vulkan/screens/first-moltenvk-vulkaninfo.png) and [screen #2](http://dl.xlab.is/vulkan/screens/first-moltenvk-vulkandraw.png))
 
-* **2016-11-07** VulkanInfo runs fine on NVIDIA GTX980 initialized through GLFW under Windows 10 ([screen #1](http://dl.xlab.is/vulkan/screens/first-windows-vulkaninfo.png) and [screen #2](http://dl.xlab.is/vulkan/screens/first-windows-vulkandraw.png)).
+* **2016-11-07** VulkanInfo and VulkanDraw run fine on NVIDIA GTX980 initialized through GLFW under Windows 10 ([screen #1](http://dl.xlab.is/vulkan/screens/first-windows-vulkaninfo.png) and [screen #2](http://dl.xlab.is/vulkan/screens/first-windows-vulkandraw.png)).
 
 * **2016-11-08** VulkanInfo runs in headless (a.k.a computing) mode in Amazon AWS cloud on P2 Instance equipped Tesla K80 ([screenshot](http://dl.xlab.is/vulkan/screens/first-amazon-vulkaninfo.png)).
 
@@ -59,7 +59,7 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-05-06** [vulkan-go/asche](https://github.com/vulkan-go/asche) complete.
 
-![vulkan cube golang](http://dl.xlab.is/vulkan/screens/cube60.gif)
+![vulkan cube golang](http://dl.xlab.is/vulkan/screens/cube.gif)
 
 See all demos in [vulkan-go/demos](https://github.com/vulkan-go/demos).
 
