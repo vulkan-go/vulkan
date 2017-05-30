@@ -55,9 +55,9 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-11-29** Generic Linux support added in using GLFW ([Issue #2](https://github.com/vulkan-go/vulkan/issues/2)) thanks @jfreymuth.
 
-* **2016-05-06** Third, successful attempt to write spining cube example. 16 hours spent, 4K LOC of C code rewritten from [cube.c](https://github.com/LunarG/VulkanSamples/blob/master/demos/cube.c) of LunarG demos.
+* **2017-05-06** Third, successful attempt to write spining cube example. 16 hours spent, 4K LOC of C code rewritten from [cube.c](https://github.com/LunarG/VulkanSamples/blob/master/demos/cube.c) of LunarG demos. The whole process has been screencasted, maybe I will release it one day.
 
-* **2016-05-06** [vulkan-go/asche](https://github.com/vulkan-go/asche) complete.
+* **2017-05-06** [vulkan-go/asche](https://github.com/vulkan-go/asche) complete.
 
 ![vulkan cube golang](http://dl.xlab.is/vulkan/screens/cube.gif)
 
