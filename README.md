@@ -4,40 +4,79 @@
 
 Package [vulkan](https://github.com/vulkan-go/vulkan) provides Go bindings for [Vulkan](https://www.khronos.org/vulkan/) — a low-overhead, cross-platform 3D graphics and compute API.
 
+## Introduction
+
 Vulkan API is the result of 18 months in an intense collaboration between leading hardware, game engine and platform vendors, built on significant contributions from multiple Khronos members. Vulkan is designed for portability across multiple platforms with desktop and mobile GPU architectures.
 
 Read the brief: https://developer.nvidia.com/engaging-voyage-vulkan
 
-I'm glad to announce that now it is possible to combine all the power and pragmatism of Golang with
-all those benefits that Vulkan introduced. A real chance to have a way to create graphics without touching
-any of C/C++, using your favourite language that scales extremely well as the codebase grows.
+The binding allows one to use Vulkan API directly within Go code, avoiding
+adding lots of C/C++ in the projects, also can be used to study Vulkan without
+diving too deep into C/C++ language semantics. For me it's just a matter of
+taste, writing Go code is simply more pleasant experience.
+
+## Project history timeline
+
+* **2016-02-16** Vulkan API publicly released.
+
+* **2016-03-06** [vulkan-go](https://github.com/vulkan-go) initial commit and first binding.
+
+* **2016-05-14** Finally received my NVIDIA Shield Tablet K1 (DHL lost the first parcel), I decided to use tablet because it was the first device supporting Vulkan out of the box. And that was a really good implementation, much wow very reference.
+
+* **2016-05-17** Created [android-go](https://github.com/android-go) project in order to run Vulkan on the android platform.
+
+* **2016-05-23** First android-go + vulkan program runs on Tablet K1 ([screenshot](http://dl.xlab.is/vulkan/screens/first-android-vulkaninfo.png)).
+
+* **2016-05-24** Improved VulkanInfo example runs on Tablet K1 ([screenshot](http://dl.xlab.is/vulkan/screens/improved-android-vulkaninfo.png)).
+
+* **2016-05-28** [android-go](https://github.com/android-go) released into public ([Reddit post](https://www.reddit.com/r/golang/comments/4lgttr/full_golang_bindings_for_android_ndk_api_with/)) with plenty of examples including GLES/EGL.
+
+* **2016-08-13** Finished an app that should draw triangle (ported from tri.c from LunarG demos). Draws nothing instead.
+
+* **2016-08-13** First unsuccessful attempt to write a spinning cube example. More than 25 hours spent, 2.5 lines of C code rewritten in 900 lines of Go code. The reference code was found in some very old LunarG demo, it seems I should've been using the latest one.. At least got the validation layers working and found some bugs in the triangle app code.
+
+* **2016-08-16** First Vulkan API program in Go that draws triangle runs on Tablet K1 ([photo](http://dl.xlab.is/vulkan/screens/first-android-vulkandraw.jpg)), validaton layers work perfectly too.
+
+* **2016-08-16** Public announce of this project ([Reddit post](https://www.reddit.com/r/golang/comments/4y2dj4/golang_bindings_for_vulkan_api_with_demos/)). Reaction was "Meh".
+
+* **2016-11-01** [MoltenVK](https://moltengl.com/moltenvk/) driver merged into GLFW (see [GLFW issue #870](https://github.com/glfw/glfw/issues/870)) and this made possible to use Vulkan API under Apple OS X or macOS.
+
+* **2016-11-06** VulkanInfo and VulkanDraw both ported to desktop OS X and use GLFW to initialize Vulkan ([screen #1](http://dl.xlab.is/vulkan/screens/first-moltenvk-vulkaninfo.png) and [screen #2](http://dl.xlab.is/vulkan/screens/first-moltenvk-vulkandraw.png))
+
+* **2016-11-07** VulkanInfo runs fine on NVIDIA GTX980 initialized through GLFW under Windows 10 ([screen #1](http://dl.xlab.is/vulkan/screens/first-windows-vulkaninfo.png) and [screen #2](http://dl.xlab.is/vulkan/screens/first-windows-vulkandraw.png)).
+
+* **2016-11-08** VulkanInfo runs in headless (a.k.a computing) mode in Amazon AWS cloud on P2 Instance equipped Tesla K80 ([screenshot](http://dl.xlab.is/vulkan/screens/first-amazon-vulkaninfo.png)).
+
+* **2016-11-09** [ios-go](https://github.com/xlab/ios-go) project started, it's very easy to run Golang apps on iOS that use custom surface, for my case it was Metal surface.
+
+* **2016-11-11** VulkanInfo runs fine on my iPhone under iOS ([screenshot](http://dl.xlab.is/vulkan/screens/first-ios-vulkaninfo.png)), and so does VulkanDraw ([photo](http://dl.xlab.is/vulkan/screens/first-ios-vulkandraw.jpg) also [GPU report from XCode](http://dl.xlab.is/vulkan/screens/gpureport-ios-vulkandraw.png))
+
+* **2016-11-13** Second unsuccessful attempt to write spinning cube. 25 hours spent. The approach was highly inspired by [Mali Vulkan SDK for Android 1.0](http://malideveloper.arm.com/downloads/deved/tutorial/SDK/Vulkan/1.0/index.html) and I created initial version of [vulkan-go/asche](https://github.com/vulkan-go/asche) — a higher level framework to simplify Vulkan initialization for new apps.
+
+* **2016-11-29** Generic Linux support added in using GLFW ([Issue #2](https://github.com/vulkan-go/vulkan/issues/2)) thanks @jfreymuth.
+
+* **2016-05-06** Third, successful attempt to write spining cube example. 16 hours spent, 4K LOC of C code rewritten from [cube.c](https://github.com/LunarG/VulkanSamples/blob/master/demos/cube.c) of LunarG demos.
+
+* **2016-05-06** [vulkan-go/asche](https://github.com/vulkan-go/asche) complete.
+
+![vulkan cube golang](http://dl.xlab.is/vulkan/screens/cube60.gif)
+
+See all demos in [vulkan-go/demos](https://github.com/vulkan-go/demos).
 
 ## How to use
 
-Despite being almost the largest Golang binding ever, the usage of this package is straigforward due to the nature of Vulkan. Just import it like this:
+Usage of this project is straigforward due to the stateless nature of Vulkan API.
+Just import the package like this:
 
 ```
 import vk "github.com/vulkan-go/vulkan"
 ```
 
-And you're set. However I must warn you that using this thing properly is not an easy task at all!
+And you're set. I must warn you that using the API properly is not an easy task at all, so beware and follow the official documentation: https://www.khronos.org/registry/vulkan/specs/1.0/html/vkspec.html 
 
-First of all, you'd need a device with the native Vulkan API support. Major platforms like Windows and Linux are
-too clumsy so I decided to stick with Android. I have bought an Nvidia Shield K1 tablet for this, because of their early support back into the March of 2016: https://developer.nvidia.com/vulkan-android.
+In order to simplify development, I created a high-level framework that manages Vulkan platform state and initialization. It is called [asche](https://github.com/vulkan-go/asche) because when you throw goper into volcano you get a pile of ash. Currently it's used in [VulkanCube](https://github.com/vulkan-go/demos/blob/master/vulkancube/vulkancube_android/main.go) demo app.
 
-Current list of devices includes some of the Android N devices, as specified at [Android NDK help pages](https://developer.android.com/ndk/guides/graphics/getting-started.html) and so far as I know Samsung Galaxy S7 has the native Vulkan drivers, but the one borrowed from a friend lacked the swapchain device extension. I'll try to maintain a list of supported devices here: [0vulkaninfo.md](https://gist.github.com/xlab/4caad9c24735d14d2c4d044d775c699b), so leave a comment if you've succeed with yours.
-
-In order to be able create apps for android using the Android NDK without any fancy stuff being done with ANativeWindow,
-I dedicated some time in May 2016 to create this framework: http://github.com/xlab/android-go. It works cool with EGL/GLES/GLES2 but of course that was a side-effect! ;) What I really did was the first Vulkan run.
-
-Anyway, since May my binding generator improved a lot due to feedback and bugs I got while binding those two beasts,
-so in August I found some time on a weekend to create examples. I had them ported from C of course, it was about 5KLOC, see [Golang Vulkan API Demos](https://github.com/vulkan-go/demos) but they do work, so the Vulkan API for Golang is official (at least for Android, heh).
-
-I'm hoping for pull-requests from the community so we'd be able to run this on Windows and Linux too, since AFAIK, there is no limitations at all. In fact, I cannot recall if there was any hacks involved while I was doing my experiments. This thing just works in a very idiomatic way, meeting all the common Vulkan guidelines.
-
-<a href="https://cl.ly/410g1n2r041E/screen.png"><img src="https://cl.ly/410g1n2r041E/screen.png" width="200"></a>
-
-## Layers
+## Validation Layers
 
 A good brief of the current state of Vulkan validation layers: [Explore the Vulkan Loader and Validation Layers](https://lunarg.com/wp-content/uploads/2016/07/lunarg-birds-feather-session-siggraph-july-26-2016.pdf) (PDF).
 
@@ -66,26 +105,13 @@ After that you'd copy the objects to `android/jni/libs` in your project and acti
 [Layer DS][ERROR 22] Unable to allocate 2 descriptors of type VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER from pool 0x1c. This pool only has 1 descriptors of this type remaining.
 ```
 
-# What's next?
+## Useful links
 
-* More platforms
-* Some kind of SDK that will lift up the initialisation burden
-* More working demos (after a little SDK)
-* More people involved
-
-Anyways, Vulkan has really rich possibilites for management and I think gophers can benefit there. Because in order to fully utilize Vulkan and its API, it's just not enough to call some functions and shovel some variables into some structs. It's about a complex architecture and I understand how to handle such things in Go without creating a lot of mess, but I cannot imagine doing that in other languages or toolsets.
-
-[![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/blog/Vulkan/vulkan_intro_management.png)](https://developer.nvidia.com/engaging-voyage-vulkan)
-
-Let the VGo adventure begin.
-
-## Good stuff
-
-* [VGo Home](https://github.com/vulkan-go)
+* [vulkanGo.com](https://vulkanGo.com)
 * [SaschaWillems Demos (C++)](https://github.com/SaschaWillems/Vulkan)
+* [LunarG Vulkan Samples](https://github.com/LunarG/VulkanSamples)
 * [Official list of Vulkan resources](https://www.khronos.org/vulkan/resources)
 * [Vulkan API quick reference](https://www.khronos.org/registry/vulkan/specs/1.0/refguide/Vulkan-1.0-web.pdf)
-* [Qt for Go](https://github.com/therecipe/qt) (when you're tired of vulkan)
 
 ## License
 
