@@ -33,7 +33,7 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-08-13** Finished an app that should draw triangle (ported from tri.c from LunarG demos). Draws nothing instead.
 
-* **2016-08-13** First unsuccessful attempt to write a spinning cube example. More than 25 hours spent, 2.5 lines of C code rewritten in 900 lines of Go code. The reference code was found in some very old LunarG demo, it seems I should've been using the latest one.. At least got the validation layers working and found some bugs in the triangle app code.
+* **2016-08-13** First unsuccessful attempt to write a spinning cube example. More than 25 hours spent, 2.5k lines of C code rewritten in 900 lines of Go code. The reference code was found in some very old LunarG demo, it seems I should've been using the latest one.. At least got the validation layers working and found some bugs in the triangle app code.
 
 * **2016-08-16** First Vulkan API program in Go that draws triangle runs on Tablet K1 ([photo](http://dl.xlab.is/vulkan/screens/first-android-vulkandraw.jpg)), validaton layers work perfectly too.
 
