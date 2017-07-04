@@ -23,17 +23,17 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-05-14** Finally received my NVIDIA Shield Tablet K1 (DHL lost the first parcel), I decided to use tablet because it was the first device supporting Vulkan out of the box. And that was a really good implementation, much wow very reference.
 
-* **2016-05-17** Created [android-go](https://github.com/android-go) project in order to run Vulkan on the android platform.
+* **2016-05-17** Created [android-go](https://github.com/xlab/android-go) project in order to run Vulkan on the android platform.
 
 * **2016-05-23** First android-go + vulkan program runs on Tablet K1 ([screenshot](http://dl.xlab.is/vulkan/screens/first-android-vulkaninfo.png)).
 
 * **2016-05-24** Improved VulkanInfo example runs on Tablet K1 ([screenshot](http://dl.xlab.is/vulkan/screens/improved-android-vulkaninfo.png)).
 
-* **2016-05-28** [android-go](https://github.com/android-go) released into public ([Reddit post](https://www.reddit.com/r/golang/comments/4lgttr/full_golang_bindings_for_android_ndk_api_with/)) with plenty of examples including GLES/EGL.
+* **2016-05-28** [android-go](https://github.com/xlab/android-go) released into public ([Reddit post](https://www.reddit.com/r/golang/comments/4lgttr/full_golang_bindings_for_android_ndk_api_with/)) with plenty of examples including GLES/EGL.
 
 * **2016-08-13** Finished an app that should draw triangle (ported from tri.c from LunarG demos). Draws nothing instead.
 
-* **2016-08-13** First unsuccessful attempt to write a spinning cube example. More than 25 hours spent, 2.5 lines of C code rewritten in 900 lines of Go code. The reference code was found in some very old LunarG demo, it seems I should've been using the latest one.. At least got the validation layers working and found some bugs in the triangle app code.
+* **2016-08-13** First unsuccessful attempt to write a spinning cube example. More than 25 hours spent, 2.5k lines of C code rewritten into 900 lines of Go code. The reference code was found in some very old LunarG demo, it seems I should've used the latest one.. At least got the validation layers working and found some bugs in the triangle app code.
 
 * **2016-08-16** First Vulkan API program in Go that draws triangle runs on Tablet K1 ([photo](http://dl.xlab.is/vulkan/screens/first-android-vulkandraw.jpg)), validaton layers work perfectly too.
 
