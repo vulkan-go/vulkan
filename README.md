@@ -25,9 +25,9 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-05-17** Created [android-go](https://github.com/xlab/android-go) project in order to run Vulkan on the android platform.
 
-* **2016-05-23** First android-go + vulkan program runs on Tablet K1 ([screenshot](http://dl.xlab.is/vulkan/screens/first-android-vulkaninfo.png)).
+* **2016-05-23** First android-go + vulkan program runs on Tablet K1 ([screenshot](http://dl.kc.vc/vulkan/screens/first-android-vulkaninfo.png)).
 
-* **2016-05-24** Improved VulkanInfo example runs on Tablet K1 ([screenshot](http://dl.xlab.is/vulkan/screens/improved-android-vulkaninfo.png)).
+* **2016-05-24** Improved VulkanInfo example runs on Tablet K1 ([screenshot](http://dl.kc.vc/vulkan/screens/improved-android-vulkaninfo.png)).
 
 * **2016-05-28** [android-go](https://github.com/xlab/android-go) released into public ([Reddit post](https://www.reddit.com/r/golang/comments/4lgttr/full_golang_bindings_for_android_ndk_api_with/)) with plenty of examples including GLES/EGL.
 
@@ -35,21 +35,21 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-08-13** First unsuccessful attempt to write a spinning cube example. More than 25 hours spent, 2.5k lines of C code rewritten into 900 lines of Go code. The reference code was found in some very old LunarG demo, it seems I should've used the latest one.. At least got the validation layers working and found some bugs in the triangle app code.
 
-* **2016-08-16** First Vulkan API program in Go that draws triangle runs on Tablet K1 ([photo](http://dl.xlab.is/vulkan/screens/first-android-vulkandraw.jpg)), validaton layers work perfectly too.
+* **2016-08-16** First Vulkan API program in Go that draws triangle runs on Tablet K1 ([photo](http://dl.kc.vc/vulkan/screens/first-android-vulkandraw.jpg)), validaton layers work perfectly too.
 
 * **2016-08-16** Public announce of this project ([Reddit post](https://www.reddit.com/r/golang/comments/4y2dj4/golang_bindings_for_vulkan_api_with_demos/)). Reaction was "Meh".
 
 * **2016-11-01** [MoltenVK](https://moltengl.com/moltenvk/) driver merged into GLFW (see [GLFW issue #870](https://github.com/glfw/glfw/issues/870)) and this made possible to use Vulkan API under Apple OS X or macOS.
 
-* **2016-11-06** VulkanInfo and VulkanDraw both ported to desktop OS X and use GLFW to initialize Vulkan ([screen #1](http://dl.xlab.is/vulkan/screens/first-moltenvk-vulkaninfo.png) and [screen #2](http://dl.xlab.is/vulkan/screens/first-moltenvk-vulkandraw.png))
+* **2016-11-06** VulkanInfo and VulkanDraw both ported to desktop OS X and use GLFW to initialize Vulkan ([screen #1](http://dl.kc.vc/vulkan/screens/first-moltenvk-vulkaninfo.png) and [screen #2](http://dl.kc.vc/vulkan/screens/first-moltenvk-vulkandraw.png))
 
-* **2016-11-07** VulkanInfo and VulkanDraw run fine on NVIDIA GTX980 initialized through GLFW under Windows 10 ([screen #1](http://dl.xlab.is/vulkan/screens/first-windows-vulkaninfo.png) and [screen #2](http://dl.xlab.is/vulkan/screens/first-windows-vulkandraw.png)).
+* **2016-11-07** VulkanInfo and VulkanDraw run fine on NVIDIA GTX980 initialized through GLFW under Windows 10 ([screen #1](http://dl.kc.vc/vulkan/screens/first-windows-vulkaninfo.png) and [screen #2](http://dl.kc.vc/vulkan/screens/first-windows-vulkandraw.png)).
 
-* **2016-11-08** VulkanInfo runs in headless (a.k.a computing) mode in Amazon AWS cloud on P2 Instance equipped Tesla K80 ([screenshot](http://dl.xlab.is/vulkan/screens/first-amazon-vulkaninfo.png)).
+* **2016-11-08** VulkanInfo runs in headless (a.k.a computing) mode in Amazon AWS cloud on P2 Instance equipped Tesla K80 ([screenshot](http://dl.kc.vc/vulkan/screens/first-amazon-vulkaninfo.png)).
 
 * **2016-11-09** [ios-go](https://github.com/xlab/ios-go) project started, it's very easy to run Golang apps on iOS that use custom surface, for my case it was Metal surface.
 
-* **2016-11-11** VulkanInfo runs fine on my iPhone under iOS ([screenshot](http://dl.xlab.is/vulkan/screens/first-ios-vulkaninfo.png)), and so does VulkanDraw ([photo](http://dl.xlab.is/vulkan/screens/first-ios-vulkandraw.jpg) also [GPU report from XCode](http://dl.xlab.is/vulkan/screens/gpureport-ios-vulkandraw.png))
+* **2016-11-11** VulkanInfo runs fine on my iPhone under iOS ([screenshot](http://dl.kc.vc/vulkan/screens/first-ios-vulkaninfo.png)), and so does VulkanDraw ([photo](http://dl.kc.vc/vulkan/screens/first-ios-vulkandraw.jpg) also [GPU report from XCode](http://dl.kc.vc/vulkan/screens/gpureport-ios-vulkandraw.png))
 
 * **2016-11-13** Second unsuccessful attempt to write spinning cube. 25 hours spent. The approach was highly inspired by [Mali Vulkan SDK for Android 1.0](http://malideveloper.arm.com/downloads/deved/tutorial/SDK/Vulkan/1.0/index.html) and I created initial version of [vulkan-go/asche](https://github.com/vulkan-go/asche) — a higher level framework to simplify Vulkan initialization for new apps.
 
@@ -59,7 +59,7 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2017-05-06** [vulkan-go/asche](https://github.com/vulkan-go/asche) complete.
 
-![vulkan cube golang](http://dl.xlab.is/vulkan/screens/cube.gif)
+![vulkan cube golang](http://dl.kc.vc/vulkan/screens/cube.gif)
 
 See all demos in [vulkan-go/demos](https://github.com/vulkan-go/demos).
 
