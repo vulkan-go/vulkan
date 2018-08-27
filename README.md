@@ -65,14 +65,31 @@ See all demos in [vulkan-go/demos](https://github.com/vulkan-go/demos).
 
 ## How to use
 
-Usage of this project is straigforward due to the stateless nature of Vulkan API.
+Usage of this project is straightforward due to the stateless nature of Vulkan API.
 Just import the package like this:
 
 ```
 import vk "github.com/vulkan-go/vulkan"
 ```
 
-And you're set. I must warn you that using the API properly is not an easy task at all, so beware and follow the official documentation: https://www.khronos.org/registry/vulkan/specs/1.0/html/vkspec.html 
+Set the GetProcAddress pointer (used to look up Vulkan functions) using SetGetInstanceProcAddr or SetDefaultGetInstanceProcAddr. After that you can call Init to initialise the library. For example:
+
+```
+// Using SDL2:
+vk.GetProcAddress(sdl.VulkanGetVkGetInstanceProcAddr())
+// OR using GLFW:
+vk.GetProcAddress(glfw.GetVulkanGetInstanceProcAddress())
+// OR without using a windowing library (Linux only, recommended for compute-only tasks)
+if err := vk.SetDefaultGetInstanceProcAddr(); err != nil {
+    panic(err)
+}
+
+if err := vk.Init(); err != nil {
+    panic(err)
+}
+```
+
+And you're set. I must warn you that using the API properly is not an easy task at all, so beware and follow the official documentation: https://www.khronos.org/registry/vulkan/specs/1.0/html/vkspec.html
 
 In order to simplify development, I created a high-level framework that manages Vulkan platform state and initialization. It is called [asche](https://github.com/vulkan-go/asche) because when you throw a gopher into volcano you get a pile of ash. Currently it's used in [VulkanCube](https://github.com/vulkan-go/demos/blob/master/vulkancube/vulkancube_android/main.go) demo app.
 
