@@ -115,3 +115,8 @@ func (cv *ClearValue) SetDepthStencil(depth float32, stencil uint32) {
 	depths[0] = depth
 	stencils[1] = stencil
 }
+
+// SurfaceFromPointer casts a pointer to a Vulkan surface into a Surface.
+func SurfaceFromPointer(surface uintptr) Surface {
+	return *(*Surface)(unsafe.Pointer(surface))
+}
