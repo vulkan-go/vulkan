@@ -76,9 +76,9 @@ Set the GetProcAddress pointer (used to look up Vulkan functions) using SetGetIn
 
 ```
 // Using SDL2:
-vk.GetProcAddress(sdl.VulkanGetVkGetInstanceProcAddr())
+vk.SetGetInstanceProcAddr(sdl.VulkanGetVkGetInstanceProcAddr())
 // OR using GLFW:
-vk.GetProcAddress(glfw.GetVulkanGetInstanceProcAddress())
+vk.SetGetInstanceProcAddr(glfw.GetVulkanGetInstanceProcAddress())
 // OR without using a windowing library (Linux only, recommended for compute-only tasks)
 if err := vk.SetDefaultGetInstanceProcAddr(); err != nil {
     panic(err)
