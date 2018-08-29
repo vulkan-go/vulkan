@@ -3,6 +3,13 @@
 #include "vk_wrapper.h"
 #include <dlfcn.h>
 
+// No-op on Android, get the ProcAddr in vkInit()
+void setProcAddr(void* getProcAddr) {}
+
+int isProcAddrSet() {
+    return 1;
+}
+
 int vkInitInstance(VkInstance instance) {
     return 0;
 }

@@ -8,10 +8,11 @@
 #include "moltenVK/vk_mvk_moltenvk.h"
 #endif
 
-int vkInit(void);
+void setProcAddr(void* getProcAddr);
+void setDefaultProcAddr();
+int isProcAddrSet();
+int vkInit();
 int vkInitInstance(VkInstance instance);
-const char** vkGetRequiredInstanceExtensions(uint32_t *count);
-VkResult vkCreateGLFWSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface);
 
 // VK_core
 extern PFN_vkCreateInstance vgo_vkCreateInstance;

@@ -4,17 +4,13 @@ package vulkan
 
 /*
 #cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
-#cgo linux CFLAGS: -DVK_USE_PLATFORM_XCB_KHR -DGLFW_INCLUDE_VULKAN
-#cgo linux pkg-config: vulkan
-#cgo linux pkg-config: glfw3
-
-#include <GLFW/glfw3.h>
-
+#cgo LDFLAGS: -ldl
 #include "vk_wrapper.h"
 #include "vk_bridge.h"
 */
 import "C"
-import "unsafe"
+
+/* // TODO: REMOVE ALL OF THIS
 
 // CreateWindowSurface creates a Vulkan surface (VK_KHR_xcb_surface) for a GLFW window with glfwCreateWindowSurface.
 // See http://www.glfw.org/docs/latest/group__vulkan.html#ga1a24536bec3f80b08ead18e28e6ae965
@@ -37,3 +33,5 @@ func GetRequiredInstanceExtensions() []string {
 	packSString(__v, __ret)
 	return __v
 }
+
+*/

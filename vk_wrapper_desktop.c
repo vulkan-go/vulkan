@@ -1,23 +1,27 @@
 // +build windows darwin,!ios linux,!android
 
-#include <GLFW/glfw3.h>
 #include "vk_wrapper.h"
+#include "vk_default_loader.h"
 
-const char** vkGetRequiredInstanceExtensions(uint32_t *count) {
-    return glfwGetRequiredInstanceExtensions(count);
+static void* (*getInstanceProcAddress)(VkInstance, const char*) = NULL;
+
+void setProcAddr(void* getProcAddr) {
+    getInstanceProcAddress = getProcAddr;
 }
 
-VkResult vkCreateGLFWSurface(VkInstance instance, void *win, const VkAllocationCallbacks *allocator, VkSurfaceKHR *surface) {
-    return glfwCreateWindowSurface(instance, (GLFWwindow *)(win), allocator, surface);
+// Look up the procAddr in the system-specific location
+void setDefaultProcAddr() {
+    getInstanceProcAddress = getDefaultProcAddr();
 }
 
-int vkInit(void) {
-    if (!glfwVulkanSupported()) {
-        return -1;
-    }
-    vgo_vkCreateInstance = (PFN_vkCreateInstance)(glfwGetInstanceProcAddress(NULL, "vkCreateInstance"));
-    vgo_vkEnumerateInstanceExtensionProperties = (PFN_vkEnumerateInstanceExtensionProperties)(glfwGetInstanceProcAddress(NULL, "vkEnumerateInstanceExtensionProperties"));
-    vgo_vkEnumerateInstanceLayerProperties = (PFN_vkEnumerateInstanceLayerProperties)(glfwGetInstanceProcAddress(NULL, "vkEnumerateInstanceLayerProperties"));
+int isProcAddrSet() {
+    return getInstanceProcAddress == NULL ? 0 : 1;
+}
+
+int vkInit() {
+    vgo_vkCreateInstance = (PFN_vkCreateInstance)((*getInstanceProcAddress)(NULL, "vkCreateInstance"));
+    vgo_vkEnumerateInstanceExtensionProperties = (PFN_vkEnumerateInstanceExtensionProperties)((*getInstanceProcAddress)(NULL, "vkEnumerateInstanceExtensionProperties"));
+    vgo_vkEnumerateInstanceLayerProperties = (PFN_vkEnumerateInstanceLayerProperties)((*getInstanceProcAddress)(NULL, "vkEnumerateInstanceLayerProperties"));
 
 #ifndef VK_USE_PLATFORM_MACOS_MVK
     // can safely init instance PFNs with no instance
@@ -28,194 +32,194 @@ int vkInit(void) {
 }
 
 int vkInitInstance(VkInstance instance) {
-    vgo_vkGetInstanceProcAddr = (PFN_vkGetInstanceProcAddr)(glfwGetInstanceProcAddress(instance, "vkGetInstanceProcAddr"));
-    vgo_vkDestroyInstance = (PFN_vkDestroyInstance)(glfwGetInstanceProcAddress(instance, "vkDestroyInstance"));
-    vgo_vkEnumeratePhysicalDevices = (PFN_vkEnumeratePhysicalDevices)(glfwGetInstanceProcAddress(instance, "vkEnumeratePhysicalDevices"));
-    vgo_vkGetPhysicalDeviceFeatures = (PFN_vkGetPhysicalDeviceFeatures)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceFeatures"));
-    vgo_vkGetPhysicalDeviceFormatProperties = (PFN_vkGetPhysicalDeviceFormatProperties)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceFormatProperties"));
-    vgo_vkGetPhysicalDeviceImageFormatProperties = (PFN_vkGetPhysicalDeviceImageFormatProperties)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceImageFormatProperties"));
-    vgo_vkGetPhysicalDeviceProperties = (PFN_vkGetPhysicalDeviceProperties)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceProperties"));
-    vgo_vkGetPhysicalDeviceQueueFamilyProperties = (PFN_vkGetPhysicalDeviceQueueFamilyProperties)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceQueueFamilyProperties"));
-    vgo_vkGetPhysicalDeviceMemoryProperties = (PFN_vkGetPhysicalDeviceMemoryProperties)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceMemoryProperties"));
-    vgo_vkGetDeviceProcAddr = (PFN_vkGetDeviceProcAddr)(glfwGetInstanceProcAddress(instance, "vkGetDeviceProcAddr"));
-    vgo_vkCreateDevice = (PFN_vkCreateDevice)(glfwGetInstanceProcAddress(instance, "vkCreateDevice"));
-    vgo_vkDestroyDevice = (PFN_vkDestroyDevice)(glfwGetInstanceProcAddress(instance, "vkDestroyDevice"));
-    vgo_vkEnumerateDeviceExtensionProperties = (PFN_vkEnumerateDeviceExtensionProperties)(glfwGetInstanceProcAddress(instance, "vkEnumerateDeviceExtensionProperties"));
-    vgo_vkEnumerateDeviceLayerProperties = (PFN_vkEnumerateDeviceLayerProperties)(glfwGetInstanceProcAddress(instance, "vkEnumerateDeviceLayerProperties"));
-    vgo_vkGetDeviceQueue = (PFN_vkGetDeviceQueue)(glfwGetInstanceProcAddress(instance, "vkGetDeviceQueue"));
-    vgo_vkQueueSubmit = (PFN_vkQueueSubmit)(glfwGetInstanceProcAddress(instance, "vkQueueSubmit"));
-    vgo_vkQueueWaitIdle = (PFN_vkQueueWaitIdle)(glfwGetInstanceProcAddress(instance, "vkQueueWaitIdle"));
-    vgo_vkDeviceWaitIdle = (PFN_vkDeviceWaitIdle)(glfwGetInstanceProcAddress(instance, "vkDeviceWaitIdle"));
-    vgo_vkAllocateMemory = (PFN_vkAllocateMemory)(glfwGetInstanceProcAddress(instance, "vkAllocateMemory"));
-    vgo_vkFreeMemory = (PFN_vkFreeMemory)(glfwGetInstanceProcAddress(instance, "vkFreeMemory"));
-    vgo_vkMapMemory = (PFN_vkMapMemory)(glfwGetInstanceProcAddress(instance, "vkMapMemory"));
-    vgo_vkUnmapMemory = (PFN_vkUnmapMemory)(glfwGetInstanceProcAddress(instance, "vkUnmapMemory"));
-    vgo_vkFlushMappedMemoryRanges = (PFN_vkFlushMappedMemoryRanges)(glfwGetInstanceProcAddress(instance, "vkFlushMappedMemoryRanges"));
-    vgo_vkInvalidateMappedMemoryRanges = (PFN_vkInvalidateMappedMemoryRanges)(glfwGetInstanceProcAddress(instance, "vkInvalidateMappedMemoryRanges"));
-    vgo_vkGetDeviceMemoryCommitment = (PFN_vkGetDeviceMemoryCommitment)(glfwGetInstanceProcAddress(instance, "vkGetDeviceMemoryCommitment"));
-    vgo_vkBindBufferMemory = (PFN_vkBindBufferMemory)(glfwGetInstanceProcAddress(instance, "vkBindBufferMemory"));
-    vgo_vkBindImageMemory = (PFN_vkBindImageMemory)(glfwGetInstanceProcAddress(instance, "vkBindImageMemory"));
-    vgo_vkGetBufferMemoryRequirements = (PFN_vkGetBufferMemoryRequirements)(glfwGetInstanceProcAddress(instance, "vkGetBufferMemoryRequirements"));
-    vgo_vkGetImageMemoryRequirements = (PFN_vkGetImageMemoryRequirements)(glfwGetInstanceProcAddress(instance, "vkGetImageMemoryRequirements"));
-    vgo_vkGetImageSparseMemoryRequirements = (PFN_vkGetImageSparseMemoryRequirements)(glfwGetInstanceProcAddress(instance, "vkGetImageSparseMemoryRequirements"));
-    vgo_vkGetPhysicalDeviceSparseImageFormatProperties = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceSparseImageFormatProperties"));
-    vgo_vkQueueBindSparse = (PFN_vkQueueBindSparse)(glfwGetInstanceProcAddress(instance, "vkQueueBindSparse"));
-    vgo_vkCreateFence = (PFN_vkCreateFence)(glfwGetInstanceProcAddress(instance, "vkCreateFence"));
-    vgo_vkDestroyFence = (PFN_vkDestroyFence)(glfwGetInstanceProcAddress(instance, "vkDestroyFence"));
-    vgo_vkResetFences = (PFN_vkResetFences)(glfwGetInstanceProcAddress(instance, "vkResetFences"));
-    vgo_vkGetFenceStatus = (PFN_vkGetFenceStatus)(glfwGetInstanceProcAddress(instance, "vkGetFenceStatus"));
-    vgo_vkWaitForFences = (PFN_vkWaitForFences)(glfwGetInstanceProcAddress(instance, "vkWaitForFences"));
-    vgo_vkCreateSemaphore = (PFN_vkCreateSemaphore)(glfwGetInstanceProcAddress(instance, "vkCreateSemaphore"));
-    vgo_vkDestroySemaphore = (PFN_vkDestroySemaphore)(glfwGetInstanceProcAddress(instance, "vkDestroySemaphore"));
-    vgo_vkCreateEvent = (PFN_vkCreateEvent)(glfwGetInstanceProcAddress(instance, "vkCreateEvent"));
-    vgo_vkDestroyEvent = (PFN_vkDestroyEvent)(glfwGetInstanceProcAddress(instance, "vkDestroyEvent"));
-    vgo_vkGetEventStatus = (PFN_vkGetEventStatus)(glfwGetInstanceProcAddress(instance, "vkGetEventStatus"));
-    vgo_vkSetEvent = (PFN_vkSetEvent)(glfwGetInstanceProcAddress(instance, "vkSetEvent"));
-    vgo_vkResetEvent = (PFN_vkResetEvent)(glfwGetInstanceProcAddress(instance, "vkResetEvent"));
-    vgo_vkCreateQueryPool = (PFN_vkCreateQueryPool)(glfwGetInstanceProcAddress(instance, "vkCreateQueryPool"));
-    vgo_vkDestroyQueryPool = (PFN_vkDestroyQueryPool)(glfwGetInstanceProcAddress(instance, "vkDestroyQueryPool"));
-    vgo_vkGetQueryPoolResults = (PFN_vkGetQueryPoolResults)(glfwGetInstanceProcAddress(instance, "vkGetQueryPoolResults"));
-    vgo_vkCreateBuffer = (PFN_vkCreateBuffer)(glfwGetInstanceProcAddress(instance, "vkCreateBuffer"));
-    vgo_vkDestroyBuffer = (PFN_vkDestroyBuffer)(glfwGetInstanceProcAddress(instance, "vkDestroyBuffer"));
-    vgo_vkCreateBufferView = (PFN_vkCreateBufferView)(glfwGetInstanceProcAddress(instance, "vkCreateBufferView"));
-    vgo_vkDestroyBufferView = (PFN_vkDestroyBufferView)(glfwGetInstanceProcAddress(instance, "vkDestroyBufferView"));
-    vgo_vkCreateImage = (PFN_vkCreateImage)(glfwGetInstanceProcAddress(instance, "vkCreateImage"));
-    vgo_vkDestroyImage = (PFN_vkDestroyImage)(glfwGetInstanceProcAddress(instance, "vkDestroyImage"));
-    vgo_vkGetImageSubresourceLayout = (PFN_vkGetImageSubresourceLayout)(glfwGetInstanceProcAddress(instance, "vkGetImageSubresourceLayout"));
-    vgo_vkCreateImageView = (PFN_vkCreateImageView)(glfwGetInstanceProcAddress(instance, "vkCreateImageView"));
-    vgo_vkDestroyImageView = (PFN_vkDestroyImageView)(glfwGetInstanceProcAddress(instance, "vkDestroyImageView"));
-    vgo_vkCreateShaderModule = (PFN_vkCreateShaderModule)(glfwGetInstanceProcAddress(instance, "vkCreateShaderModule"));
-    vgo_vkDestroyShaderModule = (PFN_vkDestroyShaderModule)(glfwGetInstanceProcAddress(instance, "vkDestroyShaderModule"));
-    vgo_vkCreatePipelineCache = (PFN_vkCreatePipelineCache)(glfwGetInstanceProcAddress(instance, "vkCreatePipelineCache"));
-    vgo_vkDestroyPipelineCache = (PFN_vkDestroyPipelineCache)(glfwGetInstanceProcAddress(instance, "vkDestroyPipelineCache"));
-    vgo_vkGetPipelineCacheData = (PFN_vkGetPipelineCacheData)(glfwGetInstanceProcAddress(instance, "vkGetPipelineCacheData"));
-    vgo_vkMergePipelineCaches = (PFN_vkMergePipelineCaches)(glfwGetInstanceProcAddress(instance, "vkMergePipelineCaches"));
-    vgo_vkCreateGraphicsPipelines = (PFN_vkCreateGraphicsPipelines)(glfwGetInstanceProcAddress(instance, "vkCreateGraphicsPipelines"));
-    vgo_vkCreateComputePipelines = (PFN_vkCreateComputePipelines)(glfwGetInstanceProcAddress(instance, "vkCreateComputePipelines"));
-    vgo_vkDestroyPipeline = (PFN_vkDestroyPipeline)(glfwGetInstanceProcAddress(instance, "vkDestroyPipeline"));
-    vgo_vkCreatePipelineLayout = (PFN_vkCreatePipelineLayout)(glfwGetInstanceProcAddress(instance, "vkCreatePipelineLayout"));
-    vgo_vkDestroyPipelineLayout = (PFN_vkDestroyPipelineLayout)(glfwGetInstanceProcAddress(instance, "vkDestroyPipelineLayout"));
-    vgo_vkCreateSampler = (PFN_vkCreateSampler)(glfwGetInstanceProcAddress(instance, "vkCreateSampler"));
-    vgo_vkDestroySampler = (PFN_vkDestroySampler)(glfwGetInstanceProcAddress(instance, "vkDestroySampler"));
-    vgo_vkCreateDescriptorSetLayout = (PFN_vkCreateDescriptorSetLayout)(glfwGetInstanceProcAddress(instance, "vkCreateDescriptorSetLayout"));
-    vgo_vkDestroyDescriptorSetLayout = (PFN_vkDestroyDescriptorSetLayout)(glfwGetInstanceProcAddress(instance, "vkDestroyDescriptorSetLayout"));
-    vgo_vkCreateDescriptorPool = (PFN_vkCreateDescriptorPool)(glfwGetInstanceProcAddress(instance, "vkCreateDescriptorPool"));
-    vgo_vkDestroyDescriptorPool = (PFN_vkDestroyDescriptorPool)(glfwGetInstanceProcAddress(instance, "vkDestroyDescriptorPool"));
-    vgo_vkResetDescriptorPool = (PFN_vkResetDescriptorPool)(glfwGetInstanceProcAddress(instance, "vkResetDescriptorPool"));
-    vgo_vkAllocateDescriptorSets = (PFN_vkAllocateDescriptorSets)(glfwGetInstanceProcAddress(instance, "vkAllocateDescriptorSets"));
-    vgo_vkFreeDescriptorSets = (PFN_vkFreeDescriptorSets)(glfwGetInstanceProcAddress(instance, "vkFreeDescriptorSets"));
-    vgo_vkUpdateDescriptorSets = (PFN_vkUpdateDescriptorSets)(glfwGetInstanceProcAddress(instance, "vkUpdateDescriptorSets"));
-    vgo_vkCreateFramebuffer = (PFN_vkCreateFramebuffer)(glfwGetInstanceProcAddress(instance, "vkCreateFramebuffer"));
-    vgo_vkDestroyFramebuffer = (PFN_vkDestroyFramebuffer)(glfwGetInstanceProcAddress(instance, "vkDestroyFramebuffer"));
-    vgo_vkCreateRenderPass = (PFN_vkCreateRenderPass)(glfwGetInstanceProcAddress(instance, "vkCreateRenderPass"));
-    vgo_vkDestroyRenderPass = (PFN_vkDestroyRenderPass)(glfwGetInstanceProcAddress(instance, "vkDestroyRenderPass"));
-    vgo_vkGetRenderAreaGranularity = (PFN_vkGetRenderAreaGranularity)(glfwGetInstanceProcAddress(instance, "vkGetRenderAreaGranularity"));
-    vgo_vkCreateCommandPool = (PFN_vkCreateCommandPool)(glfwGetInstanceProcAddress(instance, "vkCreateCommandPool"));
-    vgo_vkDestroyCommandPool = (PFN_vkDestroyCommandPool)(glfwGetInstanceProcAddress(instance, "vkDestroyCommandPool"));
-    vgo_vkResetCommandPool = (PFN_vkResetCommandPool)(glfwGetInstanceProcAddress(instance, "vkResetCommandPool"));
-    vgo_vkAllocateCommandBuffers = (PFN_vkAllocateCommandBuffers)(glfwGetInstanceProcAddress(instance, "vkAllocateCommandBuffers"));
-    vgo_vkFreeCommandBuffers = (PFN_vkFreeCommandBuffers)(glfwGetInstanceProcAddress(instance, "vkFreeCommandBuffers"));
-    vgo_vkBeginCommandBuffer = (PFN_vkBeginCommandBuffer)(glfwGetInstanceProcAddress(instance, "vkBeginCommandBuffer"));
-    vgo_vkEndCommandBuffer = (PFN_vkEndCommandBuffer)(glfwGetInstanceProcAddress(instance, "vkEndCommandBuffer"));
-    vgo_vkResetCommandBuffer = (PFN_vkResetCommandBuffer)(glfwGetInstanceProcAddress(instance, "vkResetCommandBuffer"));
-    vgo_vkCmdBindPipeline = (PFN_vkCmdBindPipeline)(glfwGetInstanceProcAddress(instance, "vkCmdBindPipeline"));
-    vgo_vkCmdSetViewport = (PFN_vkCmdSetViewport)(glfwGetInstanceProcAddress(instance, "vkCmdSetViewport"));
-    vgo_vkCmdSetScissor = (PFN_vkCmdSetScissor)(glfwGetInstanceProcAddress(instance, "vkCmdSetScissor"));
-    vgo_vkCmdSetLineWidth = (PFN_vkCmdSetLineWidth)(glfwGetInstanceProcAddress(instance, "vkCmdSetLineWidth"));
-    vgo_vkCmdSetDepthBias = (PFN_vkCmdSetDepthBias)(glfwGetInstanceProcAddress(instance, "vkCmdSetDepthBias"));
-    vgo_vkCmdSetBlendConstants = (PFN_vkCmdSetBlendConstants)(glfwGetInstanceProcAddress(instance, "vkCmdSetBlendConstants"));
-    vgo_vkCmdSetDepthBounds = (PFN_vkCmdSetDepthBounds)(glfwGetInstanceProcAddress(instance, "vkCmdSetDepthBounds"));
-    vgo_vkCmdSetStencilCompareMask = (PFN_vkCmdSetStencilCompareMask)(glfwGetInstanceProcAddress(instance, "vkCmdSetStencilCompareMask"));
-    vgo_vkCmdSetStencilWriteMask = (PFN_vkCmdSetStencilWriteMask)(glfwGetInstanceProcAddress(instance, "vkCmdSetStencilWriteMask"));
-    vgo_vkCmdSetStencilReference = (PFN_vkCmdSetStencilReference)(glfwGetInstanceProcAddress(instance, "vkCmdSetStencilReference"));
-    vgo_vkCmdBindDescriptorSets = (PFN_vkCmdBindDescriptorSets)(glfwGetInstanceProcAddress(instance, "vkCmdBindDescriptorSets"));
-    vgo_vkCmdBindIndexBuffer = (PFN_vkCmdBindIndexBuffer)(glfwGetInstanceProcAddress(instance, "vkCmdBindIndexBuffer"));
-    vgo_vkCmdBindVertexBuffers = (PFN_vkCmdBindVertexBuffers)(glfwGetInstanceProcAddress(instance, "vkCmdBindVertexBuffers"));
-    vgo_vkCmdDraw = (PFN_vkCmdDraw)(glfwGetInstanceProcAddress(instance, "vkCmdDraw"));
-    vgo_vkCmdDrawIndexed = (PFN_vkCmdDrawIndexed)(glfwGetInstanceProcAddress(instance, "vkCmdDrawIndexed"));
-    vgo_vkCmdDrawIndirect = (PFN_vkCmdDrawIndirect)(glfwGetInstanceProcAddress(instance, "vkCmdDrawIndirect"));
-    vgo_vkCmdDrawIndexedIndirect = (PFN_vkCmdDrawIndexedIndirect)(glfwGetInstanceProcAddress(instance, "vkCmdDrawIndexedIndirect"));
-    vgo_vkCmdDispatch = (PFN_vkCmdDispatch)(glfwGetInstanceProcAddress(instance, "vkCmdDispatch"));
-    vgo_vkCmdDispatchIndirect = (PFN_vkCmdDispatchIndirect)(glfwGetInstanceProcAddress(instance, "vkCmdDispatchIndirect"));
-    vgo_vkCmdCopyBuffer = (PFN_vkCmdCopyBuffer)(glfwGetInstanceProcAddress(instance, "vkCmdCopyBuffer"));
-    vgo_vkCmdCopyImage = (PFN_vkCmdCopyImage)(glfwGetInstanceProcAddress(instance, "vkCmdCopyImage"));
-    vgo_vkCmdBlitImage = (PFN_vkCmdBlitImage)(glfwGetInstanceProcAddress(instance, "vkCmdBlitImage"));
-    vgo_vkCmdCopyBufferToImage = (PFN_vkCmdCopyBufferToImage)(glfwGetInstanceProcAddress(instance, "vkCmdCopyBufferToImage"));
-    vgo_vkCmdCopyImageToBuffer = (PFN_vkCmdCopyImageToBuffer)(glfwGetInstanceProcAddress(instance, "vkCmdCopyImageToBuffer"));
-    vgo_vkCmdUpdateBuffer = (PFN_vkCmdUpdateBuffer)(glfwGetInstanceProcAddress(instance, "vkCmdUpdateBuffer"));
-    vgo_vkCmdFillBuffer = (PFN_vkCmdFillBuffer)(glfwGetInstanceProcAddress(instance, "vkCmdFillBuffer"));
-    vgo_vkCmdClearColorImage = (PFN_vkCmdClearColorImage)(glfwGetInstanceProcAddress(instance, "vkCmdClearColorImage"));
-    vgo_vkCmdClearDepthStencilImage = (PFN_vkCmdClearDepthStencilImage)(glfwGetInstanceProcAddress(instance, "vkCmdClearDepthStencilImage"));
-    vgo_vkCmdClearAttachments = (PFN_vkCmdClearAttachments)(glfwGetInstanceProcAddress(instance, "vkCmdClearAttachments"));
-    vgo_vkCmdResolveImage = (PFN_vkCmdResolveImage)(glfwGetInstanceProcAddress(instance, "vkCmdResolveImage"));
-    vgo_vkCmdSetEvent = (PFN_vkCmdSetEvent)(glfwGetInstanceProcAddress(instance, "vkCmdSetEvent"));
-    vgo_vkCmdResetEvent = (PFN_vkCmdResetEvent)(glfwGetInstanceProcAddress(instance, "vkCmdResetEvent"));
-    vgo_vkCmdWaitEvents = (PFN_vkCmdWaitEvents)(glfwGetInstanceProcAddress(instance, "vkCmdWaitEvents"));
-    vgo_vkCmdPipelineBarrier = (PFN_vkCmdPipelineBarrier)(glfwGetInstanceProcAddress(instance, "vkCmdPipelineBarrier"));
-    vgo_vkCmdBeginQuery = (PFN_vkCmdBeginQuery)(glfwGetInstanceProcAddress(instance, "vkCmdBeginQuery"));
-    vgo_vkCmdEndQuery = (PFN_vkCmdEndQuery)(glfwGetInstanceProcAddress(instance, "vkCmdEndQuery"));
-    vgo_vkCmdResetQueryPool = (PFN_vkCmdResetQueryPool)(glfwGetInstanceProcAddress(instance, "vkCmdResetQueryPool"));
-    vgo_vkCmdWriteTimestamp = (PFN_vkCmdWriteTimestamp)(glfwGetInstanceProcAddress(instance, "vkCmdWriteTimestamp"));
-    vgo_vkCmdCopyQueryPoolResults = (PFN_vkCmdCopyQueryPoolResults)(glfwGetInstanceProcAddress(instance, "vkCmdCopyQueryPoolResults"));
-    vgo_vkCmdPushConstants = (PFN_vkCmdPushConstants)(glfwGetInstanceProcAddress(instance, "vkCmdPushConstants"));
-    vgo_vkCmdBeginRenderPass = (PFN_vkCmdBeginRenderPass)(glfwGetInstanceProcAddress(instance, "vkCmdBeginRenderPass"));
-    vgo_vkCmdNextSubpass = (PFN_vkCmdNextSubpass)(glfwGetInstanceProcAddress(instance, "vkCmdNextSubpass"));
-    vgo_vkCmdEndRenderPass = (PFN_vkCmdEndRenderPass)(glfwGetInstanceProcAddress(instance, "vkCmdEndRenderPass"));
-    vgo_vkCmdExecuteCommands = (PFN_vkCmdExecuteCommands)(glfwGetInstanceProcAddress(instance, "vkCmdExecuteCommands"));
-    vgo_vkDestroySurfaceKHR = (PFN_vkDestroySurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkDestroySurfaceKHR"));
-    vgo_vkGetPhysicalDeviceSurfaceSupportKHR = (PFN_vkGetPhysicalDeviceSurfaceSupportKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceSurfaceSupportKHR"));
-    vgo_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = (PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"));
-    vgo_vkGetPhysicalDeviceSurfaceFormatsKHR = (PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceSurfaceFormatsKHR"));
-    vgo_vkGetPhysicalDeviceSurfacePresentModesKHR = (PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceSurfacePresentModesKHR"));
-    vgo_vkCreateSwapchainKHR = (PFN_vkCreateSwapchainKHR)(glfwGetInstanceProcAddress(instance, "vkCreateSwapchainKHR"));
-    vgo_vkDestroySwapchainKHR = (PFN_vkDestroySwapchainKHR)(glfwGetInstanceProcAddress(instance, "vkDestroySwapchainKHR"));
-    vgo_vkGetSwapchainImagesKHR = (PFN_vkGetSwapchainImagesKHR)(glfwGetInstanceProcAddress(instance, "vkGetSwapchainImagesKHR"));
-    vgo_vkAcquireNextImageKHR = (PFN_vkAcquireNextImageKHR)(glfwGetInstanceProcAddress(instance, "vkAcquireNextImageKHR"));
-    vgo_vkQueuePresentKHR = (PFN_vkQueuePresentKHR)(glfwGetInstanceProcAddress(instance, "vkQueuePresentKHR"));
-    vgo_vkGetPhysicalDeviceDisplayPropertiesKHR = (PFN_vkGetPhysicalDeviceDisplayPropertiesKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceDisplayPropertiesKHR"));
-    vgo_vkGetPhysicalDeviceDisplayPlanePropertiesKHR = (PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"));
-    vgo_vkGetDisplayPlaneSupportedDisplaysKHR = (PFN_vkGetDisplayPlaneSupportedDisplaysKHR)(glfwGetInstanceProcAddress(instance, "vkGetDisplayPlaneSupportedDisplaysKHR"));
-    vgo_vkGetDisplayModePropertiesKHR = (PFN_vkGetDisplayModePropertiesKHR)(glfwGetInstanceProcAddress(instance, "vkGetDisplayModePropertiesKHR"));
-    vgo_vkCreateDisplayModeKHR = (PFN_vkCreateDisplayModeKHR)(glfwGetInstanceProcAddress(instance, "vkCreateDisplayModeKHR"));
-    vgo_vkGetDisplayPlaneCapabilitiesKHR = (PFN_vkGetDisplayPlaneCapabilitiesKHR)(glfwGetInstanceProcAddress(instance, "vkGetDisplayPlaneCapabilitiesKHR"));
-    vgo_vkCreateDisplayPlaneSurfaceKHR = (PFN_vkCreateDisplayPlaneSurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkCreateDisplayPlaneSurfaceKHR"));
-    vgo_vkCreateSharedSwapchainsKHR = (PFN_vkCreateSharedSwapchainsKHR)(glfwGetInstanceProcAddress(instance, "vkCreateSharedSwapchainsKHR"));
+    vgo_vkGetInstanceProcAddr = (PFN_vkGetInstanceProcAddr)((*getInstanceProcAddress)(instance, "vkGetInstanceProcAddr"));
+    vgo_vkDestroyInstance = (PFN_vkDestroyInstance)((*getInstanceProcAddress)(instance, "vkDestroyInstance"));
+    vgo_vkEnumeratePhysicalDevices = (PFN_vkEnumeratePhysicalDevices)((*getInstanceProcAddress)(instance, "vkEnumeratePhysicalDevices"));
+    vgo_vkGetPhysicalDeviceFeatures = (PFN_vkGetPhysicalDeviceFeatures)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceFeatures"));
+    vgo_vkGetPhysicalDeviceFormatProperties = (PFN_vkGetPhysicalDeviceFormatProperties)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceFormatProperties"));
+    vgo_vkGetPhysicalDeviceImageFormatProperties = (PFN_vkGetPhysicalDeviceImageFormatProperties)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceImageFormatProperties"));
+    vgo_vkGetPhysicalDeviceProperties = (PFN_vkGetPhysicalDeviceProperties)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceProperties"));
+    vgo_vkGetPhysicalDeviceQueueFamilyProperties = (PFN_vkGetPhysicalDeviceQueueFamilyProperties)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceQueueFamilyProperties"));
+    vgo_vkGetPhysicalDeviceMemoryProperties = (PFN_vkGetPhysicalDeviceMemoryProperties)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceMemoryProperties"));
+    vgo_vkGetDeviceProcAddr = (PFN_vkGetDeviceProcAddr)((*getInstanceProcAddress)(instance, "vkGetDeviceProcAddr"));
+    vgo_vkCreateDevice = (PFN_vkCreateDevice)((*getInstanceProcAddress)(instance, "vkCreateDevice"));
+    vgo_vkDestroyDevice = (PFN_vkDestroyDevice)((*getInstanceProcAddress)(instance, "vkDestroyDevice"));
+    vgo_vkEnumerateDeviceExtensionProperties = (PFN_vkEnumerateDeviceExtensionProperties)((*getInstanceProcAddress)(instance, "vkEnumerateDeviceExtensionProperties"));
+    vgo_vkEnumerateDeviceLayerProperties = (PFN_vkEnumerateDeviceLayerProperties)((*getInstanceProcAddress)(instance, "vkEnumerateDeviceLayerProperties"));
+    vgo_vkGetDeviceQueue = (PFN_vkGetDeviceQueue)((*getInstanceProcAddress)(instance, "vkGetDeviceQueue"));
+    vgo_vkQueueSubmit = (PFN_vkQueueSubmit)((*getInstanceProcAddress)(instance, "vkQueueSubmit"));
+    vgo_vkQueueWaitIdle = (PFN_vkQueueWaitIdle)((*getInstanceProcAddress)(instance, "vkQueueWaitIdle"));
+    vgo_vkDeviceWaitIdle = (PFN_vkDeviceWaitIdle)((*getInstanceProcAddress)(instance, "vkDeviceWaitIdle"));
+    vgo_vkAllocateMemory = (PFN_vkAllocateMemory)((*getInstanceProcAddress)(instance, "vkAllocateMemory"));
+    vgo_vkFreeMemory = (PFN_vkFreeMemory)((*getInstanceProcAddress)(instance, "vkFreeMemory"));
+    vgo_vkMapMemory = (PFN_vkMapMemory)((*getInstanceProcAddress)(instance, "vkMapMemory"));
+    vgo_vkUnmapMemory = (PFN_vkUnmapMemory)((*getInstanceProcAddress)(instance, "vkUnmapMemory"));
+    vgo_vkFlushMappedMemoryRanges = (PFN_vkFlushMappedMemoryRanges)((*getInstanceProcAddress)(instance, "vkFlushMappedMemoryRanges"));
+    vgo_vkInvalidateMappedMemoryRanges = (PFN_vkInvalidateMappedMemoryRanges)((*getInstanceProcAddress)(instance, "vkInvalidateMappedMemoryRanges"));
+    vgo_vkGetDeviceMemoryCommitment = (PFN_vkGetDeviceMemoryCommitment)((*getInstanceProcAddress)(instance, "vkGetDeviceMemoryCommitment"));
+    vgo_vkBindBufferMemory = (PFN_vkBindBufferMemory)((*getInstanceProcAddress)(instance, "vkBindBufferMemory"));
+    vgo_vkBindImageMemory = (PFN_vkBindImageMemory)((*getInstanceProcAddress)(instance, "vkBindImageMemory"));
+    vgo_vkGetBufferMemoryRequirements = (PFN_vkGetBufferMemoryRequirements)((*getInstanceProcAddress)(instance, "vkGetBufferMemoryRequirements"));
+    vgo_vkGetImageMemoryRequirements = (PFN_vkGetImageMemoryRequirements)((*getInstanceProcAddress)(instance, "vkGetImageMemoryRequirements"));
+    vgo_vkGetImageSparseMemoryRequirements = (PFN_vkGetImageSparseMemoryRequirements)((*getInstanceProcAddress)(instance, "vkGetImageSparseMemoryRequirements"));
+    vgo_vkGetPhysicalDeviceSparseImageFormatProperties = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceSparseImageFormatProperties"));
+    vgo_vkQueueBindSparse = (PFN_vkQueueBindSparse)((*getInstanceProcAddress)(instance, "vkQueueBindSparse"));
+    vgo_vkCreateFence = (PFN_vkCreateFence)((*getInstanceProcAddress)(instance, "vkCreateFence"));
+    vgo_vkDestroyFence = (PFN_vkDestroyFence)((*getInstanceProcAddress)(instance, "vkDestroyFence"));
+    vgo_vkResetFences = (PFN_vkResetFences)((*getInstanceProcAddress)(instance, "vkResetFences"));
+    vgo_vkGetFenceStatus = (PFN_vkGetFenceStatus)((*getInstanceProcAddress)(instance, "vkGetFenceStatus"));
+    vgo_vkWaitForFences = (PFN_vkWaitForFences)((*getInstanceProcAddress)(instance, "vkWaitForFences"));
+    vgo_vkCreateSemaphore = (PFN_vkCreateSemaphore)((*getInstanceProcAddress)(instance, "vkCreateSemaphore"));
+    vgo_vkDestroySemaphore = (PFN_vkDestroySemaphore)((*getInstanceProcAddress)(instance, "vkDestroySemaphore"));
+    vgo_vkCreateEvent = (PFN_vkCreateEvent)((*getInstanceProcAddress)(instance, "vkCreateEvent"));
+    vgo_vkDestroyEvent = (PFN_vkDestroyEvent)((*getInstanceProcAddress)(instance, "vkDestroyEvent"));
+    vgo_vkGetEventStatus = (PFN_vkGetEventStatus)((*getInstanceProcAddress)(instance, "vkGetEventStatus"));
+    vgo_vkSetEvent = (PFN_vkSetEvent)((*getInstanceProcAddress)(instance, "vkSetEvent"));
+    vgo_vkResetEvent = (PFN_vkResetEvent)((*getInstanceProcAddress)(instance, "vkResetEvent"));
+    vgo_vkCreateQueryPool = (PFN_vkCreateQueryPool)((*getInstanceProcAddress)(instance, "vkCreateQueryPool"));
+    vgo_vkDestroyQueryPool = (PFN_vkDestroyQueryPool)((*getInstanceProcAddress)(instance, "vkDestroyQueryPool"));
+    vgo_vkGetQueryPoolResults = (PFN_vkGetQueryPoolResults)((*getInstanceProcAddress)(instance, "vkGetQueryPoolResults"));
+    vgo_vkCreateBuffer = (PFN_vkCreateBuffer)((*getInstanceProcAddress)(instance, "vkCreateBuffer"));
+    vgo_vkDestroyBuffer = (PFN_vkDestroyBuffer)((*getInstanceProcAddress)(instance, "vkDestroyBuffer"));
+    vgo_vkCreateBufferView = (PFN_vkCreateBufferView)((*getInstanceProcAddress)(instance, "vkCreateBufferView"));
+    vgo_vkDestroyBufferView = (PFN_vkDestroyBufferView)((*getInstanceProcAddress)(instance, "vkDestroyBufferView"));
+    vgo_vkCreateImage = (PFN_vkCreateImage)((*getInstanceProcAddress)(instance, "vkCreateImage"));
+    vgo_vkDestroyImage = (PFN_vkDestroyImage)((*getInstanceProcAddress)(instance, "vkDestroyImage"));
+    vgo_vkGetImageSubresourceLayout = (PFN_vkGetImageSubresourceLayout)((*getInstanceProcAddress)(instance, "vkGetImageSubresourceLayout"));
+    vgo_vkCreateImageView = (PFN_vkCreateImageView)((*getInstanceProcAddress)(instance, "vkCreateImageView"));
+    vgo_vkDestroyImageView = (PFN_vkDestroyImageView)((*getInstanceProcAddress)(instance, "vkDestroyImageView"));
+    vgo_vkCreateShaderModule = (PFN_vkCreateShaderModule)((*getInstanceProcAddress)(instance, "vkCreateShaderModule"));
+    vgo_vkDestroyShaderModule = (PFN_vkDestroyShaderModule)((*getInstanceProcAddress)(instance, "vkDestroyShaderModule"));
+    vgo_vkCreatePipelineCache = (PFN_vkCreatePipelineCache)((*getInstanceProcAddress)(instance, "vkCreatePipelineCache"));
+    vgo_vkDestroyPipelineCache = (PFN_vkDestroyPipelineCache)((*getInstanceProcAddress)(instance, "vkDestroyPipelineCache"));
+    vgo_vkGetPipelineCacheData = (PFN_vkGetPipelineCacheData)((*getInstanceProcAddress)(instance, "vkGetPipelineCacheData"));
+    vgo_vkMergePipelineCaches = (PFN_vkMergePipelineCaches)((*getInstanceProcAddress)(instance, "vkMergePipelineCaches"));
+    vgo_vkCreateGraphicsPipelines = (PFN_vkCreateGraphicsPipelines)((*getInstanceProcAddress)(instance, "vkCreateGraphicsPipelines"));
+    vgo_vkCreateComputePipelines = (PFN_vkCreateComputePipelines)((*getInstanceProcAddress)(instance, "vkCreateComputePipelines"));
+    vgo_vkDestroyPipeline = (PFN_vkDestroyPipeline)((*getInstanceProcAddress)(instance, "vkDestroyPipeline"));
+    vgo_vkCreatePipelineLayout = (PFN_vkCreatePipelineLayout)((*getInstanceProcAddress)(instance, "vkCreatePipelineLayout"));
+    vgo_vkDestroyPipelineLayout = (PFN_vkDestroyPipelineLayout)((*getInstanceProcAddress)(instance, "vkDestroyPipelineLayout"));
+    vgo_vkCreateSampler = (PFN_vkCreateSampler)((*getInstanceProcAddress)(instance, "vkCreateSampler"));
+    vgo_vkDestroySampler = (PFN_vkDestroySampler)((*getInstanceProcAddress)(instance, "vkDestroySampler"));
+    vgo_vkCreateDescriptorSetLayout = (PFN_vkCreateDescriptorSetLayout)((*getInstanceProcAddress)(instance, "vkCreateDescriptorSetLayout"));
+    vgo_vkDestroyDescriptorSetLayout = (PFN_vkDestroyDescriptorSetLayout)((*getInstanceProcAddress)(instance, "vkDestroyDescriptorSetLayout"));
+    vgo_vkCreateDescriptorPool = (PFN_vkCreateDescriptorPool)((*getInstanceProcAddress)(instance, "vkCreateDescriptorPool"));
+    vgo_vkDestroyDescriptorPool = (PFN_vkDestroyDescriptorPool)((*getInstanceProcAddress)(instance, "vkDestroyDescriptorPool"));
+    vgo_vkResetDescriptorPool = (PFN_vkResetDescriptorPool)((*getInstanceProcAddress)(instance, "vkResetDescriptorPool"));
+    vgo_vkAllocateDescriptorSets = (PFN_vkAllocateDescriptorSets)((*getInstanceProcAddress)(instance, "vkAllocateDescriptorSets"));
+    vgo_vkFreeDescriptorSets = (PFN_vkFreeDescriptorSets)((*getInstanceProcAddress)(instance, "vkFreeDescriptorSets"));
+    vgo_vkUpdateDescriptorSets = (PFN_vkUpdateDescriptorSets)((*getInstanceProcAddress)(instance, "vkUpdateDescriptorSets"));
+    vgo_vkCreateFramebuffer = (PFN_vkCreateFramebuffer)((*getInstanceProcAddress)(instance, "vkCreateFramebuffer"));
+    vgo_vkDestroyFramebuffer = (PFN_vkDestroyFramebuffer)((*getInstanceProcAddress)(instance, "vkDestroyFramebuffer"));
+    vgo_vkCreateRenderPass = (PFN_vkCreateRenderPass)((*getInstanceProcAddress)(instance, "vkCreateRenderPass"));
+    vgo_vkDestroyRenderPass = (PFN_vkDestroyRenderPass)((*getInstanceProcAddress)(instance, "vkDestroyRenderPass"));
+    vgo_vkGetRenderAreaGranularity = (PFN_vkGetRenderAreaGranularity)((*getInstanceProcAddress)(instance, "vkGetRenderAreaGranularity"));
+    vgo_vkCreateCommandPool = (PFN_vkCreateCommandPool)((*getInstanceProcAddress)(instance, "vkCreateCommandPool"));
+    vgo_vkDestroyCommandPool = (PFN_vkDestroyCommandPool)((*getInstanceProcAddress)(instance, "vkDestroyCommandPool"));
+    vgo_vkResetCommandPool = (PFN_vkResetCommandPool)((*getInstanceProcAddress)(instance, "vkResetCommandPool"));
+    vgo_vkAllocateCommandBuffers = (PFN_vkAllocateCommandBuffers)((*getInstanceProcAddress)(instance, "vkAllocateCommandBuffers"));
+    vgo_vkFreeCommandBuffers = (PFN_vkFreeCommandBuffers)((*getInstanceProcAddress)(instance, "vkFreeCommandBuffers"));
+    vgo_vkBeginCommandBuffer = (PFN_vkBeginCommandBuffer)((*getInstanceProcAddress)(instance, "vkBeginCommandBuffer"));
+    vgo_vkEndCommandBuffer = (PFN_vkEndCommandBuffer)((*getInstanceProcAddress)(instance, "vkEndCommandBuffer"));
+    vgo_vkResetCommandBuffer = (PFN_vkResetCommandBuffer)((*getInstanceProcAddress)(instance, "vkResetCommandBuffer"));
+    vgo_vkCmdBindPipeline = (PFN_vkCmdBindPipeline)((*getInstanceProcAddress)(instance, "vkCmdBindPipeline"));
+    vgo_vkCmdSetViewport = (PFN_vkCmdSetViewport)((*getInstanceProcAddress)(instance, "vkCmdSetViewport"));
+    vgo_vkCmdSetScissor = (PFN_vkCmdSetScissor)((*getInstanceProcAddress)(instance, "vkCmdSetScissor"));
+    vgo_vkCmdSetLineWidth = (PFN_vkCmdSetLineWidth)((*getInstanceProcAddress)(instance, "vkCmdSetLineWidth"));
+    vgo_vkCmdSetDepthBias = (PFN_vkCmdSetDepthBias)((*getInstanceProcAddress)(instance, "vkCmdSetDepthBias"));
+    vgo_vkCmdSetBlendConstants = (PFN_vkCmdSetBlendConstants)((*getInstanceProcAddress)(instance, "vkCmdSetBlendConstants"));
+    vgo_vkCmdSetDepthBounds = (PFN_vkCmdSetDepthBounds)((*getInstanceProcAddress)(instance, "vkCmdSetDepthBounds"));
+    vgo_vkCmdSetStencilCompareMask = (PFN_vkCmdSetStencilCompareMask)((*getInstanceProcAddress)(instance, "vkCmdSetStencilCompareMask"));
+    vgo_vkCmdSetStencilWriteMask = (PFN_vkCmdSetStencilWriteMask)((*getInstanceProcAddress)(instance, "vkCmdSetStencilWriteMask"));
+    vgo_vkCmdSetStencilReference = (PFN_vkCmdSetStencilReference)((*getInstanceProcAddress)(instance, "vkCmdSetStencilReference"));
+    vgo_vkCmdBindDescriptorSets = (PFN_vkCmdBindDescriptorSets)((*getInstanceProcAddress)(instance, "vkCmdBindDescriptorSets"));
+    vgo_vkCmdBindIndexBuffer = (PFN_vkCmdBindIndexBuffer)((*getInstanceProcAddress)(instance, "vkCmdBindIndexBuffer"));
+    vgo_vkCmdBindVertexBuffers = (PFN_vkCmdBindVertexBuffers)((*getInstanceProcAddress)(instance, "vkCmdBindVertexBuffers"));
+    vgo_vkCmdDraw = (PFN_vkCmdDraw)((*getInstanceProcAddress)(instance, "vkCmdDraw"));
+    vgo_vkCmdDrawIndexed = (PFN_vkCmdDrawIndexed)((*getInstanceProcAddress)(instance, "vkCmdDrawIndexed"));
+    vgo_vkCmdDrawIndirect = (PFN_vkCmdDrawIndirect)((*getInstanceProcAddress)(instance, "vkCmdDrawIndirect"));
+    vgo_vkCmdDrawIndexedIndirect = (PFN_vkCmdDrawIndexedIndirect)((*getInstanceProcAddress)(instance, "vkCmdDrawIndexedIndirect"));
+    vgo_vkCmdDispatch = (PFN_vkCmdDispatch)((*getInstanceProcAddress)(instance, "vkCmdDispatch"));
+    vgo_vkCmdDispatchIndirect = (PFN_vkCmdDispatchIndirect)((*getInstanceProcAddress)(instance, "vkCmdDispatchIndirect"));
+    vgo_vkCmdCopyBuffer = (PFN_vkCmdCopyBuffer)((*getInstanceProcAddress)(instance, "vkCmdCopyBuffer"));
+    vgo_vkCmdCopyImage = (PFN_vkCmdCopyImage)((*getInstanceProcAddress)(instance, "vkCmdCopyImage"));
+    vgo_vkCmdBlitImage = (PFN_vkCmdBlitImage)((*getInstanceProcAddress)(instance, "vkCmdBlitImage"));
+    vgo_vkCmdCopyBufferToImage = (PFN_vkCmdCopyBufferToImage)((*getInstanceProcAddress)(instance, "vkCmdCopyBufferToImage"));
+    vgo_vkCmdCopyImageToBuffer = (PFN_vkCmdCopyImageToBuffer)((*getInstanceProcAddress)(instance, "vkCmdCopyImageToBuffer"));
+    vgo_vkCmdUpdateBuffer = (PFN_vkCmdUpdateBuffer)((*getInstanceProcAddress)(instance, "vkCmdUpdateBuffer"));
+    vgo_vkCmdFillBuffer = (PFN_vkCmdFillBuffer)((*getInstanceProcAddress)(instance, "vkCmdFillBuffer"));
+    vgo_vkCmdClearColorImage = (PFN_vkCmdClearColorImage)((*getInstanceProcAddress)(instance, "vkCmdClearColorImage"));
+    vgo_vkCmdClearDepthStencilImage = (PFN_vkCmdClearDepthStencilImage)((*getInstanceProcAddress)(instance, "vkCmdClearDepthStencilImage"));
+    vgo_vkCmdClearAttachments = (PFN_vkCmdClearAttachments)((*getInstanceProcAddress)(instance, "vkCmdClearAttachments"));
+    vgo_vkCmdResolveImage = (PFN_vkCmdResolveImage)((*getInstanceProcAddress)(instance, "vkCmdResolveImage"));
+    vgo_vkCmdSetEvent = (PFN_vkCmdSetEvent)((*getInstanceProcAddress)(instance, "vkCmdSetEvent"));
+    vgo_vkCmdResetEvent = (PFN_vkCmdResetEvent)((*getInstanceProcAddress)(instance, "vkCmdResetEvent"));
+    vgo_vkCmdWaitEvents = (PFN_vkCmdWaitEvents)((*getInstanceProcAddress)(instance, "vkCmdWaitEvents"));
+    vgo_vkCmdPipelineBarrier = (PFN_vkCmdPipelineBarrier)((*getInstanceProcAddress)(instance, "vkCmdPipelineBarrier"));
+    vgo_vkCmdBeginQuery = (PFN_vkCmdBeginQuery)((*getInstanceProcAddress)(instance, "vkCmdBeginQuery"));
+    vgo_vkCmdEndQuery = (PFN_vkCmdEndQuery)((*getInstanceProcAddress)(instance, "vkCmdEndQuery"));
+    vgo_vkCmdResetQueryPool = (PFN_vkCmdResetQueryPool)((*getInstanceProcAddress)(instance, "vkCmdResetQueryPool"));
+    vgo_vkCmdWriteTimestamp = (PFN_vkCmdWriteTimestamp)((*getInstanceProcAddress)(instance, "vkCmdWriteTimestamp"));
+    vgo_vkCmdCopyQueryPoolResults = (PFN_vkCmdCopyQueryPoolResults)((*getInstanceProcAddress)(instance, "vkCmdCopyQueryPoolResults"));
+    vgo_vkCmdPushConstants = (PFN_vkCmdPushConstants)((*getInstanceProcAddress)(instance, "vkCmdPushConstants"));
+    vgo_vkCmdBeginRenderPass = (PFN_vkCmdBeginRenderPass)((*getInstanceProcAddress)(instance, "vkCmdBeginRenderPass"));
+    vgo_vkCmdNextSubpass = (PFN_vkCmdNextSubpass)((*getInstanceProcAddress)(instance, "vkCmdNextSubpass"));
+    vgo_vkCmdEndRenderPass = (PFN_vkCmdEndRenderPass)((*getInstanceProcAddress)(instance, "vkCmdEndRenderPass"));
+    vgo_vkCmdExecuteCommands = (PFN_vkCmdExecuteCommands)((*getInstanceProcAddress)(instance, "vkCmdExecuteCommands"));
+    vgo_vkDestroySurfaceKHR = (PFN_vkDestroySurfaceKHR)((*getInstanceProcAddress)(instance, "vkDestroySurfaceKHR"));
+    vgo_vkGetPhysicalDeviceSurfaceSupportKHR = (PFN_vkGetPhysicalDeviceSurfaceSupportKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceSurfaceSupportKHR"));
+    vgo_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = (PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"));
+    vgo_vkGetPhysicalDeviceSurfaceFormatsKHR = (PFN_vkGetPhysicalDeviceSurfaceFormatsKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceSurfaceFormatsKHR"));
+    vgo_vkGetPhysicalDeviceSurfacePresentModesKHR = (PFN_vkGetPhysicalDeviceSurfacePresentModesKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceSurfacePresentModesKHR"));
+    vgo_vkCreateSwapchainKHR = (PFN_vkCreateSwapchainKHR)((*getInstanceProcAddress)(instance, "vkCreateSwapchainKHR"));
+    vgo_vkDestroySwapchainKHR = (PFN_vkDestroySwapchainKHR)((*getInstanceProcAddress)(instance, "vkDestroySwapchainKHR"));
+    vgo_vkGetSwapchainImagesKHR = (PFN_vkGetSwapchainImagesKHR)((*getInstanceProcAddress)(instance, "vkGetSwapchainImagesKHR"));
+    vgo_vkAcquireNextImageKHR = (PFN_vkAcquireNextImageKHR)((*getInstanceProcAddress)(instance, "vkAcquireNextImageKHR"));
+    vgo_vkQueuePresentKHR = (PFN_vkQueuePresentKHR)((*getInstanceProcAddress)(instance, "vkQueuePresentKHR"));
+    vgo_vkGetPhysicalDeviceDisplayPropertiesKHR = (PFN_vkGetPhysicalDeviceDisplayPropertiesKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceDisplayPropertiesKHR"));
+    vgo_vkGetPhysicalDeviceDisplayPlanePropertiesKHR = (PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"));
+    vgo_vkGetDisplayPlaneSupportedDisplaysKHR = (PFN_vkGetDisplayPlaneSupportedDisplaysKHR)((*getInstanceProcAddress)(instance, "vkGetDisplayPlaneSupportedDisplaysKHR"));
+    vgo_vkGetDisplayModePropertiesKHR = (PFN_vkGetDisplayModePropertiesKHR)((*getInstanceProcAddress)(instance, "vkGetDisplayModePropertiesKHR"));
+    vgo_vkCreateDisplayModeKHR = (PFN_vkCreateDisplayModeKHR)((*getInstanceProcAddress)(instance, "vkCreateDisplayModeKHR"));
+    vgo_vkGetDisplayPlaneCapabilitiesKHR = (PFN_vkGetDisplayPlaneCapabilitiesKHR)((*getInstanceProcAddress)(instance, "vkGetDisplayPlaneCapabilitiesKHR"));
+    vgo_vkCreateDisplayPlaneSurfaceKHR = (PFN_vkCreateDisplayPlaneSurfaceKHR)((*getInstanceProcAddress)(instance, "vkCreateDisplayPlaneSurfaceKHR"));
+    vgo_vkCreateSharedSwapchainsKHR = (PFN_vkCreateSharedSwapchainsKHR)((*getInstanceProcAddress)(instance, "vkCreateSharedSwapchainsKHR"));
 
 #ifdef VK_USE_PLATFORM_XLIB_KHR
-    vgo_vkCreateXlibSurfaceKHR = (PFN_vkCreateXlibSurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkCreateXlibSurfaceKHR"));
-    vgo_vkGetPhysicalDeviceXlibPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceXlibPresentationSupportKHR"));
+    vgo_vkCreateXlibSurfaceKHR = (PFN_vkCreateXlibSurfaceKHR)((*getInstanceProcAddress)(instance, "vkCreateXlibSurfaceKHR"));
+    vgo_vkGetPhysicalDeviceXlibPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceXlibPresentationSupportKHR"));
 #endif
 
 #ifdef VK_USE_PLATFORM_XCB_KHR
-    vgo_vkCreateXcbSurfaceKHR = (PFN_vkCreateXcbSurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkCreateXcbSurfaceKHR"));
-    vgo_vkGetPhysicalDeviceXcbPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceXcbPresentationSupportKHR"));
+    vgo_vkCreateXcbSurfaceKHR = (PFN_vkCreateXcbSurfaceKHR)((*getInstanceProcAddress)(instance, "vkCreateXcbSurfaceKHR"));
+    vgo_vkGetPhysicalDeviceXcbPresentationSupportKHR = (PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceXcbPresentationSupportKHR"));
 #endif
 
 #ifdef VK_USE_PLATFORM_WAYLAND_KHR
-    vgo_vkCreateWaylandSurfaceKHR = (PFN_vkCreateWaylandSurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkCreateWaylandSurfaceKHR"));
-    vgo_vkGetPhysicalDeviceWaylandPresentationSupportKHR = (PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceWaylandPresentationSupportKHR"));
+    vgo_vkCreateWaylandSurfaceKHR = (PFN_vkCreateWaylandSurfaceKHR)((*getInstanceProcAddress)(instance, "vkCreateWaylandSurfaceKHR"));
+    vgo_vkGetPhysicalDeviceWaylandPresentationSupportKHR = (PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceWaylandPresentationSupportKHR"));
 #endif
 
 #ifdef VK_USE_PLATFORM_MIR_KHR
-    vgo_vkCreateMirSurfaceKHR = (PFN_vkCreateMirSurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkCreateMirSurfaceKHR"));
-    vgo_vkGetPhysicalDeviceMirPresentationSupportKHR = (PFN_vkGetPhysicalDeviceMirPresentationSupportKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceMirPresentationSupportKHR"));
+    vgo_vkCreateMirSurfaceKHR = (PFN_vkCreateMirSurfaceKHR)((*getInstanceProcAddress)(instance, "vkCreateMirSurfaceKHR"));
+    vgo_vkGetPhysicalDeviceMirPresentationSupportKHR = (PFN_vkGetPhysicalDeviceMirPresentationSupportKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceMirPresentationSupportKHR"));
 #endif
 
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
-    vgo_vkCreateAndroidSurfaceKHR = (PFN_vkCreateAndroidSurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkCreateAndroidSurfaceKHR"));
+    vgo_vkCreateAndroidSurfaceKHR = (PFN_vkCreateAndroidSurfaceKHR)((*getInstanceProcAddress)(instance, "vkCreateAndroidSurfaceKHR"));
 #endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
-    vgo_vkCreateWin32SurfaceKHR = (PFN_vkCreateWin32SurfaceKHR)(glfwGetInstanceProcAddress(instance, "vkCreateWin32SurfaceKHR"));
-    vgo_vkGetPhysicalDeviceWin32PresentationSupportKHR = (PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR)(glfwGetInstanceProcAddress(instance, "vkGetPhysicalDeviceWin32PresentationSupportKHR"));
+    vgo_vkCreateWin32SurfaceKHR = (PFN_vkCreateWin32SurfaceKHR)((*getInstanceProcAddress)(instance, "vkCreateWin32SurfaceKHR"));
+    vgo_vkGetPhysicalDeviceWin32PresentationSupportKHR = (PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR)((*getInstanceProcAddress)(instance, "vkGetPhysicalDeviceWin32PresentationSupportKHR"));
 #endif
 
-    vgo_vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)(glfwGetInstanceProcAddress(instance, "vkCreateDebugReportCallbackEXT"));
-    vgo_vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)(glfwGetInstanceProcAddress(instance, "vkDestroyDebugReportCallbackEXT"));
-    vgo_vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)(glfwGetInstanceProcAddress(instance, "vkDebugReportMessageEXT"));
+    vgo_vkCreateDebugReportCallbackEXT = (PFN_vkCreateDebugReportCallbackEXT)((*getInstanceProcAddress)(instance, "vkCreateDebugReportCallbackEXT"));
+    vgo_vkDestroyDebugReportCallbackEXT = (PFN_vkDestroyDebugReportCallbackEXT)((*getInstanceProcAddress)(instance, "vkDestroyDebugReportCallbackEXT"));
+    vgo_vkDebugReportMessageEXT = (PFN_vkDebugReportMessageEXT)((*getInstanceProcAddress)(instance, "vkDebugReportMessageEXT"));
 
-    vgo_vkGetRefreshCycleDurationGOOGLE = (PFN_vkGetRefreshCycleDurationGOOGLE)(glfwGetInstanceProcAddress(instance, "vkGetRefreshCycleDurationGOOGLE"));
-    vgo_vkGetPastPresentationTimingGOOGLE = (PFN_vkGetPastPresentationTimingGOOGLE)(glfwGetInstanceProcAddress(instance, "vkGetPastPresentationTimingGOOGLE"));
+    vgo_vkGetRefreshCycleDurationGOOGLE = (PFN_vkGetRefreshCycleDurationGOOGLE)((*getInstanceProcAddress)(instance, "vkGetRefreshCycleDurationGOOGLE"));
+    vgo_vkGetPastPresentationTimingGOOGLE = (PFN_vkGetPastPresentationTimingGOOGLE)((*getInstanceProcAddress)(instance, "vkGetPastPresentationTimingGOOGLE"));
     return 0;
 }
 
