@@ -38,19 +38,12 @@ TRANSLATOR:
       # callbacks (no allocation callbacks cos it's dumb)
       - {action: accept, from: PFN_vkDebugReportCallback}
       - {action: replace, from: PFN_vkDebugReportCallback, to: DebugReportCallbackFunc}
+      - {action: ignore, from: DebugUtilsMessenger}
       # these in global section so doc will work
       - {action: accept, from: ^callVk}
       - {action: replace, from: ^callVk}
-      # surface_capabilities2
-      - {action: replace, from: "(?i)_CAPABILITIES2_EXT$", to: "_CAPABILITIES2_E"}
-      - {action: replace, from: "(?i)Capabilities2EXT$", to: "Capabilities2E"}
     type:
       - {action: accept, from: "^ANativeWindow$"}
-      - {action: accept, from: "^HINSTANCE$"}
-      - {action: accept, from: "^HWND$"}
-      - {action: accept, from: "^HANDLE$"}
-      - {action: accept, from: "^SECURITY_ATTRIBUTES$"}
-      - {action: accept, from: "^DWORD$"}
       - {action: replace, from: "KHR$"}
       - {action: replace, from: "EXT$"}
     function:
@@ -83,12 +76,8 @@ TRANSLATOR:
       - {transform: export}
   MemTips:
     - {target: VkAllocationCallbacks, self: raw}
+    - {target: DebugUtilsMessengerCallback, self: raw}
     - {target: ANativeWindow, self: raw}
-    - {target: HINSTANCE, self: raw}
-    - {target: HWND, self: raw}
-    - {target: HANDLE, self: raw}
-    - {target: SECURITY_ATTRIBUTES, self: raw}
-    - {target: DWORD, self: raw}
   PtrTips:
     function:
       - {target: ^callVkEnumeratePhysicalDevices$, tips: [0,ref,arr]}
