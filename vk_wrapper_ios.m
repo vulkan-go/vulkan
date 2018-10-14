@@ -4,6 +4,13 @@
 #include "vk_wrapper.h"
 #include <dlfcn.h>
 
+// No-op on iOS, get the ProcAddr in vkInit()
+void setProcAddr(void* getProcAddr) {}
+
+int isProcAddrSet() {
+    return 1;
+}
+
 int vkInit(void) {
     vgo_vkGetInstanceProcAddr = (PFN_vkGetInstanceProcAddr)(dlsym(RTLD_DEFAULT, "vkGetInstanceProcAddr"));
     if (vgo_vkGetInstanceProcAddr == NULL) {
@@ -369,26 +376,6 @@ PFN_vkGetDisplayPlaneCapabilitiesKHR vgo_vkGetDisplayPlaneCapabilitiesKHR;
 PFN_vkCreateDisplayPlaneSurfaceKHR vgo_vkCreateDisplayPlaneSurfaceKHR;
 PFN_vkCreateSharedSwapchainsKHR vgo_vkCreateSharedSwapchainsKHR;
 
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-PFN_vkCreateXlibSurfaceKHR vgo_vkCreateXlibSurfaceKHR;
-PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vgo_vkGetPhysicalDeviceXlibPresentationSupportKHR;
-#endif
-
-#ifdef VK_USE_PLATFORM_XCB_KHR
-PFN_vkCreateXcbSurfaceKHR vgo_vkCreateXcbSurfaceKHR;
-PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR vgo_vkGetPhysicalDeviceXcbPresentationSupportKHR;
-#endif
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-PFN_vkCreateWaylandSurfaceKHR vgo_vkCreateWaylandSurfaceKHR;
-PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR vgo_vkGetPhysicalDeviceWaylandPresentationSupportKHR;
-#endif
-
-#ifdef VK_USE_PLATFORM_MIR_KHR
-PFN_vkCreateMirSurfaceKHR vgo_vkCreateMirSurfaceKHR;
-PFN_vkGetPhysicalDeviceMirPresentationSupportKHR vgo_vkGetPhysicalDeviceMirPresentationSupportKHR;
-#endif
-
 #ifdef VK_USE_PLATFORM_IOS_MVK
 PFN_vkCreateIOSSurfaceMVK vgo_vkCreateIOSSurfaceMVK;
 PFN_vkActivateMoltenVKLicenseMVK vgo_vkActivateMoltenVKLicenseMVK;
@@ -398,11 +385,6 @@ PFN_vkSetMoltenVKDeviceConfigurationMVK vgo_vkSetMoltenVKDeviceConfigurationMVK;
 PFN_vkGetPhysicalDeviceMetalFeaturesMVK vgo_vkGetPhysicalDeviceMetalFeaturesMVK;
 PFN_vkGetSwapchainPerformanceMVK vgo_vkGetSwapchainPerformanceMVK;
 void __link_moltenvk() { vkGetInstanceProcAddr(NULL, NULL); }
-#endif
-
-#ifdef VK_USE_PLATFORM_WIN32_KHR
-PFN_vkCreateWin32SurfaceKHR vgo_vkCreateWin32SurfaceKHR;
-PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vgo_vkGetPhysicalDeviceWin32PresentationSupportKHR;
 #endif
 
 PFN_vkCreateDebugReportCallbackEXT vgo_vkCreateDebugReportCallbackEXT;

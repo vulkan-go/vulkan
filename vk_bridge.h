@@ -947,19 +947,6 @@ VkBool32 callVkGetPhysicalDeviceWaylandPresentationSupportKHR(
     struct wl_display*                          display);
 #endif /* VK_USE_PLATFORM_WAYLAND_KHR */
 
-#ifdef VK_USE_PLATFORM_MIR_KHR
-VkResult callVkCreateMirSurfaceKHR(
-    VkInstance                                  instance,
-    const VkMirSurfaceCreateInfoKHR*            pCreateInfo,
-    const VkAllocationCallbacks*                pAllocator,
-    VkSurfaceKHR*                               pSurface);
-
-VkBool32 callVkGetPhysicalDeviceMirPresentationSupportKHR(
-    VkPhysicalDevice                            physicalDevice,
-    uint32_t                                    queueFamilyIndex,
-    MirConnection*                              connection);
-#endif /* VK_USE_PLATFORM_MIR_KHR */
-
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
 VkResult callVkCreateAndroidSurfaceKHR(
     VkInstance                                  instance,
