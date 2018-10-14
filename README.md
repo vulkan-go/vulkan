@@ -1,8 +1,8 @@
 <img src="https://cl.ly/2H2E3c0T1X16/Vulkan_500px_Mar15.png" width="200">
 
-# Golang Bindings for Vulkan API ![version-1.0.50](https://img.shields.io/badge/version-1.0.50-lightgrey.svg) [![GoDoc](https://godoc.org/github.com/vulkan-go/vulkan?status.svg)](https://godoc.org/github.com/vulkan-go/vulkan)
+# Golang Bindings for Vulkan API ![version-1.1.88](https://img.shields.io/badge/version-1.1.88-lightgrey.svg) [![GoDoc](https://godoc.org/github.com/vulkan-go/vulkan?status.svg)](https://godoc.org/github.com/vulkan-go/vulkan)
 
-Package [vulkan](https://github.com/vulkan-go/vulkan) provides Go bindings for [Vulkan](https://www.khronos.org/vulkan/) — a low-overhead, cross-platform 3D graphics and compute API.
+Package [vulkan](https://github.com/vulkan-go/vulkan) provides Go bindings for [Vulkan](https://www.khronos.org/vulkan/) — a low-overhead, cross-platform 3D graphics and compute API. Updated October 13, 2018 — Vulkan 1.1.88.
 
 ## Introduction
 
@@ -59,6 +59,8 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2017-05-06** [vulkan-go/asche](https://github.com/vulkan-go/asche) complete.
 
+* **2018-10-13** Updated to Vulkan 1.1.88 spec.
+
 ![vulkan cube golang](http://dl.kc.vc/vulkan/screens/cube.gif)
 
 See all demos in [vulkan-go/demos](https://github.com/vulkan-go/demos).
@@ -77,8 +79,10 @@ Set the GetProcAddress pointer (used to look up Vulkan functions) using SetGetIn
 ```
 // Using SDL2:
 vk.SetGetInstanceProcAddr(sdl.VulkanGetVkGetInstanceProcAddr())
+
 // OR using GLFW:
 vk.SetGetInstanceProcAddr(glfw.GetVulkanGetInstanceProcAddress())
+
 // OR without using a windowing library (Linux only, recommended for compute-only tasks)
 if err := vk.SetDefaultGetInstanceProcAddr(); err != nil {
     panic(err)
