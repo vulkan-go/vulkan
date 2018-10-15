@@ -4,7 +4,6 @@
 package vulkan
 
 /*
-#cgo CFLAGS: -I. -DVK_NO_PROTOTYPES
 #cgo LDFLAGS: -framework Foundation -framework Metal -framework QuartzCore -framework MoltenVK -lc++
 #cgo CFLAGS: -x objective-c -DVK_USE_PLATFORM_IOS_MVK
 
