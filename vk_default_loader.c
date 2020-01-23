@@ -2,6 +2,12 @@
 #include "vulkan/vulkan.h"
 
 #if defined(_WIN32)
+    #include <windows.h>
+    typedef void* (*vkGetInstanceProcAddrFn)(void* lib, const char* procname);
+    static vkGetInstanceProcAddrFn symLoader;
+    static void* loaderWrap(VkInstance instance, const char* vkproc) {
+        return (*symLoader)(instance, vkproc);
+    }
 #elif defined(unix) || defined(__unix__) || defined(__unix)
     #include <dlfcn.h>
     static void* (*symLoader)(void* lib, const char* procname);
@@ -17,8 +23,15 @@
 
 void* getDefaultProcAddr() {
     #if defined(_WIN32)
-        // TODO: WIN32 Vulkan loader
-        return NULL;
+        HMODULE libvulkan = LoadLibrary(TEXT("vulkan-1.dll"));
+        if (libvulkan == NULL) {
+            return NULL;
+        }
+        symLoader = (vkGetInstanceProcAddrFn)GetProcAddress(libvulkan, "vkGetInstanceProcAddr");
+        if (symLoader == NULL) {
+            return NULL;
+        }
+        return &loaderWrap;
     #elif defined(__APPLE__) && defined(__MACH__)
         // return &loaderWrap;
         return NULL;
