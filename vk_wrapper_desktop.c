@@ -1,4 +1,4 @@
-// +build windows darwin,!ios linux,!android
+// +build windows darwin,!ios linux,!android freebsd
 
 #include "vk_wrapper.h"
 #include "vk_default_loader.h"
