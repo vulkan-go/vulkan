@@ -1,9 +1,9 @@
-// +build linux,!android
+// +build freebsd,!android
 
 package vulkan
 
 /*
-#cgo LDFLAGS: -ldl
+#cgo LDFLAGS: -L/usr/local/lib -ldl -lvulkan
 
 #include "vk_wrapper.h"
 #include "vk_bridge.h"

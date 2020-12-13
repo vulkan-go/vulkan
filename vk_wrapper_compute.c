@@ -1,4 +1,4 @@
-// +build linux,compute linux,headless, freebsd,compute freebsd,headless
+// +build linux,compute linux,headless freebsd,compute freebsd,headless
 
 #include "vk_wrapper.h"
 #include <dlfcn.h>
