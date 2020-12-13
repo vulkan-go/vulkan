@@ -1,4 +1,4 @@
-// +build freebsd,!android
+// +build freebsd
 
 package vulkan
 
