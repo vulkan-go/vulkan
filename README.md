@@ -97,6 +97,14 @@ And you're set. I must warn you that using the API properly is not an easy task 
 
 In order to simplify development, I created a high-level framework that manages Vulkan platform state and initialization. It is called [asche](https://github.com/vulkan-go/asche) because when you throw a gopher into volcano you get a pile of ash. Currently it's used in [VulkanCube](https://github.com/vulkan-go/demos/blob/master/vulkancube/vulkancube_android/main.go) demo app.
 
+## MoltenVK os macOS
+
+MoltenVK provides a `MoltenVK.xcframework` which contains static libraries for all Apple platforms. Unfortuantely, linking with a xcframework outside of XCode is not possible.
+
+Instead vulkan-go expects the dylibs to be present in the library search path. 
+
+Follow the [build instructions](https://github.com/KhronosGroup/MoltenVK#building), but instead of `make install` manually copy `./Package/Latest/MoltenVK/dylib/macOS/libMoltenVK.dylib` to `/usr/local/lib`
+
 ## Validation Layers
 
 A good brief of the current state of Vulkan validation layers: [Explore the Vulkan Loader and Validation Layers](https://lunarg.com/wp-content/uploads/2016/07/lunarg-birds-feather-session-siggraph-july-26-2016.pdf) (PDF).
