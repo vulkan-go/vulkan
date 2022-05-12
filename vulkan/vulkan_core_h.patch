@@ -1,0 +1,69 @@
+--- /usr/local/include/vulkan/vulkan_core.h	2022-05-05 01:00:38.000000000 -0700
++++ vulkan_core.h	2022-05-12 00:05:57.000000000 -0700
+@@ -9843,7 +9843,7 @@
+     uint32_t                                    vertexStride);
+ #endif
+ 
+-
++/*
+ #define VK_NVX_binary_import 1
+ VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkCuModuleNVX)
+ VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkCuFunctionNVX)
+@@ -9913,7 +9913,7 @@
+     VkCommandBuffer                             commandBuffer,
+     const VkCuLaunchInfoNVX*                    pLaunchInfo);
+ #endif
+-
++*/
+ 
+ #define VK_NVX_image_view_handle 1
+ #define VK_NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION 2
+@@ -11220,6 +11220,8 @@
+     const VkCoarseSampleOrderCustomNV*          pCustomSampleOrders);
+ #endif
+ 
++// ray tracing not working on mac..
++#ifdef GO_INCLUDE_NV_ray_tracing
+ 
+ #define VK_NV_ray_tracing 1
+ VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkAccelerationStructureNV)
+@@ -11589,6 +11591,7 @@
+     uint32_t                                    shader);
+ #endif
+ 
++#endif // GO_INCLUDE_NV_ray_tracing
+ 
+ #define VK_NV_representative_fragment_test 1
+ #define VK_NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION 2
+@@ -13313,6 +13316,7 @@
+     const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]);
+ #endif
+ 
++#ifdef GO_INCLUDE_NV_ray_tracing
+ 
+ #define VK_NV_ray_tracing_motion_blur 1
+ #define VK_NV_RAY_TRACING_MOTION_BLUR_SPEC_VERSION 1
+@@ -13402,7 +13406,7 @@
+     VkBool32           rayTracingMotionBlurPipelineTraceRaysIndirect;
+ } VkPhysicalDeviceRayTracingMotionBlurFeaturesNV;
+ 
+-
++#endif // GO_INCLUDE_NV_ray_tracing
+ 
+ #define VK_EXT_ycbcr_2plane_444_formats 1
+ #define VK_EXT_YCBCR_2PLANE_444_FORMATS_SPEC_VERSION 1
+@@ -13984,6 +13988,7 @@
+ #define VK_GOOGLE_SURFACELESS_QUERY_SPEC_VERSION 1
+ #define VK_GOOGLE_SURFACELESS_QUERY_EXTENSION_NAME "VK_GOOGLE_surfaceless_query"
+ 
++#ifdef GO_INCLUDE_NV_ray_tracing
+ 
+ #define VK_KHR_acceleration_structure 1
+ VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkAccelerationStructureKHR)
+@@ -14429,3 +14434,6 @@
+ #endif
+ 
+ #endif
++
++#endif // GO_INCLUDE_NV_ray_tracing
++

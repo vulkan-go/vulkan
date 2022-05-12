@@ -12,9 +12,9 @@ GENERATOR:
         "-I.",
         "-DVK_NO_PROTOTYPES",
     ]}
-    
+   
 PARSER:
-  IncludePaths: [/usr/include]
+  IncludePaths: [/usr/local/include, /usr/local/stdinclude]
   # IncludePaths: [windows/, /usr/include]
   SourcesPaths:
     - vulkan/vulkan.h
@@ -38,6 +38,8 @@ TRANSLATOR:
       # callbacks (no allocation callbacks cos it's dumb)
       - {action: accept, from: PFN_vkDebugReportCallback}
       - {action: replace, from: PFN_vkDebugReportCallback, to: DebugReportCallbackFunc}
+      - {action: accept, from: PFN_vkDeviceMemoryReportCallback}
+      - {action: replace, from: PFN_vkDeviceMemoryReportCallback, to: DeviceMemoryReportCallbackFunc}
       - {action: ignore, from: DebugUtilsMessenger}
       # these in global section so doc will work
       - {action: accept, from: ^callVk}
@@ -56,6 +58,7 @@ TRANSLATOR:
       - {transform: lower}
       - {action: accept, from: "(?i)^VK_"}
       - {action: replace, from: "(?i)^VK_", to: "_"}
+      - {action: replace, from: PipelineCacheHeaderVersionOne, to: PipelineCacheHeaderVersion1}
       - {load: snakecase}
     private:
       - {transform: unexport}
