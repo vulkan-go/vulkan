@@ -35,7 +35,12 @@ go_library(
         "vulkan_ios.go",
         "vulkan_linux.go",
     ],
-    cdeps = [":vulkan_headers"],
+    cdeps = [":vulkan_headers"] + select({
+        "@io_bazel_rules_go//go/platform:darwin": [
+            "@com_github_goki_vulkan_mac_deps//:libmoltenvk_dylib",
+        ],
+        "//conditions:default": [],
+    }),
     cgo = True,
     clinkopts = select({
         "@io_bazel_rules_go//go/platform:android": [
@@ -50,11 +55,12 @@ go_library(
             "-framework IOSurface",
             "-framework QuartzCore",
             "-framework Metal",
-            "-lMoltenVK",
             "-lc++",
         ],
         "@io_bazel_rules_go//go/platform:freebsd": [
-            "-L/usr/local/lib -ldl -lvulkan",
+            "-L/usr/local/lib",
+            "-ldl",
+            "-lvulkan",
         ],
         "@io_bazel_rules_go//go/platform:linux": [
             "-ldl",
