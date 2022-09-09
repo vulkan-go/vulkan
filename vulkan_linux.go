@@ -7,6 +7,7 @@ import "unsafe"
 /*
 #cgo pkg-config: vulkan
 #cgo LDFLAGS: -ldl -lvulkan
+#cgo CFLAGS: -Wno-implicit-function-declaration
 
 #include "vk_wrapper.h"
 #include "vk_bridge.h"
@@ -70,8 +71,9 @@ type WaylandSurfaceCreateInfo struct {
 	Surface uintptr
 }
 
-// CreateInstance function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateInstance.html
-func CreateInstance(pCreateInfo *InstanceCreateInfo, pAllocator *AllocationCallbacks, pInstance *Instance) Result {
+// WaylandCreateInstance function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateInstance.html
+// this is a Wayland-specific instance creator
+func WaylandCreateInstance(pCreateInfo *InstanceCreateInfo, pAllocator *AllocationCallbacks, pInstance *Instance) Result {
 	cpCreateInfo, _ := pCreateInfo.PassRef()
 	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), 0
 	cpInstance, _ := (*C.VkInstance)(unsafe.Pointer(pInstance)), 0
