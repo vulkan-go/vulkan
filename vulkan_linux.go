@@ -5,14 +5,11 @@ package vulkan
 import "unsafe"
 
 /*
-#cgo pkg-config: vulkan
 #cgo LDFLAGS: -ldl -lvulkan
 #cgo CFLAGS: -Wno-implicit-function-declaration
 
 #include "vk_wrapper.h"
 #include "vk_bridge.h"
-#include <vulkan/vulkan.h>
-#include <vulkan/vulkan_wayland.h>
 
 VkPipeline nilPipeline =  (VkPipeline) { 0 };
 VkPipelineCache nilPipelineCache =  (VkPipelineCache) { VK_NULL_HANDLE };
@@ -27,7 +24,7 @@ VkResult wlcallVkCreateInstance(
 }
 VkResult wlcallVkCreateWaylandSurfaceKHR(
     void*                                  Pinstance,
-    const VkWaylandSurfaceCreateInfoKHR*        pCreateInfo,
+    void*                                   pCreateInfo,
     const VkAllocationCallbacks*                pAllocator,
     VkSurfaceKHR*                               pSurface) {
     VkInstance instance = (VkInstance) Pinstance;
@@ -36,7 +33,7 @@ VkResult wlcallVkCreateWaylandSurfaceKHR(
 VkBool32 wlcallVkGetPhysicalDeviceWaylandPresentationSupportKHR(
     void*                                       PphysicalDevice,
     uint32_t                                    queueFamilyIndex,
-    struct wl_display*                          display) {
+    void*                          display) {
     VkPhysicalDevice                            physicalDevice = (VkPhysicalDevice) PphysicalDevice;
     return vkGetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice,
             queueFamilyIndex, display);
@@ -94,10 +91,10 @@ func CreateWaylandSurface(instance Instance, info *WaylandSurfaceCreateInfo, pAl
 	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), 0
 	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), 0
 
-	C.wlcallVkCreateWaylandSurfaceKHR(unsafe.Pointer(instance), (*C.VkWaylandSurfaceCreateInfoKHR)(unsafe.Pointer(info)), cpAllocator, cpSurface)
+	C.wlcallVkCreateWaylandSurfaceKHR(unsafe.Pointer(instance), unsafe.Pointer(info), cpAllocator, cpSurface)
 }
 
 // GetPhysicalDeviceWaylandPresentationSupport is a Linux Wayland-related function
 func GetPhysicalDeviceWaylandPresentationSupport(physicalDevice PhysicalDevice, queueFamilyIndex uint32, display uintptr) bool {
-	return 0 != C.wlcallVkGetPhysicalDeviceWaylandPresentationSupportKHR(unsafe.Pointer(physicalDevice), C.uint(queueFamilyIndex), (*C.struct_wl_display)(unsafe.Pointer(display)))
+	return 0 != C.wlcallVkGetPhysicalDeviceWaylandPresentationSupportKHR(unsafe.Pointer(physicalDevice), C.uint(queueFamilyIndex), unsafe.Pointer(display))
 }
