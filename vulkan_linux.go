@@ -15,13 +15,6 @@ VkPipeline nilPipeline =  (VkPipeline) { 0 };
 VkPipelineCache nilPipelineCache =  (VkPipelineCache) { VK_NULL_HANDLE };
 
 ////////////////////// WAYLAND BEGIN
-VkResult wlcallVkCreateInstance(
-    void*                 PpCreateInfo,
-    const VkAllocationCallbacks*                pAllocator,
-    VkInstance*                                 pInstance) {
-        const VkInstanceCreateInfo*                 pCreateInfo = (const VkInstanceCreateInfo*   ) PpCreateInfo;
-    return vkCreateInstance(pCreateInfo, pAllocator, pInstance);
-}
 VkResult wlcallVkCreateWaylandSurfaceKHR(
     void*                                  Pinstance,
     void*                                   pCreateInfo,
@@ -68,17 +61,6 @@ type WaylandSurfaceCreateInfo struct {
 	Surface uintptr
 }
 
-// WaylandCreateInstance function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateInstance.html
-// this is a Wayland-specific instance creator
-func WaylandCreateInstance(pCreateInfo *InstanceCreateInfo, pAllocator *AllocationCallbacks, pInstance *Instance) Result {
-	cpCreateInfo, _ := pCreateInfo.PassRef()
-	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), 0
-	cpInstance, _ := (*C.VkInstance)(unsafe.Pointer(pInstance)), 0
-	__ret := C.wlcallVkCreateInstance(unsafe.Pointer(cpCreateInfo), cpAllocator, cpInstance)
-	__v := (Result)(__ret)
-	return __v
-}
-
 // GetPhysicalDeviceFeatures2 function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceFeatures2.html
 func GetPhysicalDeviceFeatures2(physicalDevice PhysicalDevice, pFeatures *PhysicalDeviceFeatures2) {
 	cphysicalDevice, _ := *(*C.VkPhysicalDevice)(unsafe.Pointer(&physicalDevice)), 0
@@ -86,7 +68,7 @@ func GetPhysicalDeviceFeatures2(physicalDevice PhysicalDevice, pFeatures *Physic
 	C.wlcallVkGetPhysicalDeviceFeatures2(cphysicalDevice, unsafe.Pointer(cpFeatures))
 }
 
-// CreateWaylandSurface is a Linux Wayland-related function
+// CreateWaylandSurface function as declared in https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateWaylandSurfaceKHR.html
 func CreateWaylandSurface(instance Instance, info *WaylandSurfaceCreateInfo, pAllocator *AllocationCallbacks, pSurface *Surface) {
 	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), 0
 	cpSurface, _ := (*C.VkSurfaceKHR)(unsafe.Pointer(pSurface)), 0
@@ -94,7 +76,7 @@ func CreateWaylandSurface(instance Instance, info *WaylandSurfaceCreateInfo, pAl
 	C.wlcallVkCreateWaylandSurfaceKHR(unsafe.Pointer(instance), unsafe.Pointer(info), cpAllocator, cpSurface)
 }
 
-// GetPhysicalDeviceWaylandPresentationSupport is a Linux Wayland-related function
+// GetPhysicalDeviceWaylandPresentationSupport function as declared in https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html
 func GetPhysicalDeviceWaylandPresentationSupport(physicalDevice PhysicalDevice, queueFamilyIndex uint32, display uintptr) bool {
 	return 0 != C.wlcallVkGetPhysicalDeviceWaylandPresentationSupportKHR(unsafe.Pointer(physicalDevice), C.uint(queueFamilyIndex), unsafe.Pointer(display))
 }
