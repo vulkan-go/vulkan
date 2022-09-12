@@ -10,9 +10,6 @@ import "unsafe"
 
 #include "vk_wrapper.h"
 
-VkPipeline nilPipeline =  (VkPipeline) { 0 };
-VkPipelineCache nilPipelineCache =  (VkPipelineCache) { VK_NULL_HANDLE };
-
 ////////////////////// WAYLAND BEGIN
 VkResult wlcallVkCreateWaylandSurfaceKHR(
     void*                                  Pinstance,
@@ -35,12 +32,6 @@ VkBool32 wlcallVkGetPhysicalDeviceWaylandPresentationSupportKHR(
 
 */
 import "C"
-
-// cannot be created without unsafe and C
-var NilPipeline = (*Pipeline)(unsafe.Pointer(&C.nilPipeline))
-
-// cannot be created without unsafe and C
-var NilPipelineCache = (*PipelineCache)(unsafe.Pointer(&C.nilPipelineCache))
 
 // Linux Wayland type flags
 type WaylandSurfaceCreateFlags uint32
