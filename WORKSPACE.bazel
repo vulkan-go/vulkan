@@ -11,19 +11,6 @@ http_archive(
     ],
 )
 
-# NOTE: consumers of this repository need to copy the following into their WORKSPACE
-
-vulkan_mac_deps_version = "1.3.211.0"
-
-http_archive(
-    name = "com_github_goki_vulkan_mac_deps",
-    sha256 = "8d3277edf13a29703fc8922e32cf6e15a67c2af67c89fb1bec4dc2bce3e0cbf6",
-    strip_prefix = "vulkan_mac_deps-%s" % vulkan_mac_deps_version,
-    url = "https://github.com/goki/vulkan_mac_deps/archive/refs/tags/%s.tar.gz" % vulkan_mac_deps_version,
-)
-
-# END NOTE
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
