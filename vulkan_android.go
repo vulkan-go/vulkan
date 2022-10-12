@@ -4,7 +4,7 @@ package vulkan
 
 /*
 #cgo android LDFLAGS: -Wl,--no-warn-mismatch -lm_hard
-#cgo android CFLAGS: -DVK_USE_PLATFORM_ANDROID_KHR -D__ARM_ARCH_7A__ -D_NDK_MATH_NO_SOFTFP=1 -mfpu=vfp -march=armv7-a
+#cgo android CFLAGS: -DVK_USE_PLATFORM_ANDROID_KHR -D_NDK_MATH_NO_SOFTFP=1 -mfpu=vfp
 
 #include <android/native_window.h>
 
