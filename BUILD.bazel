@@ -1,0 +1,112 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+cc_library(
+    name = "vulkan_headers",
+    hdrs = glob(["vulkan/*"]),
+)
+
+go_library(
+    name = "vulkan",
+    srcs = [
+        "cgo_helpers.c",
+        "cgo_helpers.go",
+        "cgo_helpers.h",
+        "const.go",
+        "doc.go",
+        "errors.go",
+        "init.go",
+        "types.go",
+        "util.go",
+        "vk_bridge.c",
+        "vk_bridge.h",
+        "vk_debug_android.go",
+        "vk_default_loader.c",
+        "vk_default_loader.h",
+        "vk_null32.go",
+        "vk_null64.go",
+        "vk_wrapper.h",
+        "vk_wrapper_android.c",
+        "vk_wrapper_desktop.c",
+        "vk_wrapper_ios.m",
+        "vulkan.go",
+        "vulkan_android.go",
+        "vulkan_darwin.go",
+        "vulkan_freebsd.go",
+        "vulkan_ios.go",
+        "vulkan_linux.go",
+    ],
+    cdeps = [":vulkan_headers"],
+    cgo = True,
+    clinkopts = select({
+        "@io_bazel_rules_go//go/platform:android": [
+            "-Wl,--no-warn-mismatch",
+            "-lm_hard",
+            "-llog",
+        ],
+        "@io_bazel_rules_go//go/platform:darwin": [
+            "-F/Library/Frameworks",
+            "-framework Cocoa",
+            "-framework IOKit",
+            "-framework IOSurface",
+            "-framework QuartzCore",
+            "-framework Metal",
+            # This line requires the Vulkan SDK to be installed.
+            # TODO: We should not require this.
+            # We can use cc_import and cdeps to link it, but the
+            # vulkan loader at run-time searches for the icd.d directory.
+            # I haven't figured out how to bundle that directory with this library.
+            # Maybe fixable by setting SYSCONFDIR once this is fixed:
+            # https://github.com/bazelbuild/bazel/issues/13930
+            # Reference:
+            # https://vulkan.lunarg.com/doc/view/1.3.211.0/mac/LoaderDriverInterface.html#user-content-driver-discovery-on-macos
+            "-lMoltenVK",
+            "-lc++",
+        ],
+        "@io_bazel_rules_go//go/platform:freebsd": [
+            "-L/usr/local/lib",
+            "-ldl",
+            "-lvulkan",
+        ],
+        "@io_bazel_rules_go//go/platform:linux": [
+            "-ldl",
+        ],
+        "//conditions:default": [],
+    }) + select({
+        "@io_bazel_rules_go//go/platform:ios_arm64": [
+            "-framework Foundation",
+            "-framework Metal",
+            "-framework QuartzCore",
+            "-framework MoltenVK",
+            "-lc++",
+        ],
+        "//conditions:default": [],
+    }),
+    copts = [
+        "-I.",
+        "-DVK_NO_PROTOTYPES",
+        #
+        # "-DSYSCONFDIR=$(rootpath @com_github_goki_vulkan_mac_deps//:vulkan_mac_deps)/sdk/macOS/share",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:android": [
+            "-DVK_USE_PLATFORM_ANDROID_KHR",
+            "-D__ARM_ARCH_7A__",
+            "-D_NDK_MATH_NO_SOFTFP=1",
+            "-mfpu=vfp",
+            "-mfloat-abi=hard",
+            "-march=armv7-a",
+        ],
+        "@io_bazel_rules_go//go/platform:darwin": [
+            "-DVK_USE_PLATFORM_MACOS_MVK",
+            "-Wno-deprecated-declarations",
+        ],
+        "//conditions:default": [],
+    }) + select({
+        "@io_bazel_rules_go//go/platform:ios_arm64": [
+            "-x objective-c",
+            "-DVK_USE_PLATFORM_IOS_MVK",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/goki/vulkan",
+    visibility = ["//visibility:public"],
+)

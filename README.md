@@ -1,8 +1,8 @@
 <img src="https://cl.ly/2H2E3c0T1X16/Vulkan_500px_Mar15.png" width="200">
 
-# Golang Bindings for Vulkan API ![version-1.1.88](https://img.shields.io/badge/version-1.1.88-lightgrey.svg) [![GoDoc](https://godoc.org/github.com/vulkan-go/vulkan?status.svg)](https://godoc.org/github.com/vulkan-go/vulkan)
+# Golang Bindings for Vulkan API ![version-1.1.88](https://img.shields.io/badge/version-1.1.88-lightgrey.svg) [![GoDoc](https://godoc.org/github.com/goki/vulkan?status.svg)](https://godoc.org/github.com/goki/vulkan)
 
-Package [vulkan](https://github.com/vulkan-go/vulkan) provides Go bindings for [Vulkan](https://www.khronos.org/vulkan/) — a low-overhead, cross-platform 3D graphics and compute API. Updated October 13, 2018 — Vulkan 1.1.88.
+Package [vulkan](https://github.com/goki/vulkan) provides Go bindings for [Vulkan](https://www.khronos.org/vulkan/) — a low-overhead, cross-platform 3D graphics and compute API. Updated October 13, 2018 — Vulkan 1.1.88.
 
 ## Introduction
 
@@ -53,7 +53,7 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2016-11-13** Second unsuccessful attempt to write spinning cube. 25 hours spent. The approach was highly inspired by [Mali Vulkan SDK for Android 1.0](http://malideveloper.arm.com/downloads/deved/tutorial/SDK/Vulkan/1.0/index.html) and I created initial version of [vulkan-go/asche](https://github.com/vulkan-go/asche) — a higher level framework to simplify Vulkan initialization for new apps.
 
-* **2016-11-29** Generic Linux support added in using GLFW ([Issue #2](https://github.com/vulkan-go/vulkan/issues/2)) thanks @jfreymuth.
+* **2016-11-29** Generic Linux support added in using GLFW ([Issue #2](https://github.com/goki/vulkan/issues/2)) thanks @jfreymuth.
 
 * **2017-05-06** Third, successful attempt to write spining cube example. 16 hours spent, 4K LOC of C code rewritten from [cube.c](https://github.com/LunarG/VulkanSamples/blob/master/demos/cube.c) of LunarG demos. The whole process has been screencasted, maybe I will release it one day.
 
@@ -71,7 +71,7 @@ Usage of this project is straightforward due to the stateless nature of Vulkan A
 Just import the package like this:
 
 ```
-import vk "github.com/vulkan-go/vulkan"
+import vk "github.com/goki/vulkan"
 ```
 
 Set the GetProcAddress pointer (used to look up Vulkan functions) using SetGetInstanceProcAddr or SetDefaultGetInstanceProcAddr. After that you can call Init to initialise the library. For example:
