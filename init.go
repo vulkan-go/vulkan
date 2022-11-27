@@ -27,7 +27,7 @@ func SetDefaultGetInstanceProcAddr() error {
 }
 
 // Init checks for Vulkan support on the platform and obtains PFNs for global Vulkan API functions.
-// Either SetGetInstanceProcAddr or SetDefaultGetInstanceGetProcAddr must have been called prior to
+// Either SetGetInstanceProcAddr or SetDefaultGetInstanceProcAddr must have been called prior to
 // calling Init.
 func Init() error {
 	if C.isProcAddrSet() == 0 {
@@ -41,7 +41,7 @@ func Init() error {
 }
 
 // InitInstance obtains instance PFNs for Vulkan API functions, this is necessary on
-// OS X using MoltenVK, but for the other platforms it's an option. Not implemented for Android.
+// OS X using MoltenVK, but for the other platforms it's an option.
 func InitInstance(instance Instance) error {
 	if C.isProcAddrSet() == 0 {
 		return errors.New("vulkan: GetInstanceProcAddr is not set")

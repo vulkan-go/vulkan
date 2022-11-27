@@ -1,4 +1,4 @@
-// +build windows darwin,!ios linux,!android freebsd
+// +build windows darwin,!ios android linux freebsd
 
 #include "vk_wrapper.h"
 #include "vk_default_loader.h"
@@ -23,7 +23,7 @@ int vkInit() {
     vgo_vkEnumerateInstanceExtensionProperties = (PFN_vkEnumerateInstanceExtensionProperties)((*getInstanceProcAddress)(NULL, "vkEnumerateInstanceExtensionProperties"));
     vgo_vkEnumerateInstanceLayerProperties = (PFN_vkEnumerateInstanceLayerProperties)((*getInstanceProcAddress)(NULL, "vkEnumerateInstanceLayerProperties"));
 
-#ifndef VK_USE_PLATFORM_MACOS_MVK
+#if !defined(VK_USE_PLATFORM_MACOS_MVK) && !defined(VK_USE_PLATFORM_ANDROID_KHR)
     // can safely init instance PFNs with no instance
     vkInitInstance(NULL);
 #endif
@@ -418,4 +418,3 @@ PFN_vkDebugReportMessageEXT vgo_vkDebugReportMessageEXT;
 
 PFN_vkGetRefreshCycleDurationGOOGLE vgo_vkGetRefreshCycleDurationGOOGLE;
 PFN_vkGetPastPresentationTimingGOOGLE vgo_vkGetPastPresentationTimingGOOGLE;
-

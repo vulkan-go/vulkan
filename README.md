@@ -15,6 +15,8 @@ adding lots of C/C++ in the projects, also can be used to study Vulkan without
 diving too deep into C/C++ language semantics. For me it's just a matter of
 taste, writing Go code is simply more pleasant experience.
 
+See all demos in [vulkan-go/demos](https://github.com/vulkan-go/demos).
+
 ## Project history timeline
 
 * **2016-02-16** Vulkan API publicly released.
@@ -61,9 +63,7 @@ taste, writing Go code is simply more pleasant experience.
 
 * **2018-10-13** Updated to Vulkan 1.1.88 spec.
 
-![vulkan cube golang](http://dl.kc.vc/vulkan/screens/cube.gif)
-
-See all demos in [vulkan-go/demos](https://github.com/vulkan-go/demos).
+* **2022-11-26** Changed loader for Android. Now compatible with [Android 8 (Oreo)](https://android.googlesource.com/platform/external/vulkan-validation-layers/+/refs/heads/oreo-release/loader/LoaderAndLayerInterface.md) API level 26 a higher.
 
 ## How to use
 
@@ -109,7 +109,11 @@ Follow the [build instructions](https://github.com/KhronosGroup/MoltenVK#buildin
 
 A good brief of the current state of Vulkan validation layers: [Explore the Vulkan Loader and Validation Layers](https://lunarg.com/wp-content/uploads/2016/07/lunarg-birds-feather-session-siggraph-july-26-2016.pdf) (PDF).
 
-There is a full support of validation layers with custom callbacks in Go. For my Android experiments I got the standard pack of layers from https://github.com/LunarG/VulkanTools and built them like this:
+There is a full support of validation layers with custom callbacks in Go.
+
+Khronos Group releasing compiled Validation Layers like .so library directly on their [GitHub respository](https://github.com/KhronosGroup/Vulkan-ValidationLayers/releases/)
+
+Or You can build them from https://github.com/LunarG/VulkanTools like this:
 
 ```
 $ cd build-android
@@ -118,7 +122,7 @@ $ ./android-generate.sh
 $ ndk-build
 ```
 
-After that you'd copy the objects to `android/jni/libs` in your project and activate the `ValidationLayers.mk` in your `Android.mk` so when building APK they will be copied alongside with your shared library. It just works then:
+After that you'd copy the files to `android/jni/libs` in your project and activate the `ValidationLayers.mk` in your `Android.mk` so when building APK they will be copied alongside with your shared library. It just works then:
 
 ```
 [INFO] Instance extensions: [VK_KHR_surface VK_KHR_android_surface]
@@ -138,8 +142,10 @@ After that you'd copy the objects to `android/jni/libs` in your project and acti
 
 * [vulkanGo.com](https://vulkanGo.com)
 * [SaschaWillems Demos (C++)](https://github.com/SaschaWillems/Vulkan)
-* [LunarG Vulkan Samples](https://github.com/LunarG/VulkanSamples)
+* [LunarG Vulkan Samples](https://github.com/LunarG/VulkanSamples) (archived)
+* [Vulkan Samples from Khronos Group](https://github.com/KhronosGroup/Vulkan-Samples)
 * [Official list of Vulkan resources](https://www.khronos.org/vulkan/resources)
+* [API description](https://registry.khronos.org/vulkan/)
 * [Vulkan API quick reference](https://www.khronos.org/registry/vulkan/specs/1.0/refguide/Vulkan-1.0-web.pdf)
 
 ## License
