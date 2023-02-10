@@ -1,3 +1,9 @@
+# Update from Feb 9, 2023:
+
+Just updated to the current 1.3.239.0 version of https://vulkan.lunarg.com/sdk/home and included the `vulkan_beta.h` file which includes the `PhysicalDevicePortabilitySubsetFeatures` struct that is needed to configure features on MoltenVK on the mac.  Everything else more-or-less worked from the original conversion notes below.  The .patch files have been updated.
+
+# Original conversion notes from May 11, 2022:
+
 Notes on updating to newer versions of Vulkan, this is from version 1.3.211.0 of https://vulkan.lunarg.com/sdk/home
 
 * Install [c-for-go](https://github.com/xlab/c-for-go) -- revert to the same version that was used to build the original `vulkan-go` from Oct 14, 2018 -- the current version as of 5/12/22 is apparently causing the crash from my first attempt.

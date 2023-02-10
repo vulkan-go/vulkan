@@ -1,24 +1,52 @@
---- const.go	2022-05-12 01:22:31.000000000 -0700
-+++ const_fixed.go	2022-05-12 01:22:24.000000000 -0700
-@@ -29,7 +29,7 @@
- 	// AttachmentUnused as defined in vulkan/vulkan_core.h:124
+--- const.go.orig	2023-02-09 22:33:10
++++ const.go	2023-02-09 22:35:41
+@@ -28,7 +28,7 @@
+ 	// AttachmentUnused as defined in vulkan/vulkan_core.h:123
  	AttachmentUnused = (^uint32(0))
- 	// False as defined in vulkan/vulkan_core.h:125
+ 	// False as defined in vulkan/vulkan_core.h:124
 -	False = uint32(0)
 +	False = 0
- 	// LodClampNone as defined in vulkan/vulkan_core.h:126
+ 	// LodClampNone as defined in vulkan/vulkan_core.h:125
  	LodClampNone = 1000.0
- 	// QueueFamilyIgnored as defined in vulkan/vulkan_core.h:127
-@@ -41,7 +41,7 @@
- 	// SubpassExternal as defined in vulkan/vulkan_core.h:130
+ 	// QueueFamilyIgnored as defined in vulkan/vulkan_core.h:126
+@@ -40,7 +40,7 @@
+ 	// SubpassExternal as defined in vulkan/vulkan_core.h:129
  	SubpassExternal = (^uint32(0))
- 	// True as defined in vulkan/vulkan_core.h:131
+ 	// True as defined in vulkan/vulkan_core.h:130
 -	True = uint32(1)
 +	True = 1
- 	// WholeSize as defined in vulkan/vulkan_core.h:132
+ 	// WholeSize as defined in vulkan/vulkan_core.h:131
  	WholeSize = (^uint64(0))
- 	// MaxMemoryTypes as defined in vulkan/vulkan_core.h:133
-@@ -2221,7 +2221,7 @@
+ 	// MaxMemoryTypes as defined in vulkan/vulkan_core.h:132
+@@ -1432,11 +1432,11 @@
+ 	// Ext4444FormatsExtensionName as defined in vulkan/vulkan_core.h:14605
+ 	Ext4444FormatsExtensionName = "VK_EXT_4444_formats"
+ 	// StdVulkanVideoCodecH264DecodeSpecVersion as defined in vk_video/vulkan_video_codec_h264std_decode.h:27
+-	StdVulkanVideoCodecH264DecodeSpecVersion = StdVulkanVideoCodecH264DecodeApiVersion100
++	// StdVulkanVideoCodecH264DecodeSpecVersion = StdVulkanVideoCodecH264DecodeApiVersion100
+ 	// StdVulkanVideoCodecH264DecodeExtensionName as defined in vk_video/vulkan_video_codec_h264std_decode.h:28
+ 	StdVulkanVideoCodecH264DecodeExtensionName = "VK_STD_vulkan_video_codec_h264_decode"
+ 	// StdVulkanVideoCodecH265DecodeSpecVersion as defined in vk_video/vulkan_video_codec_h265std_decode.h:27
+-	StdVulkanVideoCodecH265DecodeSpecVersion = StdVulkanVideoCodecH265DecodeApiVersion100
++	// StdVulkanVideoCodecH265DecodeSpecVersion = StdVulkanVideoCodecH265DecodeApiVersion100
+ 	// StdVulkanVideoCodecH265DecodeExtensionName as defined in vk_video/vulkan_video_codec_h265std_decode.h:28
+ 	StdVulkanVideoCodecH265DecodeExtensionName = "VK_STD_vulkan_video_codec_h265_decode"
+ 	// KhrPortabilitySubset as defined in vulkan/vulkan_beta.h:22
+@@ -1464,11 +1464,11 @@
+ 	// ExtVideoEncodeH265ExtensionName as defined in vulkan/vulkan_beta.h:344
+ 	ExtVideoEncodeH265ExtensionName = "VK_EXT_video_encode_h265"
+ 	// StdVulkanVideoCodecH264EncodeSpecVersion as defined in vk_video/vulkan_video_codec_h264std_encode.h:26
+-	StdVulkanVideoCodecH264EncodeSpecVersion = StdVulkanVideoCodecH264EncodeApiVersion098
++	// StdVulkanVideoCodecH264EncodeSpecVersion = StdVulkanVideoCodecH264EncodeApiVersion098
+ 	// StdVulkanVideoCodecH264EncodeExtensionName as defined in vk_video/vulkan_video_codec_h264std_encode.h:27
+ 	StdVulkanVideoCodecH264EncodeExtensionName = "VK_STD_vulkan_video_codec_h264_encode"
+ 	// StdVulkanVideoCodecH265EncodeSpecVersion as defined in vk_video/vulkan_video_codec_h265std_encode.h:26
+-	StdVulkanVideoCodecH265EncodeSpecVersion = StdVulkanVideoCodecH265EncodeApiVersion099
++	// StdVulkanVideoCodecH265EncodeSpecVersion = StdVulkanVideoCodecH265EncodeApiVersion099
+ 	// StdVulkanVideoCodecH265EncodeExtensionName as defined in vk_video/vulkan_video_codec_h265std_encode.h:27
+ 	StdVulkanVideoCodecH265EncodeExtensionName = "VK_STD_vulkan_video_codec_h265_encode"
+ )
+@@ -2270,7 +2270,7 @@
  
  // PipelineCacheHeaderVersion enumeration from https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCacheHeaderVersion.html
  const (
