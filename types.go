@@ -4750,63 +4750,6 @@ type PhysicalDeviceShaderClockFeatures struct {
 	allocsab512283      interface{}
 }
 
-// VideoDecodeH265ProfileInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH265ProfileInfoKHR
-type VideoDecodeH265ProfileInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	refe4076e29    *C.VkVideoDecodeH265ProfileInfoKHR
-	allocse4076e29 interface{}
-}
-
-// VideoDecodeH265Capabilities as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH265CapabilitiesKHR
-type VideoDecodeH265Capabilities struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	refd2735383    *C.VkVideoDecodeH265CapabilitiesKHR
-	allocsd2735383 interface{}
-}
-
-// VideoDecodeH265SessionParametersAddInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH265SessionParametersAddInfoKHR
-type VideoDecodeH265SessionParametersAddInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	StdVPSCount    uint32
-	StdSPSCount    uint32
-	StdPPSCount    uint32
-	refa6d463b3    *C.VkVideoDecodeH265SessionParametersAddInfoKHR
-	allocsa6d463b3 interface{}
-}
-
-// VideoDecodeH265SessionParametersCreateInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH265SessionParametersCreateInfoKHR
-type VideoDecodeH265SessionParametersCreateInfo struct {
-	SType              StructureType
-	PNext              unsafe.Pointer
-	MaxStdVPSCount     uint32
-	MaxStdSPSCount     uint32
-	MaxStdPPSCount     uint32
-	PParametersAddInfo []VideoDecodeH265SessionParametersAddInfo
-	ref189da725        *C.VkVideoDecodeH265SessionParametersCreateInfoKHR
-	allocs189da725     interface{}
-}
-
-// VideoDecodeH265PictureInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH265PictureInfoKHR
-type VideoDecodeH265PictureInfo struct {
-	SType                StructureType
-	PNext                unsafe.Pointer
-	SliceSegmentCount    uint32
-	PSliceSegmentOffsets []uint32
-	ref1dc9bf5e          *C.VkVideoDecodeH265PictureInfoKHR
-	allocs1dc9bf5e       interface{}
-}
-
-// VideoDecodeH265DpbSlotInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH265DpbSlotInfoKHR
-type VideoDecodeH265DpbSlotInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	ref53624891    *C.VkVideoDecodeH265DpbSlotInfoKHR
-	allocs53624891 interface{}
-}
-
 // DeviceQueueGlobalPriorityCreateInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkDeviceQueueGlobalPriorityCreateInfoKHR
 type DeviceQueueGlobalPriorityCreateInfo struct {
 	SType          StructureType

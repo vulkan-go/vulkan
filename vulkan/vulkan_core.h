@@ -9354,6 +9354,7 @@ typedef struct VkPhysicalDeviceShaderClockFeaturesKHR {
 } VkPhysicalDeviceShaderClockFeaturesKHR;
 
 
+#ifdef GO_INCLUDE_video_decode
 
 #define VK_KHR_video_decode_h265 1
 #include "vk_video/vulkan_video_codec_h265std.h"
@@ -9406,7 +9407,7 @@ typedef struct VkVideoDecodeH265DpbSlotInfoKHR {
     const StdVideoDecodeH265ReferenceInfo*    pStdReferenceInfo;
 } VkVideoDecodeH265DpbSlotInfoKHR;
 
-
+#endif // GO_INCLUDE_video_decode
 
 #define VK_KHR_global_priority 1
 #define VK_MAX_GLOBAL_PRIORITY_SIZE_KHR   16U
