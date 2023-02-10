@@ -11,7 +11,7 @@ test:
 	
 # NOTE: MUST update version number here prior to running 'make release'
 VERS=v1.0.1
-PACKAGE=vgpu
+PACKAGE=vulkan
 GIT_COMMIT=`git rev-parse --short HEAD`
 VERS_DATE=`date -u +%Y-%m-%d\ %H:%M`
 VERS_FILE=version.go
@@ -23,7 +23,7 @@ release:
 	@echo "package $(PACKAGE)" >> $(VERS_FILE)
 	@echo "" >> $(VERS_FILE)
 	@echo "const (" >> $(VERS_FILE)
-	@echo "	Version     = \"$(VERS)\"" >> $(VERS_FILE)
+	@echo "	GoVersion     = \"$(VERS)\"" >> $(VERS_FILE)
 	@echo "	GitCommit   = \"$(GIT_COMMIT)\" // the commit JUST BEFORE the release" >> $(VERS_FILE)
 	@echo "	VersionDate = \"$(VERS_DATE)\" // UTC" >> $(VERS_FILE)
 	@echo ")" >> $(VERS_FILE)
