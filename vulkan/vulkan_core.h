@@ -8180,6 +8180,7 @@ VKAPI_ATTR void VKAPI_CALL vkCmdDecodeVideoKHR(
     const VkVideoDecodeInfoKHR*                 pDecodeInfo);
 #endif
 
+#ifdef GO_INCLUDE_video_decode
 
 #define VK_KHR_video_decode_h264 1
 #include "vk_video/vulkan_video_codec_h264std.h"
@@ -8239,7 +8240,7 @@ typedef struct VkVideoDecodeH264DpbSlotInfoKHR {
     const StdVideoDecodeH264ReferenceInfo*    pStdReferenceInfo;
 } VkVideoDecodeH264DpbSlotInfoKHR;
 
-
+#endif // GO_INCLUDE_video_decode
 
 #define VK_KHR_dynamic_rendering 1
 #define VK_KHR_DYNAMIC_RENDERING_SPEC_VERSION 1

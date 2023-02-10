@@ -4402,66 +4402,6 @@ type VideoDecodeInfo struct {
 	allocsbbf9d3b8      interface{}
 }
 
-// VideoDecodeH264PictureLayoutFlags type as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH264PictureLayoutFlagsKHR
-type VideoDecodeH264PictureLayoutFlags uint32
-
-// VideoDecodeH264ProfileInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH264ProfileInfoKHR
-type VideoDecodeH264ProfileInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	PictureLayout  VideoDecodeH264PictureLayoutFlagBits
-	ref5dfcb5c1    *C.VkVideoDecodeH264ProfileInfoKHR
-	allocs5dfcb5c1 interface{}
-}
-
-// VideoDecodeH264Capabilities as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH264CapabilitiesKHR
-type VideoDecodeH264Capabilities struct {
-	SType                  StructureType
-	PNext                  unsafe.Pointer
-	FieldOffsetGranularity Offset2D
-	ref7c1bc212            *C.VkVideoDecodeH264CapabilitiesKHR
-	allocs7c1bc212         interface{}
-}
-
-// VideoDecodeH264SessionParametersAddInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH264SessionParametersAddInfoKHR
-type VideoDecodeH264SessionParametersAddInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	StdSPSCount    uint32
-	StdPPSCount    uint32
-	refa7619eae    *C.VkVideoDecodeH264SessionParametersAddInfoKHR
-	allocsa7619eae interface{}
-}
-
-// VideoDecodeH264SessionParametersCreateInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH264SessionParametersCreateInfoKHR
-type VideoDecodeH264SessionParametersCreateInfo struct {
-	SType              StructureType
-	PNext              unsafe.Pointer
-	MaxStdSPSCount     uint32
-	MaxStdPPSCount     uint32
-	PParametersAddInfo []VideoDecodeH264SessionParametersAddInfo
-	ref167a4ff4        *C.VkVideoDecodeH264SessionParametersCreateInfoKHR
-	allocs167a4ff4     interface{}
-}
-
-// VideoDecodeH264PictureInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH264PictureInfoKHR
-type VideoDecodeH264PictureInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	SliceCount     uint32
-	PSliceOffsets  []uint32
-	refa43264b6    *C.VkVideoDecodeH264PictureInfoKHR
-	allocsa43264b6 interface{}
-}
-
-// VideoDecodeH264DpbSlotInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkVideoDecodeH264DpbSlotInfoKHR
-type VideoDecodeH264DpbSlotInfo struct {
-	SType          StructureType
-	PNext          unsafe.Pointer
-	refea999379    *C.VkVideoDecodeH264DpbSlotInfoKHR
-	allocsea999379 interface{}
-}
-
 // RenderingFragmentShadingRateAttachmentInfo as declared in https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/xhtml/vkspec.html#VkRenderingFragmentShadingRateAttachmentInfoKHR
 type RenderingFragmentShadingRateAttachmentInfo struct {
 	SType                          StructureType
