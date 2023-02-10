@@ -1,6 +1,42 @@
---- vulkan_core.h.orig	2023-02-09 22:12:19
-+++ vulkan_core.h	2023-02-09 22:25:00
-@@ -10488,7 +10488,7 @@
+--- /usr/local/include/vulkan/vulkan_core.h	2023-01-27 11:55:20
++++ vulkan_core.h	2023-02-10 11:46:48
+@@ -8180,6 +8180,7 @@
+     const VkVideoDecodeInfoKHR*                 pDecodeInfo);
+ #endif
+ 
++#ifdef GO_INCLUDE_video_decode
+ 
+ #define VK_KHR_video_decode_h264 1
+ #include "vk_video/vulkan_video_codec_h264std.h"
+@@ -8239,8 +8240,8 @@
+     const StdVideoDecodeH264ReferenceInfo*    pStdReferenceInfo;
+ } VkVideoDecodeH264DpbSlotInfoKHR;
+ 
++#endif // GO_INCLUDE_video_decode
+ 
+-
+ #define VK_KHR_dynamic_rendering 1
+ #define VK_KHR_DYNAMIC_RENDERING_SPEC_VERSION 1
+ #define VK_KHR_DYNAMIC_RENDERING_EXTENSION_NAME "VK_KHR_dynamic_rendering"
+@@ -9353,6 +9354,7 @@
+ } VkPhysicalDeviceShaderClockFeaturesKHR;
+ 
+ 
++#ifdef GO_INCLUDE_video_decode
+ 
+ #define VK_KHR_video_decode_h265 1
+ #include "vk_video/vulkan_video_codec_h265std.h"
+@@ -9405,8 +9407,8 @@
+     const StdVideoDecodeH265ReferenceInfo*    pStdReferenceInfo;
+ } VkVideoDecodeH265DpbSlotInfoKHR;
+ 
++#endif // GO_INCLUDE_video_decode
+ 
+-
+ #define VK_KHR_global_priority 1
+ #define VK_MAX_GLOBAL_PRIORITY_SIZE_KHR   16U
+ #define VK_KHR_GLOBAL_PRIORITY_SPEC_VERSION 1
+@@ -10488,7 +10490,7 @@
      uint32_t                                    vertexStride);
  #endif
  
@@ -9,7 +45,7 @@
  #define VK_NVX_binary_import 1
  VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkCuModuleNVX)
  VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkCuFunctionNVX)
-@@ -10558,8 +10558,8 @@
+@@ -10558,8 +10560,8 @@
      VkCommandBuffer                             commandBuffer,
      const VkCuLaunchInfoNVX*                    pLaunchInfo);
  #endif
@@ -19,7 +55,7 @@
  #define VK_NVX_image_view_handle 1
  #define VK_NVX_IMAGE_VIEW_HANDLE_SPEC_VERSION 2
  #define VK_NVX_IMAGE_VIEW_HANDLE_EXTENSION_NAME "VK_NVX_image_view_handle"
-@@ -11911,6 +11911,8 @@
+@@ -11911,6 +11913,8 @@
      const VkCoarseSampleOrderCustomNV*          pCustomSampleOrders);
  #endif
  
@@ -28,7 +64,7 @@
  
  #define VK_NV_ray_tracing 1
  VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkAccelerationStructureNV)
-@@ -12285,6 +12287,7 @@
+@@ -12285,6 +12289,7 @@
      uint32_t                                    shader);
  #endif
  
@@ -36,7 +72,7 @@
  
  #define VK_NV_representative_fragment_test 1
  #define VK_NV_REPRESENTATIVE_FRAGMENT_TEST_SPEC_VERSION 2
-@@ -14168,6 +14171,8 @@
+@@ -14168,6 +14173,8 @@
      const void*        opaqueCaptureDescriptorData;
  } VkOpaqueCaptureDescriptorDataCreateInfoEXT;
  
@@ -45,7 +81,7 @@
  typedef struct VkAccelerationStructureCaptureDescriptorDataInfoEXT {
      VkStructureType               sType;
      const void*                   pNext;
-@@ -14175,6 +14180,8 @@
+@@ -14175,6 +14182,8 @@
      VkAccelerationStructureNV     accelerationStructureNV;
  } VkAccelerationStructureCaptureDescriptorDataInfoEXT;
  
@@ -54,7 +90,7 @@
  typedef void (VKAPI_PTR *PFN_vkGetDescriptorSetLayoutSizeEXT)(VkDevice device, VkDescriptorSetLayout layout, VkDeviceSize* pLayoutSizeInBytes);
  typedef void (VKAPI_PTR *PFN_vkGetDescriptorSetLayoutBindingOffsetEXT)(VkDevice device, VkDescriptorSetLayout layout, uint32_t binding, VkDeviceSize* pOffset);
  typedef void (VKAPI_PTR *PFN_vkGetDescriptorEXT)(VkDevice device, const VkDescriptorGetInfoEXT* pDescriptorInfo, size_t dataSize, void* pDescriptor);
-@@ -14185,7 +14192,10 @@
+@@ -14185,7 +14194,10 @@
  typedef VkResult (VKAPI_PTR *PFN_vkGetImageOpaqueCaptureDescriptorDataEXT)(VkDevice device, const VkImageCaptureDescriptorDataInfoEXT* pInfo, void* pData);
  typedef VkResult (VKAPI_PTR *PFN_vkGetImageViewOpaqueCaptureDescriptorDataEXT)(VkDevice device, const VkImageViewCaptureDescriptorDataInfoEXT* pInfo, void* pData);
  typedef VkResult (VKAPI_PTR *PFN_vkGetSamplerOpaqueCaptureDescriptorDataEXT)(VkDevice device, const VkSamplerCaptureDescriptorDataInfoEXT* pInfo, void* pData);
@@ -65,7 +101,7 @@
  
  #ifndef VK_NO_PROTOTYPES
  VKAPI_ATTR void VKAPI_CALL vkGetDescriptorSetLayoutSizeEXT(
-@@ -14352,6 +14362,7 @@
+@@ -14352,6 +14364,7 @@
      const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]);
  #endif
  
@@ -73,7 +109,7 @@
  
  #define VK_NV_ray_tracing_motion_blur 1
  #define VK_NV_RAY_TRACING_MOTION_BLUR_SPEC_VERSION 1
-@@ -14441,8 +14452,8 @@
+@@ -14441,8 +14454,8 @@
      VkBool32           rayTracingMotionBlurPipelineTraceRaysIndirect;
  } VkPhysicalDeviceRayTracingMotionBlurFeaturesNV;
  
@@ -83,7 +119,7 @@
  #define VK_EXT_ycbcr_2plane_444_formats 1
  #define VK_EXT_YCBCR_2PLANE_444_FORMATS_SPEC_VERSION 1
  #define VK_EXT_YCBCR_2PLANE_444_FORMATS_EXTENSION_NAME "VK_EXT_ycbcr_2plane_444_formats"
-@@ -14600,6 +14611,7 @@
+@@ -14600,6 +14613,7 @@
  } VkPhysicalDevice4444FormatsFeaturesEXT;
  
  
@@ -91,7 +127,7 @@
  
  #define VK_EXT_device_fault 1
  #define VK_EXT_DEVICE_FAULT_SPEC_VERSION  1
-@@ -16909,3 +16921,6 @@
+@@ -16909,3 +16923,6 @@
  #endif
  
  #endif

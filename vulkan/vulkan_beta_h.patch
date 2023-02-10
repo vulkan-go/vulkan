@@ -1,0 +1,26 @@
+--- /usr/local/include/vulkan/vulkan_beta.h	2023-01-27 11:55:20
++++ vulkan_beta.h	2023-02-10 11:53:39
+@@ -49,6 +49,7 @@
+ } VkPhysicalDevicePortabilitySubsetPropertiesKHR;
+ 
+ 
++#ifdef GO_INCLUDE_video_decode
+ 
+ #define VK_KHR_video_encode_queue 1
+ #define VK_KHR_VIDEO_ENCODE_QUEUE_SPEC_VERSION 7
+@@ -158,7 +159,6 @@
+     const VkVideoEncodeInfoKHR*                 pEncodeInfo);
+ #endif
+ 
+-
+ #define VK_EXT_video_encode_h264 1
+ #include "vk_video/vulkan_video_codec_h264std.h"
+ #include "vk_video/vulkan_video_codec_h264std_encode.h"
+@@ -545,6 +545,7 @@
+     VkVideoEncodeH265FrameSizeEXT    maxFrameSize;
+ } VkVideoEncodeH265RateControlLayerInfoEXT;
+ 
++#endif // GO_INCLUDE_video_decode
+ 
+ #ifdef __cplusplus
+ }
