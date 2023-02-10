@@ -73,7 +73,7 @@ $ ./android-generate.sh
 $ ndk-build
 ```
 
-After that you'd copy the objects to `android/jni/libs` in your project and activate the `ValidationLayers.mk` in your `Android.mk` so when building APK they will be copied alongside with your shared library. It just works then:
+After that you'd copy the files to `android/jni/libs` in your project and activate the `ValidationLayers.mk` in your `Android.mk` so when building APK they will be copied alongside with your shared library. It just works then:
 
 ```
 [INFO] Instance extensions: [VK_KHR_surface VK_KHR_android_surface]
@@ -93,8 +93,10 @@ After that you'd copy the objects to `android/jni/libs` in your project and acti
 
 * [vulkanGo.com](https://vulkanGo.com)
 * [SaschaWillems Demos (C++)](https://github.com/SaschaWillems/Vulkan)
-* [LunarG Vulkan Samples](https://github.com/LunarG/VulkanSamples)
+* [LunarG Vulkan Samples](https://github.com/LunarG/VulkanSamples) (archived)
+* [Vulkan Samples from Khronos Group](https://github.com/KhronosGroup/Vulkan-Samples)
 * [Official list of Vulkan resources](https://www.khronos.org/vulkan/resources)
+* [API description](https://registry.khronos.org/vulkan/)
 * [Vulkan API quick reference](https://www.khronos.org/registry/vulkan/specs/1.0/refguide/Vulkan-1.0-web.pdf)
 
 ## License

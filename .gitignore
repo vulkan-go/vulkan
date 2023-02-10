@@ -1,1 +1,4 @@
-/bazel-*
+# JetBrains IDE
+.idea/
+*.iml
+
