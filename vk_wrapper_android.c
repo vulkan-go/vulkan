@@ -6,6 +6,11 @@
 // No-op on Android, get the ProcAddr in vkInit()
 void setProcAddr(void* getProcAddr) {}
 
+// no-op??
+void setDefaultProcAddr() {
+
+}
+
 int isProcAddrSet() {
     return 1;
 }
