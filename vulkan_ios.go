@@ -4,7 +4,7 @@
 package vulkan
 
 /*
-#cgo LDFLAGS: -L/usr/local/lib -framework Foundation -framework Metal -framework QuartzCore -framework IOSurface -lMoltenVK -lc++
+#cgo LDFLAGS: -L/Users/oreilly/dev/ios/MoltenVK/MoltenVK/dylib/iOS/ -framework Foundation -framework Metal -framework QuartzCore -framework IOSurface -lMoltenVK -lc++
 #cgo CFLAGS: -x objective-c -DVK_USE_PLATFORM_IOS_MVK -v
 
 #include "vulkan/vulkan.h"
@@ -113,22 +113,22 @@ func CreateIOSSurfaceMVK(instance Instance, pCreateInfo *IOSSurfaceCreateInfoMVK
 	return __v
 }
 
-// ActivateMoltenVKLicenseMVK function as declared in vulkan/vk_bridge.h:978
-func ActivateMoltenVKLicenseMVK(licenseID string, licenseKey string, acceptLicenseTermsAndConditions Bool32) Result {
-	clicenseID, _ := unpackPCharString(licenseID)
-	clicenseKey, _ := unpackPCharString(licenseKey)
-	cacceptLicenseTermsAndConditions, _ := (C.VkBool32)(acceptLicenseTermsAndConditions), cgoAllocsUnknown
-	__ret := C.callVkActivateMoltenVKLicenseMVK(clicenseID, clicenseKey, cacceptLicenseTermsAndConditions)
-	__v := (Result)(__ret)
-	return __v
-}
+// // ActivateMoltenVKLicenseMVK function as declared in vulkan/vk_bridge.h:978
+// func ActivateMoltenVKLicenseMVK(licenseID string, licenseKey string, acceptLicenseTermsAndConditions Bool32) Result {
+// 	clicenseID, _ := unpackPCharString(licenseID)
+// 	clicenseKey, _ := unpackPCharString(licenseKey)
+// 	cacceptLicenseTermsAndConditions, _ := (C.VkBool32)(acceptLicenseTermsAndConditions), cgoAllocsUnknown
+// 	__ret := C.callVkActivateMoltenVKLicenseMVK(clicenseID, clicenseKey, cacceptLicenseTermsAndConditions)
+// 	__v := (Result)(__ret)
+// 	return __v
+// }
 
-// ActivateMoltenVKLicensesMVK function as declared in vulkan/vk_bridge.h:983
-func ActivateMoltenVKLicensesMVK() Result {
-	__ret := C.callVkActivateMoltenVKLicensesMVK()
-	__v := (Result)(__ret)
-	return __v
-}
+// // ActivateMoltenVKLicensesMVK function as declared in vulkan/vk_bridge.h:983
+// func ActivateMoltenVKLicensesMVK() Result {
+// 	__ret := C.callVkActivateMoltenVKLicensesMVK()
+// 	__v := (Result)(__ret)
+// 	return __v
+// }
 
 // GetMoltenVKDeviceConfigurationMVK function as declared in vulkan/vk_bridge.h:985
 func GetMoltenVKDeviceConfigurationMVK(device Device, pConfiguration *MVKDeviceConfiguration) Result {

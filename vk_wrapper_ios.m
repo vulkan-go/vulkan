@@ -7,6 +7,8 @@
 // No-op on iOS, get the ProcAddr in vkInit()
 void setProcAddr(void* getProcAddr) {}
 
+void setDefaultProcAddr(void* getProcAddr) {}
+
 int isProcAddrSet() {
     return 1;
 }

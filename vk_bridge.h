@@ -962,12 +962,12 @@ VkResult callVkCreateIOSSurfaceMVK(
     const VkAllocationCallbacks*            pAllocator,
     VkSurfaceKHR*                           pSurface);
 
-VkResult callVkActivateMoltenVKLicenseMVK(
-    const char*                                 licenseID,
-    const char*                                 licenseKey,
-    VkBool32                                    acceptLicenseTermsAndConditions);
-
-VkResult callVkActivateMoltenVKLicensesMVK();
+// VkResult callVkActivateMoltenVKLicenseMVK(
+//     const char*                                 licenseID,
+//     const char*                                 licenseKey,
+//     VkBool32                                    acceptLicenseTermsAndConditions);
+// 
+// VkResult callVkActivateMoltenVKLicensesMVK();
 
 VkResult callVkGetMoltenVKDeviceConfigurationMVK(
     VkDevice                                    device,
