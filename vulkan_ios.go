@@ -4,7 +4,7 @@
 package vulkan
 
 /*
-#cgo LDFLAGS: -L/Users/oreilly/dev/ios/MoltenVK/MoltenVK/dylib/iOS/ -framework Foundation -framework Metal -framework QuartzCore -framework IOSurface -lMoltenVK -lc++
+#cgo LDFLAGS: -F/Users/oreilly/dev/ios/MoltenVK/MoltenVK -framework Foundation -framework Metal -framework QuartzCore -framework IOSurface -framework MoltenVK -lc++
 #cgo CFLAGS: -x objective-c -DVK_USE_PLATFORM_IOS_MVK -v
 
 #include "vulkan/vulkan.h"
