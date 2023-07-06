@@ -60,6 +60,136 @@ Follow the [build instructions](https://github.com/KhronosGroup/MoltenVK#buildin
 
 **IMPORTANT:** be sure to remove any existing `libMoltenVK.dylib` file *before* copying a new one, otherwise you'll have to reboot your computer due to the way the gatekeeper mechanism works!
 
+## MoltenVK on iOS
+
+grab MoltenVK asset from github actions, copy to suitable directory:
+
+```
+-L/Users/oreilly/dev/ios/MoltenVK/MoltenVK/dylib/iOS/`  and `-lMoltenVK ` in `vulkan_ios.go`
+
+$ cp libMoltenVK.dylib myapp.app` 
+$ lipo -create libMoltenVK.dylib -output MoltenVK`
+$ mkdir MoltenVK.framework
+$ mv MoltenVK MoltenVK.framework/
+$ install_name_tool -change @rpath/libMoltenVK.dylib @executable_path/MoltenVK.framework/MoltenVK main
+$ codesign --force --deep --verbose=2 --sign "Randall O'Reilly" widgets.app
+$ codesign -vvvv ../widgets.app
+```
+
+Info.plist for `MoltenVK.framework`
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>22F82</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>MoltenVK</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.example.test.MoltenVK</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>MoltenVK</string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>iPhoneOS</string>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+</dict>
+</plist>
+```
+
+main Info.plist for reference:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>22F82</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>main</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.example.test.widgets</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Widgets</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>iPhoneOS</string>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>20E238</string>
+	<key>DTPlatformName</key>
+	<string>iphoneos</string>
+	<key>DTPlatformVersion</key>
+	<string>16.4</string>
+	<key>DTSDKBuild</key>
+	<string>20E238</string>
+	<key>DTSDKName</key>
+	<string>iphoneos16.4</string>
+	<key>DTXcode</key>
+	<string>1431</string>
+	<key>DTXcodeBuild</key>
+	<string>14E300c</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>MinimumOSVersion</key>
+	<string>16.4</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>
+```
+
+
+
 ## Validation Layers
 
 A good brief of the current state of Vulkan validation layers: [Explore the Vulkan Loader and Validation Layers](https://lunarg.com/wp-content/uploads/2016/07/lunarg-birds-feather-session-siggraph-july-26-2016.pdf) (PDF).
