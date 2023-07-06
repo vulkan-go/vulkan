@@ -1311,41 +1311,41 @@ VkResult callVkCreateIOSSurfaceMVK(
     return vgo_vkCreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface);
 }
 
-VkResult callVkActivateMoltenVKLicenseMVK(
-    const char*                                 licenseID,
-    const char*                                 licenseKey,
-    VkBool32                                    acceptLicenseTermsAndConditions) {
-    return vgo_vkActivateMoltenVKLicenseMVK(licenseID, licenseKey, acceptLicenseTermsAndConditions);
-}
+// VkResult callVkActivateMoltenVKLicenseMVK(
+//     const char*                                 licenseID,
+//     const char*                                 licenseKey,
+//     VkBool32                                    acceptLicenseTermsAndConditions) {
+//     return vgo_vkActivateMoltenVKLicenseMVK(licenseID, licenseKey, acceptLicenseTermsAndConditions);
+// }
 
-VkResult callVkActivateMoltenVKLicensesMVK() {
-    return vgo_vkActivateMoltenVKLicensesMVK();
-}
+// VkResult callVkActivateMoltenVKLicensesMVK() {
+//     return vgo_vkActivateMoltenVKLicensesMVK();
+// }
 
 VkResult callVkGetMoltenVKDeviceConfigurationMVK(
     VkDevice                                    device,
-    MVKDeviceConfiguration*                     pConfiguration) {
-    return vgo_vkGetMoltenVKDeviceConfigurationMVK(device, pConfiguration);
+    MVKConfiguration*                     pConfiguration) {
+    return vgo_vkGetMoltenVKDeviceConfigurationMVK(device, pConfiguration, sizeof(MVKConfiguration));
 }
 
 VkResult callVkSetMoltenVKDeviceConfigurationMVK(
     VkDevice                                    device,
-    MVKDeviceConfiguration*                     pConfiguration) {
-    return vgo_vkSetMoltenVKDeviceConfigurationMVK(device, pConfiguration);
+    MVKConfiguration*                     pConfiguration) {
+    return vgo_vkSetMoltenVKDeviceConfigurationMVK(device, pConfiguration, sizeof(MVKConfiguration));
 }
 
 VkResult callVkGetPhysicalDeviceMetalFeaturesMVK(
     VkPhysicalDevice                            physicalDevice,
     MVKPhysicalDeviceMetalFeatures*             pMetalFeatures) {
-    return vgo_vkGetPhysicalDeviceMetalFeaturesMVK(physicalDevice, pMetalFeatures);
+    return vgo_vkGetPhysicalDeviceMetalFeaturesMVK(physicalDevice, pMetalFeatures, sizeof(MVKConfiguration));
 }
 
-VkResult callVkGetSwapchainPerformanceMVK(
-    VkDevice                                    device,
-    VkSwapchainKHR                              swapchain,
-    MVKSwapchainPerformance*                    pSwapchainPerf) {
-    return vgo_vkGetSwapchainPerformanceMVK(device, swapchain, pSwapchainPerf);
-}
+// VkResult callVkGetSwapchainPerformanceMVK(
+//     VkDevice                                    device,
+//     VkSwapchainKHR                              swapchain,
+//     MVKSwapchainPerformance*                    pSwapchainPerf) {
+//     return vgo_vkGetSwapchainPerformanceMVK(device, swapchain, pSwapchainPerf);
+// }
 #endif /* VK_USE_PLATFORM_IOS_MVK */
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR

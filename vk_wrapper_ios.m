@@ -201,12 +201,12 @@ int vkInitInstance(VkInstance instance) {
 
 #ifdef VK_USE_PLATFORM_IOS_MVK
     vgo_vkCreateIOSSurfaceMVK = (PFN_vkCreateIOSSurfaceMVK)(vgo_vkGetInstanceProcAddr(instance, "vkCreateIOSSurfaceMVK"));
-    vgo_vkActivateMoltenVKLicenseMVK = (PFN_vkActivateMoltenVKLicenseMVK)(vgo_vkGetInstanceProcAddr(instance, "vkActivateMoltenVKLicenseMVK"));
-    vgo_vkActivateMoltenVKLicensesMVK = (PFN_vkActivateMoltenVKLicensesMVK)(vgo_vkGetInstanceProcAddr(instance, "vkActivateMoltenVKLicensesMVK"));
-    vgo_vkGetMoltenVKDeviceConfigurationMVK = (PFN_vkGetMoltenVKDeviceConfigurationMVK)(vgo_vkGetInstanceProcAddr(instance, "vkGetMoltenVKDeviceConfigurationMVK"));
-    vgo_vkSetMoltenVKDeviceConfigurationMVK = (PFN_vkSetMoltenVKDeviceConfigurationMVK)(vgo_vkGetInstanceProcAddr(instance, "vkSetMoltenVKDeviceConfigurationMVK"));
+    // vgo_vkActivateMoltenVKLicenseMVK = (PFN_vkActivateMoltenVKLicenseMVK)(vgo_vkGetInstanceProcAddr(instance, "vkActivateMoltenVKLicenseMVK"));
+    // vgo_vkActivateMoltenVKLicensesMVK = (PFN_vkActivateMoltenVKLicensesMVK)(vgo_vkGetInstanceProcAddr(instance, "vkActivateMoltenVKLicensesMVK"));
+    vgo_vkGetMoltenVKDeviceConfigurationMVK = (PFN_vkGetMoltenVKConfigurationMVK)(vgo_vkGetInstanceProcAddr(instance, "vkGetMoltenVKConfigurationMVK"));
+    vgo_vkSetMoltenVKDeviceConfigurationMVK = (PFN_vkSetMoltenVKConfigurationMVK)(vgo_vkGetInstanceProcAddr(instance, "vkSetMoltenVKConfigurationMVK"));
     vgo_vkGetPhysicalDeviceMetalFeaturesMVK = (PFN_vkGetPhysicalDeviceMetalFeaturesMVK)(vgo_vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceMetalFeaturesMVK"));
-    vgo_vkGetSwapchainPerformanceMVK = (PFN_vkGetSwapchainPerformanceMVK)(vgo_vkGetInstanceProcAddr(instance, "vkGetSwapchainPerformanceMVK"));
+    // vgo_vkGetSwapchainPerformanceMVK = (PFN_vkGetSwapchainPerformanceMVK)(vgo_vkGetInstanceProcAddr(instance, "vkGetSwapchainPerformanceMVK"));
 #endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
@@ -378,12 +378,12 @@ PFN_vkCreateSharedSwapchainsKHR vgo_vkCreateSharedSwapchainsKHR;
 
 #ifdef VK_USE_PLATFORM_IOS_MVK
 PFN_vkCreateIOSSurfaceMVK vgo_vkCreateIOSSurfaceMVK;
-PFN_vkActivateMoltenVKLicenseMVK vgo_vkActivateMoltenVKLicenseMVK;
-PFN_vkActivateMoltenVKLicensesMVK vgo_vkActivateMoltenVKLicensesMVK;
-PFN_vkGetMoltenVKDeviceConfigurationMVK vgo_vkGetMoltenVKDeviceConfigurationMVK;
-PFN_vkSetMoltenVKDeviceConfigurationMVK vgo_vkSetMoltenVKDeviceConfigurationMVK;
+// PFN_vkActivateMoltenVKLicenseMVK vgo_vkActivateMoltenVKLicenseMVK;
+// PFN_vkActivateMoltenVKLicensesMVK vgo_vkActivateMoltenVKLicensesMVK;
+PFN_vkGetMoltenVKConfigurationMVK vgo_vkGetMoltenVKDeviceConfigurationMVK;
+PFN_vkSetMoltenVKConfigurationMVK vgo_vkSetMoltenVKDeviceConfigurationMVK;
 PFN_vkGetPhysicalDeviceMetalFeaturesMVK vgo_vkGetPhysicalDeviceMetalFeaturesMVK;
-PFN_vkGetSwapchainPerformanceMVK vgo_vkGetSwapchainPerformanceMVK;
+// PFN_vkGetSwapchainPerformanceMVK vgo_vkGetSwapchainPerformanceMVK;
 void __link_moltenvk() { vkGetInstanceProcAddr(NULL, NULL); }
 #endif
 
