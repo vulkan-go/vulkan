@@ -1,3 +1,7 @@
+GO ?= go
+
+.PHONY: all clean test
+
 all:
 	c-for-go -ccdefs -out .. vulkan.yml
 
@@ -7,4 +11,4 @@ clean:
 	rm -f vulkan.go
 
 test:
-	go build
+	$(GO) test ./...

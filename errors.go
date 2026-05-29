@@ -41,6 +41,12 @@ func Error(result Result) error {
 		return errTooManyObjects
 	case ErrorFormatNotSupported:
 		return errFormatNotSupported
+	case ErrorFragmentedPool:
+		return errFragmentedPool
+	case ErrorOutOfPoolMemory:
+		return errOutOfPoolMemory
+	case ErrorInvalidExternalHandle:
+		return errInvalidExternalHandle
 	case ErrorSurfaceLost:
 		return errSurfaceLostKHR
 	case ErrorNativeWindowInUse:
@@ -55,6 +61,12 @@ func Error(result Result) error {
 		return errValidationFailedEXT
 	case ErrorInvalidShaderNv:
 		return errInvalidShaderNV
+	case ErrorInvalidDrmFormatModifierPlaneLayout:
+		return errInvalidDrmFormatModifierPlaneLayout
+	case ErrorFragmentation:
+		return errFragmentation
+	case ErrorNotPermitted:
+		return errNotPermitted
 	default:
 		return fmt.Errorf("vulkan error: unknown %v", result)
 	}
@@ -77,12 +89,18 @@ var (
 	errIncompatibleDriver   = errors.New("vulkan error: incompatible driver")
 	errTooManyObjects       = errors.New("vulkan error: too many objects")
 	errFormatNotSupported   = errors.New("vulkan error: format not supported")
+	errFragmentedPool       = errors.New("vulkan error: fragmented pool")
+	errOutOfPoolMemory      = errors.New("vulkan error: out of pool memory")
+	errInvalidExternalHandle = errors.New("vulkan error: invalid external handle")
 
-	errSurfaceLostKHR         = errors.New("vulkan error: surface lost (KHR)")
-	errNativeWindowInUseKHR   = errors.New("vulkan error: native window in use (KHR)")
-	warnSuboptimalKHR         = errors.New("vulkan warn: suboptimal (KHR)")
-	errOutOfDateKHR           = errors.New("vulkan error: out of date (KHR)")
-	errIncompatibleDisplayKHR = errors.New("vulkan error: incompatible display (KHR)")
-	errValidationFailedEXT    = errors.New("vulkan error: validation failed (EXT)")
-	errInvalidShaderNV        = errors.New("vulkan error: invalid shader (NV)")
+	errSurfaceLostKHR                    = errors.New("vulkan error: surface lost (KHR)")
+	errNativeWindowInUseKHR              = errors.New("vulkan error: native window in use (KHR)")
+	warnSuboptimalKHR                    = errors.New("vulkan warn: suboptimal (KHR)")
+	errOutOfDateKHR                      = errors.New("vulkan error: out of date (KHR)")
+	errIncompatibleDisplayKHR            = errors.New("vulkan error: incompatible display (KHR)")
+	errValidationFailedEXT               = errors.New("vulkan error: validation failed (EXT)")
+	errInvalidShaderNV                   = errors.New("vulkan error: invalid shader (NV)")
+	errInvalidDrmFormatModifierPlaneLayout = errors.New("vulkan error: invalid DRM format modifier plane layout")
+	errFragmentation                     = errors.New("vulkan error: fragmentation")
+	errNotPermitted                      = errors.New("vulkan error: not permitted")
 )
