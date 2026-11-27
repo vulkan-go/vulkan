@@ -169,12 +169,15 @@ func GetDeviceQueue(device Device, queueFamilyIndex uint32, queueIndex uint32, p
 // QueueSubmit function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkQueueSubmit.html
 func QueueSubmit(queue Queue, submitCount uint32, pSubmits []SubmitInfo, fence Fence) Result {
 	cqueue, _ := *(*C.VkQueue)(unsafe.Pointer(&queue)), cgoAllocsUnknown
-	csubmitCount, _ := (C.uint32_t)(submitCount), cgoAllocsUnknown
-	cpSubmits, _ := unpackArgSSubmitInfo(pSubmits)
 	cfence, _ := *(*C.VkFence)(unsafe.Pointer(&fence)), cgoAllocsUnknown
+	// rely on finalizers (which lag behind IMMEDIATE present and leak native heap).
+	csubmitCount, _ := (C.uint32_t)(submitCount), cgoAllocsUnknown
+	cpSubmits, allocs := unpackArgSSubmitInfo(pSubmits)
 	__ret := C.callVkQueueSubmit(cqueue, csubmitCount, cpSubmits, cfence)
-	packSSubmitInfo(pSubmits, cpSubmits)
 	__v := (Result)(__ret)
+	if allocs != nil {
+		allocs.Free()
+	}
 	return __v
 }
 
@@ -411,9 +414,13 @@ func CreateEvent(device Device, pCreateInfo *EventCreateInfo, pAllocator *Alloca
 	cdevice, _ := *(*C.VkDevice)(unsafe.Pointer(&device)), cgoAllocsUnknown
 	cpCreateInfo, _ := pCreateInfo.PassRef()
 	cpAllocator, _ := (*C.VkAllocationCallbacks)(unsafe.Pointer(pAllocator)), cgoAllocsUnknown
-	cpEvent, _ := (*C.VkEvent)(unsafe.Pointer(pEvent)), cgoAllocsUnknown
-	__ret := C.callVkCreateEvent(cdevice, cpCreateInfo, cpAllocator, cpEvent)
+	var cEvent C.VkEvent
+	__ret := C.callVkCreateEvent(cdevice, cpCreateInfo, cpAllocator, &cEvent)
 	__v := (Result)(__ret)
+	if pEvent != nil {
+		*pEvent = *(*Event)(unsafe.Pointer(&cEvent))
+	}
+	pCreateInfo.Free()
 	return __v
 }
 
@@ -778,12 +785,16 @@ func FreeDescriptorSets(device Device, descriptorPool DescriptorPool, descriptor
 func UpdateDescriptorSets(device Device, descriptorWriteCount uint32, pDescriptorWrites []WriteDescriptorSet, descriptorCopyCount uint32, pDescriptorCopies []CopyDescriptorSet) {
 	cdevice, _ := *(*C.VkDevice)(unsafe.Pointer(&device)), cgoAllocsUnknown
 	cdescriptorWriteCount, _ := (C.uint32_t)(descriptorWriteCount), cgoAllocsUnknown
-	cpDescriptorWrites, _ := unpackArgSWriteDescriptorSet(pDescriptorWrites)
+	cpDescriptorWrites, writeAllocs := unpackArgSWriteDescriptorSet(pDescriptorWrites)
 	cdescriptorCopyCount, _ := (C.uint32_t)(descriptorCopyCount), cgoAllocsUnknown
-	cpDescriptorCopies, _ := unpackArgSCopyDescriptorSet(pDescriptorCopies)
+	cpDescriptorCopies, copyAllocs := unpackArgSCopyDescriptorSet(pDescriptorCopies)
 	C.callVkUpdateDescriptorSets(cdevice, cdescriptorWriteCount, cpDescriptorWrites, cdescriptorCopyCount, cpDescriptorCopies)
-	packSCopyDescriptorSet(pDescriptorCopies, cpDescriptorCopies)
-	packSWriteDescriptorSet(pDescriptorWrites, cpDescriptorWrites)
+	if writeAllocs != nil {
+		writeAllocs.Free()
+	}
+	if copyAllocs != nil {
+		copyAllocs.Free()
+	}
 }
 
 // CreateFramebuffer function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateFramebuffer.html
@@ -886,6 +897,7 @@ func BeginCommandBuffer(commandBuffer CommandBuffer, pBeginInfo *CommandBufferBe
 	cpBeginInfo, _ := pBeginInfo.PassRef()
 	__ret := C.callVkBeginCommandBuffer(ccommandBuffer, cpBeginInfo)
 	__v := (Result)(__ret)
+	pBeginInfo.Free()
 	return __v
 }
 
@@ -919,9 +931,11 @@ func CmdSetViewport(commandBuffer CommandBuffer, firstViewport uint32, viewportC
 	ccommandBuffer, _ := *(*C.VkCommandBuffer)(unsafe.Pointer(&commandBuffer)), cgoAllocsUnknown
 	cfirstViewport, _ := (C.uint32_t)(firstViewport), cgoAllocsUnknown
 	cviewportCount, _ := (C.uint32_t)(viewportCount), cgoAllocsUnknown
-	cpViewports, _ := unpackArgSViewport(pViewports)
+	cpViewports, allocs := unpackArgSViewport(pViewports)
 	C.callVkCmdSetViewport(ccommandBuffer, cfirstViewport, cviewportCount, cpViewports)
-	packSViewport(pViewports, cpViewports)
+	if allocs != nil {
+		allocs.Free()
+	}
 }
 
 // CmdSetScissor function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetScissor.html
@@ -929,9 +943,11 @@ func CmdSetScissor(commandBuffer CommandBuffer, firstScissor uint32, scissorCoun
 	ccommandBuffer, _ := *(*C.VkCommandBuffer)(unsafe.Pointer(&commandBuffer)), cgoAllocsUnknown
 	cfirstScissor, _ := (C.uint32_t)(firstScissor), cgoAllocsUnknown
 	cscissorCount, _ := (C.uint32_t)(scissorCount), cgoAllocsUnknown
-	cpScissors, _ := unpackArgSRect2D(pScissors)
+	cpScissors, allocs := unpackArgSRect2D(pScissors)
 	C.callVkCmdSetScissor(ccommandBuffer, cfirstScissor, cscissorCount, cpScissors)
-	packSRect2D(pScissors, cpScissors)
+	if allocs != nil {
+		allocs.Free()
+	}
 }
 
 // CmdSetLineWidth function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetLineWidth.html
@@ -1234,15 +1250,21 @@ func CmdWaitEvents(commandBuffer CommandBuffer, eventCount uint32, pEvents []Eve
 	csrcStageMask, _ := (C.VkPipelineStageFlags)(srcStageMask), cgoAllocsUnknown
 	cdstStageMask, _ := (C.VkPipelineStageFlags)(dstStageMask), cgoAllocsUnknown
 	cmemoryBarrierCount, _ := (C.uint32_t)(memoryBarrierCount), cgoAllocsUnknown
-	cpMemoryBarriers, _ := unpackArgSMemoryBarrier(pMemoryBarriers)
+	cpMemoryBarriers, memAllocs := unpackArgSMemoryBarrier(pMemoryBarriers)
 	cbufferMemoryBarrierCount, _ := (C.uint32_t)(bufferMemoryBarrierCount), cgoAllocsUnknown
-	cpBufferMemoryBarriers, _ := unpackArgSBufferMemoryBarrier(pBufferMemoryBarriers)
+	cpBufferMemoryBarriers, bufAllocs := unpackArgSBufferMemoryBarrier(pBufferMemoryBarriers)
 	cimageMemoryBarrierCount, _ := (C.uint32_t)(imageMemoryBarrierCount), cgoAllocsUnknown
-	cpImageMemoryBarriers, _ := unpackArgSImageMemoryBarrier(pImageMemoryBarriers)
+	cpImageMemoryBarriers, imgAllocs := unpackArgSImageMemoryBarrier(pImageMemoryBarriers)
 	C.callVkCmdWaitEvents(ccommandBuffer, ceventCount, cpEvents, csrcStageMask, cdstStageMask, cmemoryBarrierCount, cpMemoryBarriers, cbufferMemoryBarrierCount, cpBufferMemoryBarriers, cimageMemoryBarrierCount, cpImageMemoryBarriers)
-	packSImageMemoryBarrier(pImageMemoryBarriers, cpImageMemoryBarriers)
-	packSBufferMemoryBarrier(pBufferMemoryBarriers, cpBufferMemoryBarriers)
-	packSMemoryBarrier(pMemoryBarriers, cpMemoryBarriers)
+	if memAllocs != nil {
+		memAllocs.Free()
+	}
+	if bufAllocs != nil {
+		bufAllocs.Free()
+	}
+	if imgAllocs != nil {
+		imgAllocs.Free()
+	}
 }
 
 // CmdPipelineBarrier function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdPipelineBarrier.html
@@ -1252,15 +1274,21 @@ func CmdPipelineBarrier(commandBuffer CommandBuffer, srcStageMask PipelineStageF
 	cdstStageMask, _ := (C.VkPipelineStageFlags)(dstStageMask), cgoAllocsUnknown
 	cdependencyFlags, _ := (C.VkDependencyFlags)(dependencyFlags), cgoAllocsUnknown
 	cmemoryBarrierCount, _ := (C.uint32_t)(memoryBarrierCount), cgoAllocsUnknown
-	cpMemoryBarriers, _ := unpackArgSMemoryBarrier(pMemoryBarriers)
+	cpMemoryBarriers, memAllocs := unpackArgSMemoryBarrier(pMemoryBarriers)
 	cbufferMemoryBarrierCount, _ := (C.uint32_t)(bufferMemoryBarrierCount), cgoAllocsUnknown
-	cpBufferMemoryBarriers, _ := unpackArgSBufferMemoryBarrier(pBufferMemoryBarriers)
+	cpBufferMemoryBarriers, bufAllocs := unpackArgSBufferMemoryBarrier(pBufferMemoryBarriers)
 	cimageMemoryBarrierCount, _ := (C.uint32_t)(imageMemoryBarrierCount), cgoAllocsUnknown
-	cpImageMemoryBarriers, _ := unpackArgSImageMemoryBarrier(pImageMemoryBarriers)
+	cpImageMemoryBarriers, imgAllocs := unpackArgSImageMemoryBarrier(pImageMemoryBarriers)
 	C.callVkCmdPipelineBarrier(ccommandBuffer, csrcStageMask, cdstStageMask, cdependencyFlags, cmemoryBarrierCount, cpMemoryBarriers, cbufferMemoryBarrierCount, cpBufferMemoryBarriers, cimageMemoryBarrierCount, cpImageMemoryBarriers)
-	packSImageMemoryBarrier(pImageMemoryBarriers, cpImageMemoryBarriers)
-	packSBufferMemoryBarrier(pBufferMemoryBarriers, cpBufferMemoryBarriers)
-	packSMemoryBarrier(pMemoryBarriers, cpMemoryBarriers)
+	if memAllocs != nil {
+		memAllocs.Free()
+	}
+	if bufAllocs != nil {
+		bufAllocs.Free()
+	}
+	if imgAllocs != nil {
+		imgAllocs.Free()
+	}
 }
 
 // CmdBeginQuery function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdBeginQuery.html
@@ -1328,6 +1356,7 @@ func CmdBeginRenderPass(commandBuffer CommandBuffer, pRenderPassBegin *RenderPas
 	cpRenderPassBegin, _ := pRenderPassBegin.PassRef()
 	ccontents, _ := (C.VkSubpassContents)(contents), cgoAllocsUnknown
 	C.callVkCmdBeginRenderPass(ccommandBuffer, cpRenderPassBegin, ccontents)
+	pRenderPassBegin.Free()
 }
 
 // CmdNextSubpass function as declared in https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdNextSubpass.html
@@ -1452,6 +1481,7 @@ func QueuePresent(queue Queue, pPresentInfo *PresentInfo) Result {
 	cpPresentInfo, _ := pPresentInfo.PassRef()
 	__ret := C.callVkQueuePresentKHR(cqueue, cpPresentInfo)
 	__v := (Result)(__ret)
+	pPresentInfo.Free()
 	return __v
 }
 

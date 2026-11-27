@@ -39365,14 +39365,12 @@ func packSLayerProperties(v []LayerProperties, ptr0 *C.VkLayerProperties) {
 }
 
 // unpackArgSSubmitInfo transforms a sliced Go data structure into plain C format.
+// Caller (QueueSubmit) must Free the returned allocs; do not rely on finalizers.
 func unpackArgSSubmitInfo(x []SubmitInfo) (unpacked *C.VkSubmitInfo, allocs *cgoAllocMap) {
 	if x == nil {
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkSubmitInfo) {
-		go allocs.Free()
-	})
 
 	len0 := len(x)
 	mem0 := allocSubmitInfoMemory(len0)
@@ -39636,9 +39634,7 @@ func unpackArgSWriteDescriptorSet(x []WriteDescriptorSet) (unpacked *C.VkWriteDe
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkWriteDescriptorSet) {
-		go allocs.Free()
-	})
+	// Caller (UpdateDescriptorSets) must Free allocs; do not rely on finalizers.
 
 	len0 := len(x)
 	mem0 := allocWriteDescriptorSetMemory(len0)
@@ -39674,9 +39670,7 @@ func unpackArgSCopyDescriptorSet(x []CopyDescriptorSet) (unpacked *C.VkCopyDescr
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkCopyDescriptorSet) {
-		go allocs.Free()
-	})
+	// Caller (UpdateDescriptorSets) must Free allocs; do not rely on finalizers.
 
 	len0 := len(x)
 	mem0 := allocCopyDescriptorSetMemory(len0)
@@ -39712,9 +39706,7 @@ func unpackArgSViewport(x []Viewport) (unpacked *C.VkViewport, allocs *cgoAllocM
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkViewport) {
-		go allocs.Free()
-	})
+	// Caller (CmdSetViewport) must Free allocs; do not rely on finalizers.
 
 	len0 := len(x)
 	mem0 := allocViewportMemory(len0)
@@ -39741,9 +39733,7 @@ func unpackArgSRect2D(x []Rect2D) (unpacked *C.VkRect2D, allocs *cgoAllocMap) {
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkRect2D) {
-		go allocs.Free()
-	})
+	// Caller (CmdSetScissor) must Free allocs; do not rely on finalizers.
 
 	len0 := len(x)
 	mem0 := allocRect2DMemory(len0)
@@ -40074,9 +40064,7 @@ func unpackArgSMemoryBarrier(x []MemoryBarrier) (unpacked *C.VkMemoryBarrier, al
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkMemoryBarrier) {
-		go allocs.Free()
-	})
+	// Caller (CmdPipelineBarrier / CmdWaitEvents) must Free allocs; do not rely on finalizers.
 
 	len0 := len(x)
 	mem0 := allocMemoryBarrierMemory(len0)
@@ -40112,9 +40100,7 @@ func unpackArgSBufferMemoryBarrier(x []BufferMemoryBarrier) (unpacked *C.VkBuffe
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkBufferMemoryBarrier) {
-		go allocs.Free()
-	})
+	// Caller (CmdPipelineBarrier / CmdWaitEvents) must Free allocs; do not rely on finalizers.
 
 	len0 := len(x)
 	mem0 := allocBufferMemoryBarrierMemory(len0)
@@ -40150,9 +40136,7 @@ func unpackArgSImageMemoryBarrier(x []ImageMemoryBarrier) (unpacked *C.VkImageMe
 		return nil, nil
 	}
 	allocs = new(cgoAllocMap)
-	defer runtime.SetFinalizer(&unpacked, func(**C.VkImageMemoryBarrier) {
-		go allocs.Free()
-	})
+	// Caller (CmdPipelineBarrier / CmdWaitEvents) must Free allocs; do not rely on finalizers.
 
 	len0 := len(x)
 	mem0 := allocImageMemoryBarrierMemory(len0)
